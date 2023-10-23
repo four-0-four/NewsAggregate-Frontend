@@ -7,12 +7,12 @@ export interface ILandingPageProps {
 
 export default function LandingPage (props: ILandingPageProps) {
   return (
-    <div className='columns-4'>
+    <div className='lg:columns-4 md:columns-3 sm:columns-2 columns-1'>
         <div className='border-b border-gray-300'>
             <h1 className='text-left font-bold text-2xl mb-2'>What is Farabix?</h1>
             <p className='text-left text-xs mb-4'>Farabix is a groundbreaking platform designed exclusively for journalists.We offer journalists a unique space to share their stories,investigations,and breakthroughs with the world,unfiltered and untouched by external influences.Our priority is to uphold the integrity of journalism by providing a secure,transparent,and direct line between journalists and readers.</p>
         </div>
-        <div className='border-b border-gray-300'>
+        <div className='border-b border-gray-300 break-inside-avoid-column'>
             <img src="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/website/landing2.jpg"
                 className="object-cover max-h-32 w-[100%] mb-4"/>
             <h1 className='text-left font-bold text-2xl mb-2'>Why join Farabix?</h1>
@@ -21,7 +21,7 @@ export default function LandingPage (props: ILandingPageProps) {
             <p className='text-left text-xs mb-4'><span className="font-bold">Unfiltered Publishing:</span> enabling journalists to publish their news directly to a global audience, bypassing biases and interference.</p>
             <p className='text-left text-xs mb-4'><span className="font-bold">Peer Review System:</span> Ensuring news quality through reviews conducted by journalists</p>
         </div>
-        <div className='border-b border-gray-300'>
+        <div className='border-b border-gray-300 break-inside-avoid-column'>
             <img src="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/website/landing1.jpg"
                 className="object-cover h-72 w-[100%] mb-4"/>
             <h1 className='text-left font-bold text-2xl mb-2'>Take a Stand for Truth & Join Us Today</h1>
@@ -32,7 +32,7 @@ export default function LandingPage (props: ILandingPageProps) {
                 <button className='w-full rounded-md bg-black text-white text-xs p-2 mt-2'>Submit</button>
             </div>
         </div>
-        <div className='border-b border-gray-300 mb-4'>
+        <div className='border-b border-gray-300 mb-4 break-inside-avoid-column'>
             <h1 className='text-left font-bold text-2xl mb-2'>Who is the founder of Farabix?</h1>
             <p className='text-left text-xs mb-4'>Hello there! I'm Sina,born in the vibrant city of Tehran,Iran and raised amidst the diverse cultures of Mississauga, Canada. I'm a lover of news and a staunch believer in the power of transparent journalism. I hold a deep-seated passion for unearthing the truth and presenting it to the world unfiltered. It's this love for truth-telling and transparency that led me to create a unique news hub. A platform where verified journalists can share their stories with 100% transparency, encapsulating all perspectives.</p>
             <div className="flex items-center space-x-4 mb-4">
@@ -43,11 +43,11 @@ export default function LandingPage (props: ILandingPageProps) {
                 </div>
             </div>
         </div>
-        <div className='border-b border-gray-300'>
+        <div className='border-b border-gray-300 break-inside-avoid-column'>
             <h1 className='text-left font-bold text-2xl mb-2'>What led me to create Farabix?</h1>
             <p className='text-left text-xs mb-4'>Growing up in Iran, I witnessed severe government censorship leading to suppression, harm, and even death for journalists who challenged official narratives.My journey then took me to Canada, where I encountered a different kind of bias - the polarizing narratives of outlets like Fox News and CNN, showing me that impartiality in journalism was a global challenge.Motivated by these experiences, I set out to create a space where journalists can safely and anonymously publish their news with full transparency.</p>
         </div>
-        <div className='border-b border-gray-300'>
+        <div className='border-b border-gray-300 break-inside-avoid-column'>
             <h1 className='text-left font-bold text-2xl mb-2'>What is Farabix Missions?</h1>
             <p className='text-left text-xs mb-4'><span className="font-bold">Engineer a Truthful Journalism Platform:</span>
 Build a Secure & Transparent News Hub, empowering verified journalists to share genuine news directly. Advocate for integrity and diverse perspectives,
