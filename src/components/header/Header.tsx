@@ -24,8 +24,8 @@ export function Header (props: IHeaderProps) {
         {/* Navigation Menu Section */}
         <div className="border-t border-b py-1 border-black w-full flex justify-between">
             <span>
-                <a href="/home" className="px-4 py-1 my-1 border-r border-black hover:bg-black hover:text-white">Home</a>
-                <a href="/explore" className="px-4 py-1 my-1 border-r border-black hover:bg-black hover:text-white">Explore</a>
+                <a href="/landing" className="px-4 py-1 my-1 border-r border-black bg-black text-white">Landing</a>
+                <span className="px-4 py-1 my-1">Will Launch Soon!</span>
             </span>
             <span className="text-gray-700 px-4">
                 {formattedDate}

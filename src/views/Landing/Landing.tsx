@@ -62,14 +62,24 @@ Aim to implement a robust journalist verification system before publishing with 
                 <h1 className='text-left font-bold text-2xl mb-2'>Contact Us</h1>
                 <p className='text-left text-xs mb-4'>Please don't hesitate to reach out to us! We're here to help and always happy to assist. Feel free to contact us anytime</p>
                 <div className=''>
-                    <span className='flex justify-start items-center mb-3'>
+                    <a 
+                        className='flex justify-start items-center mb-3 cursor-pointer' 
+                        href="https://t.me/farabix" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                    >
                         <TelegramIcon className='w-8 h-8'/>
                         <span>@Farabix</span>
-                    </span>
-                    <span className='flex justify-start items-center mb-3'>
+                    </a>
+                    <a 
+                        className='flex justify-start items-center mb-3 cursor-pointer'  
+                        href="mailto:contact@farabix.com" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                    >
                         <EmailIcon className='w-8 h-8'/>
                         <span>contact@farabix.com</span>
-                    </span>
+                    </a>
                 </div>
             </div>
         </div>
