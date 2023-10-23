@@ -1,0 +1,47 @@
+/* fonts.css */
+@font-face {
+    font-family: 'BBCReithSans';
+    src: url('./BBCReithSans.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'BBCReithSans';
+    src: url('./BBCReithSans-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'BBCReithSans';
+    src: url('./BBCReithSans-BoldItalic.otf') format('opentype');
+    font-weight: bold;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'BBCReithSans';
+    src: url('./BBCReithSans-Italic.otf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+  }
+  
+  @font-face {
+    font-family: 'BBCReithSans';
+    src: url('./BBCReithSans-Medium.otf') format('opentype');
+    font-weight: 500; /* Medium weight */
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'BBCReithSans';
+    src: url('./BBCReithSans-MediumItalic.otf') format('opentype');
+    font-weight: 500; /* Medium weight */
+    font-style: italic;
+  }
+  
+  body {
+    font-family: 'BBCReithSans', sans-serif;
+  }
+  
