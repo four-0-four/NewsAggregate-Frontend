@@ -22,12 +22,12 @@ export function Header (props: IHeaderProps) {
             <span className="text-4xl font-bold uppercase">Farabix</span>
         </div>
         {/* Navigation Menu Section */}
-        <div className="border-t border-b py-1 border-black w-full flex justify-between">
+        <div className="border-t border-b py-1 border-black w-full flex flex-col md:flex-row justify-between">
             <span>
                 <a href="/landing" className="px-4 py-1 my-1 border-r border-black bg-black text-white">Landing</a>
                 <span className="px-4 py-1 my-1">Will Launch Soon!</span>
             </span>
-            <span className="text-gray-700 px-4">
+            <span className="text-gray-700 px-4 self-center md:self-auto">
                 {formattedDate}
             </span>
         </div>

@@ -6,13 +6,15 @@ import { Header } from './components/header/Header';
 
 function App() {
   return (
-    <div className="App bg-backgroundPrimary min-h-screen p-4 pb-0">
-      <Router>
-        <Header />
-        <div className='p-4'>
-          <MainRoute />
-        </div>
-      </Router>
+    <div className="App bg-backgroundPrimary pt-4">
+      <div className=' min-h-screen max-w-[1600px] mx-auto'>
+        <Router>
+          <Header />
+          <div className='p-4'>
+            <MainRoute />
+          </div>
+        </Router>
+      </div>
     </div>
   );
 }
