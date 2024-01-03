@@ -1,5 +1,6 @@
 import React from 'react';
 import '../app/globals.css';
+import Layout from '../components/Layout';
 
 interface MyAppProps {
     Component: React.ComponentType;
@@ -7,7 +8,11 @@ interface MyAppProps {
 }
 
 function MyApp({ Component, pageProps }: MyAppProps) {
-    return <Component {...pageProps} />;
+    return (
+        <Layout>
+            <Component {...pageProps} />
+        </Layout>
+    );
 }
 
 export default MyApp;
