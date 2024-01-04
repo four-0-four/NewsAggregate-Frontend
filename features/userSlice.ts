@@ -20,7 +20,7 @@ const initialState: UserState = {
 export const registerUser = createAsyncThunk(
   'user/register',
   async (userData: { first_name: string; last_name: string; email: string; password: string; confirmPassword: string }) => {
-    const response = await fetch('http://localhost:8080/auth/user/signup', {
+    const response = await fetch('https://api.farabix.com/mainframe2/auth/user/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
