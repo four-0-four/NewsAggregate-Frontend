@@ -10,6 +10,10 @@ const config: Config = {
     extend: {
       colors: {
         primary: '#F9CF45', // primary color
+        'custom-bg': '#FBFCFD',
+        'very-light-gray': '#F4F4F4',
+        'light-gray': '#EAE9E9',
+        'dark-gray': '#ABABAB',
       },
       fontFamily: {
         sans: ['Lato', 'sans-serif'], // setting Lato as the primary font
