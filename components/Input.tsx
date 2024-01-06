@@ -11,7 +11,7 @@ type InputProps = {
 
 const Input: React.FC<InputProps> = ({ headerText, placeholder, name, value, onChange }) => {
     return (
-        <div className="flex flex-col mb-4">
+        <div className="flex flex-col mt-6">
             <h1 className="text-md font-semibold mb-1 ml-2">{headerText}</h1>
             <input
                 type="text"
