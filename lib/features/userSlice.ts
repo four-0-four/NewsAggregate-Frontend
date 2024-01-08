@@ -23,13 +23,47 @@ const initialState: UserState = {
   isAuthenticated: false,
 };
 
+export const forgetPassword = createAsyncThunk<string, { email: string }, { rejectValue: string }>(
+  'user/forgetPassword',
+  async ({ email }, thunkAPI) => {
+    try {
+      const response = await fetch('localhost:8080/auth/user/forget-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to initiate password reset');
+      }
+
+      const message = await response.text(); // Assuming the response is a text message
+      return message;
+    } catch (error) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
+      }
+      return thunkAPI.rejectWithValue('Failed to initiate password reset');
+    }
+  }
+);
+
 // Async thunk to fetch user details
 export const fetchUserDetails = createAsyncThunk<UserDetails, void, { rejectValue: string }>(
   'user/fetchUserDetails',
   async (_, thunkAPI) => {
     const token = Cookies.get('access_token');
+    const cachedUserDetails = Cookies.get('user_details');
+
     if (!token) {
       return thunkAPI.rejectWithValue('No access token available');
+    }
+
+    // Check if user details are cached and valid
+    if (cachedUserDetails) {
+      return JSON.parse(cachedUserDetails);
     }
 
     try {
@@ -44,7 +78,10 @@ export const fetchUserDetails = createAsyncThunk<UserDetails, void, { rejectValu
         throw new Error('Failed to fetch user details');
       }
 
-      return await response.json() as UserDetails;
+      const userDetails = await response.json() as UserDetails;
+      // Store user details in cookies for caching
+      Cookies.set('user_details', JSON.stringify(userDetails), { expires: 1 }); // expires in 1 day
+      return userDetails;
     } catch (error) {
       if (error instanceof Error) {
         return thunkAPI.rejectWithValue(error.message);
@@ -154,6 +191,9 @@ const userSlice = createSlice({
         state.userDetails = null;
       }
     },
+    setAuthenticationState: (state, action: PayloadAction<boolean>) => {
+      state.isAuthenticated = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -196,11 +236,23 @@ const userSlice = createSlice({
       state.status = 'failed';
       state.error = action.payload;
       state.isAuthenticated = false;
+    })
+    .addCase(forgetPassword.pending, (state) => {
+      state.status = 'loading';
+      state.error = null;
+    })
+    .addCase(forgetPassword.fulfilled, (state, action: PayloadAction<string>) => {
+      state.status = 'succeeded';
+      state.error = null;
+    })
+    .addCase(forgetPassword.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload;
     });
   },
 });
 
-export const { setUserAuthentication } = userSlice.actions;
+export const { setUserAuthentication, setAuthenticationState } = userSlice.actions;
 export const selectUserStatus = (state: { user: UserState }) => state.user.status;
 export const selectUserError = (state: { user: UserState }) => state.user.error;
 export const selectIsAuthenticated = (state: { user: UserState }) => state.user.isAuthenticated;

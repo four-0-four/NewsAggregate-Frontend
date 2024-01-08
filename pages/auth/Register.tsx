@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useRouter } from 'next/router';
-import Input from '../components/Input'; // Adjust the path according to your file structure
-import { registerUser, selectUserStatus, selectUserError } from '../lib/features/userSlice';
+import Input from '../../components/Input'; // Adjust the path according to your file structure
+import { registerUser, selectUserStatus, selectUserError } from '../../lib/features/userSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 const RegisterForm = () => {
@@ -50,7 +50,7 @@ const RegisterForm = () => {
                 <div className="mt-10 flex flex-col md:flex-row justify-between items-center w-full">
                     <p className="text-xs md:text-sm order-2 md:order-1">
                         Already have an account? 
-                        <a href="/Login" className="text-primary"> Log In</a>
+                        <a href="/auth/Login" className="text-primary"> Log In</a>
                     </p>
                     <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[25px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
                         Register

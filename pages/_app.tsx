@@ -1,9 +1,9 @@
 'use client'
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
-import { makeStore, AppStore } from '../lib/store';
 import Cookies from 'js-cookie';
-import { fetchUserDetails, refreshAccessToken } from '../lib/features/userSlice';
+import { makeStore, AppStore } from '../lib/store';
+import { fetchUserDetails, refreshAccessToken, setAuthenticationState } from '../lib/features/userSlice';
 import '../app/globals.css';
 import Layout from '../app/Layout';
 
@@ -14,30 +14,37 @@ interface MyAppProps {
 
 function MyApp({ Component, pageProps }: MyAppProps) {
   const storeRef = useRef<AppStore | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   if (!storeRef.current) {
     storeRef.current = makeStore();
-    // Initialize the store as needed
-    // For example: storeRef.current.dispatch(initializeCount(count));
-    // Add any other initialization logic here if necessary
+    // Other initial store setup...
   }
 
   useEffect(() => {
-    const checkAuth = () => {
+    const checkAuth = async () => {
       const accessToken = Cookies.get('access_token');
       if (accessToken) {
-        storeRef.current?.dispatch(fetchUserDetails());
+        await storeRef.current?.dispatch(setAuthenticationState(true));
+        await storeRef.current?.dispatch(fetchUserDetails());
+      } else {
+        await storeRef.current?.dispatch(setAuthenticationState(false));
       }
+      setIsLoading(false);
     };
 
     checkAuth();
 
     const interval = setInterval(() => {
       storeRef.current?.dispatch(refreshAccessToken());
-    }, 15 * 60 * 1000); // 15 minutes
+    }, 15 * 60 * 1000);
 
     return () => clearInterval(interval);
   }, []);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or any loading component
+  }
 
   return (
     <Provider store={storeRef.current}>
