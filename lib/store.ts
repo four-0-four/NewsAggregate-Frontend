@@ -1,6 +1,6 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from './features/userSlice';
+import userReducer from './features/user/slice';
 
 export const makeStore = ()=> {
   return configureStore({

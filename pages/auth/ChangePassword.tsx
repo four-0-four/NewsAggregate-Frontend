@@ -1,24 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Input from '../../components/Input'; // Adjust the path according to your file structure
-import { selectUserStatus, selectUserError, loginUser } from '../../lib/features/userSlice';
-import { useAppDispatch, useAppSelector } from '../../lib/hooks'; // Adjust the import path
+import Input from '../../components/Input';
+import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { confirmResetToken, changePassword } from '../../lib/features/user/thunks'; // Adjust the import path
 
 const ChangePasswordForm = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
+    const { token } = router.query; // Extract token from URL
     const status = useAppSelector(selectUserStatus);
-    const error = useAppSelector(selectUserError);
+    const [error,setError] = useState("");
 
     const [formData, setFormData] = useState({
-        oldPassword: '',
         newPassword: '',
         confirmPassword: '',
     });
 
+    // Validate token before page loads
+    useEffect(() => {
+        if (token) {
+            dispatch(confirmResetToken({ token: token as string }))
+                .unwrap()
+                .catch(() => {
+                    router.push('/auth/Login');
+                });
+        }
+    }, [token, dispatch, router]);
+
+    // Redirect on password change success
     useEffect(() => {
         if (status === 'succeeded') {
-            router.push('/'); // Redirect to home page on successful login
+            router.push('/'); // Redirect to home page
         }
     }, [status, router]);
 
@@ -28,7 +41,23 @@ const ChangePasswordForm = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        //dispatch(loginUser({ email: formData.email }));
+        if (formData.newPassword === formData.confirmPassword) {
+            dispatch(changePassword({ 
+                token: token as string, 
+                newPassword: formData.newPassword, 
+                confirmPassword: formData.confirmPassword 
+            }))
+            .unwrap()
+            .then(() => {
+                router.push('/'); // Redirect to homepage on success
+            })
+            .catch((error) => {
+                // Handle the error here (optional)
+                setError('Failed to change password: ' + error);
+            });
+        } else {
+            setError("Passwords do not match");
+        }
     };
 
     return (
@@ -37,14 +66,14 @@ const ChangePasswordForm = () => {
                 <h1 className={`text-xl md:text-2xl font-bold text-center uppercase pb-4 ${(status === 'succeeded' || status === 'failed') ? "mb-1" : "mb-4"} border-b border-light-gray`}>
                     Change Password
                 </h1>
+                {error === '' && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
 
-                <Input headerText="Old Password" placeholder="Old Password" name="oldPassword" value={formData.oldPassword} onChange={handleChange} />
                 <Input headerText="New Password" placeholder="New Password" name="newPassword" value={formData.newPassword} onChange={handleChange} />
                 <Input headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
 
                 <div className="mt-10 flex flex-col md:flex-row justify-between items-center w-full">
                     <p className="text-xs md:text-sm order-2 md:order-1">
-                        <a href="/Login" className="text-primary">Cancel</a>
+                        <a href="/auth/Login" className="text-primary">Cancel</a>
                     </p>
                     <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[25px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
                         Change

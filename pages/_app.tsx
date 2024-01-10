@@ -3,9 +3,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import Cookies from 'js-cookie';
 import { makeStore, AppStore } from '../lib/store';
-import { fetchUserDetails, refreshAccessToken, setAuthenticationState } from '../lib/features/userSlice';
+import { setAuthenticationState } from '../lib/features/user/slice';
 import '../app/globals.css';
 import Layout from '../app/Layout';
+import { fetchUserDetails, refreshAccessToken } from '@/lib/features/user/thunks';
+import { isTokenValid } from '../util/token';
 
 interface MyAppProps {
   Component: React.ComponentType;
@@ -24,10 +26,11 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   useEffect(() => {
     const checkAuth = async () => {
       const accessToken = Cookies.get('access_token');
-      if (accessToken) {
+      if (accessToken && isTokenValid(accessToken)) {
         await storeRef.current?.dispatch(setAuthenticationState(true));
         await storeRef.current?.dispatch(fetchUserDetails());
       } else {
+        Cookies.remove('access_token');
         await storeRef.current?.dispatch(setAuthenticationState(false));
       }
       setIsLoading(false);

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Input from '../../components/Input'; // Adjust the path according to your file structure
-import { selectUserStatus, selectUserError, loginUser } from '../../lib/features/userSlice';
+import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks'; // Adjust the import path
+import { loginUser } from '@/lib/features/user/thunks';
 
 const LoginForm = () => {
     const dispatch = useAppDispatch();

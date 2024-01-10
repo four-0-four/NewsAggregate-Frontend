@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { RootState } from '../lib/store'; // Adjust the path according to your file structure
-import { selectIsAuthenticated } from '../lib/features/userSlice';
+import { selectIsAuthenticated } from '../lib/features/user/slice';
 
 const Header: React.FC = () => {
   const today = new Date();
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
             {userDetails.first_name}
           </span>
         ) : (
-          <button className="bg-primary text-black py-2 px-4 sm:px-8 rounded-[25px] uppercase text-sm sm:text-md" onClick={()=>router.push('/Register')}>
+          <button className="bg-primary text-black py-2 px-4 sm:px-8 rounded-[25px] uppercase text-sm sm:text-md" onClick={()=>router.push('/auth/Register')}>
             Register
           </button>
         )}

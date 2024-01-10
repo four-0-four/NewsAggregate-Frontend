@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Input from '../../components/Input'; // Adjust the path according to your file structure
-import { selectUserStatus, selectUserError, loginUser, forgetPassword } from '../../lib/features/userSlice';
+import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks'; // Adjust the import path
+import { forgetPassword } from '@/lib/features/user/thunks';
 
 const PasswordEmailForm = () => {
     const dispatch = useAppDispatch();
@@ -13,12 +14,6 @@ const PasswordEmailForm = () => {
     const [formData, setFormData] = useState({
         email: '',
     });
-
-    useEffect(() => {
-        if (status === 'succeeded') {
-            router.push('/'); // Redirect to home page on successful login
-        }
-    }, [status, router]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
