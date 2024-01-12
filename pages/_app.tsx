@@ -8,6 +8,7 @@ import '../app/globals.css';
 import Layout from '../app/Layout';
 import { fetchUserDetails, refreshAccessToken } from '@/lib/features/user/thunks';
 import { isTokenValid } from '../util/token';
+import Head from 'next/head';
 
 interface MyAppProps {
   Component: React.ComponentType;
@@ -50,11 +51,19 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   }
 
   return (
-    <Provider store={storeRef.current}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </Provider>
+    <>
+      <Head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
+      </Head>
+      <Provider store={storeRef.current}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Provider>
+    </>
   );
 }
 

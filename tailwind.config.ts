@@ -16,7 +16,7 @@ const config: Config = {
         'dark-gray': '#ABABAB',
       },
       fontFamily: {
-        sans: ['Lato', 'sans-serif'], // setting Lato as the primary font
+        sans: ['Poppins', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
