@@ -5,6 +5,24 @@ import { UserDetails } from './slice';
 const BaseURL = "http://127.0.0.1:8080"
 const ProductionBaseURL = "https://api.farabix.com/mainframe2"
 
+
+export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
+  'user/logout',
+  (_, thunkAPI) => {
+    try {
+      // Delete the access token cookie
+      Cookies.remove('access_token');
+
+    } catch (error) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
+      }
+      return thunkAPI.rejectWithValue('Logout failed');
+    }
+  }
+);
+
+
 export const confirmResetToken = createAsyncThunk<string, { token: string }, { rejectValue: string }>(
     'user/confirmResetToken',
     async ({ token }, thunkAPI) => {
