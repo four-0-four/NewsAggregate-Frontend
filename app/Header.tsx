@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { RootState } from '../lib/store'; // Adjust the path according to your file structure
 import { selectIsAuthenticated } from '../lib/features/user/slice';
 import ProfileDropdown from '@/components/ProfileDropdown';
-
 const Header: React.FC = () => {
   const today = new Date();
   const router = useRouter();
@@ -22,10 +21,10 @@ const Header: React.FC = () => {
 
 
   return (
-    <header className="bg-black text-white p-2 px-4 sm:px-12">
+    <header className="bg-black text-white p-2 px-4">
       <div className="max-w-[1450px] mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <img src="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/website/logo_transparent.png" alt="Farabix" className="w-12" />
+          <img src={'./logo_transparent.png'} alt="Farabix" className="w-12" />
           <p className="hidden sm:block md:ml-2 text-xl sm:text-2xl text-primary uppercase">Farabix</p>
           <p className="block ml-2 md:ml-6 sm:ml-4 bg-neutral-800 border border-neutral-600 px-3 py-1 rounded-full text-md text-neutral-300">{shortFormattedDate}</p>
         </div>
