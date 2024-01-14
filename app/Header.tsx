@@ -19,13 +19,14 @@ const Header: React.FC = () => {
   const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
   const userDetails = useSelector((state: RootState) => state.user.userDetails);
 
-
   return (
-    <header className="bg-black text-white p-2 px-4">
+    <header className="bg-black text-white p-2 px-4 fixed top-0 left-0 right-0 z-10 mb-10">
       <div className="max-w-[1450px] mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <img src={'./logo_transparent.png'} alt="Farabix" className="w-12" />
-          <p className="hidden sm:block md:ml-2 text-xl sm:text-2xl text-primary uppercase">Farabix</p>
+          <div className='cursor-pointer flex flex-row items-center' onClick={()=>router.push('/')}>
+            <img src={'./logo_transparent.png'} alt="Farabix" className="w-12" />
+            <p className="hidden sm:block md:ml-2 text-xl sm:text-2xl text-primary uppercase">Farabix</p>
+          </div>
           <p className="block ml-2 md:ml-6 sm:ml-4 bg-neutral-800 border border-neutral-600 px-3 py-1 rounded-full text-md text-neutral-300">{shortFormattedDate}</p>
         </div>
 

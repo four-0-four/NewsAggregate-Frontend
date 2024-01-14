@@ -13,14 +13,13 @@ type LayoutProps = {
 };
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  //const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
-  let isAuthenticated = true;
+  const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
   return (
     <>
       <Header />
-      <div className="flex max-w-[1450px] mx-auto min-h-[700px] h-[92vh] p-2 py-8">
+      <div className="flex max-w-[1450px] mx-auto pt-[60px]">
         {isAuthenticated && (<Sidebar />)}
-        <main className="flex-1 px-4 sm:px-12">
+        <main className={`flex-1 p-2 px-1 sm:px-4 xl:px-6 justify-start p-5`}>
           {children}
         </main>
       </div>

@@ -26,6 +26,7 @@ const config: Config = {
       screens: {
         'xs': '475px', // custom xs breakpoint
         'xl': '1400px', // custom xl breakpoint
+        '2xl': '1600px', // custom 2xl breakpoint
       },
     },
   },
