@@ -26,7 +26,6 @@ export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
 export const confirmResetToken = createAsyncThunk<string, { token: string }, { rejectValue: string }>(
     'user/confirmResetToken',
     async ({ token }, thunkAPI) => {
-      console.log("we are here")
       try {
         const response = await fetch(BaseURL + '/auth/user/confirm-reset', {
           method: 'POST',
@@ -55,7 +54,6 @@ export const confirmResetToken = createAsyncThunk<string, { token: string }, { r
   export const confirmRegistrationToken = createAsyncThunk<string, { token: string }, { rejectValue: string }>(
     'user/confirmRegistrationToken',
     async ({ token }, thunkAPI) => {
-      console.log("Attempting to confirm registration token");
       try {
         const response = await fetch(BaseURL + '/auth/user/confirm-registration', {
           method: 'POST',
@@ -120,7 +118,6 @@ export const confirmResetToken = createAsyncThunk<string, { token: string }, { r
 export const forgetPassword = createAsyncThunk<string, { email: string }, { rejectValue: string }>(
     'user/forgetPassword',
     async ({ email }, thunkAPI) => {
-      console.log("we are in forget password")
       try {
         const response = await fetch(BaseURL + '/auth/user/forget-password', {
           method: 'POST',
@@ -272,6 +269,47 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
           return thunkAPI.rejectWithValue(error.message);
         }
         return thunkAPI.rejectWithValue('Token refresh failed');
+      }
+    }
+  );
+
+
+  export const fetchUserFollowings = createAsyncThunk<string[], void, { rejectValue: string }>(
+    'user/fetchUserFollowings',
+    async (_, thunkAPI) => {
+      const token = Cookies.get('access_token');
+      const cachedUserFollowings = Cookies.get('followings');
+  
+      if (!token) {
+        return thunkAPI.rejectWithValue('No access token available');
+      }
+  
+      // Check if user details are cached and valid
+      if (cachedUserFollowings) {
+        return JSON.parse(cachedUserFollowings);
+      }
+  
+      try {
+        const response = await fetch(BaseURL + '/user/get-followings', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch user followings');
+        }
+  
+        const userFollowings = await response.json() as String[];
+        // Store user details in cookies for caching
+        Cookies.set('followings', JSON.stringify(userFollowings), { expires: 1 }); // expires in 1 day
+        return userFollowings;
+      } catch (error) {
+        if (error instanceof Error) {
+          return thunkAPI.rejectWithValue(error.message);
+        }
+        return thunkAPI.rejectWithValue('Failed to fetch user details');
       }
     }
   );

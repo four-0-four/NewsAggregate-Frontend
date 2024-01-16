@@ -12,6 +12,7 @@ type NewsComponentProps = {
 
 const NewsCard: React.FC<NewsComponentProps> = ({ imageSrc, title, description, from, fromImage, date, tags }) => {
     // Function to format the date
+    console.log(tags,typeof(tags))
     const formatDate = (date: Date) => {
         const now = new Date();
         const differenceInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
@@ -42,7 +43,7 @@ const NewsCard: React.FC<NewsComponentProps> = ({ imageSrc, title, description, 
     };
 
     return (
-        <div className="flex flex-col md:flex-row w-full rounded-[25px] bg-white border-solid border border-gray-100 overflow-hidden p-2">
+        <div className="flex flex-col md:flex-row w-full rounded-[25px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-4 cursor-pointer">
             <img src={imageSrc} alt="News" className="hidden md:block xs:w-1/3 object-cover rounded-[25px]" />
             <div className='flex flex-row md:flex-col items-center mb-4'>
                 <img src={imageSrc} alt="News" className="block md:hidden xs:w-1/3 md:w-full object-cover rounded-[25px]" />

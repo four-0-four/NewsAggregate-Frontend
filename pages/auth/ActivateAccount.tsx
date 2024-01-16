@@ -16,9 +16,7 @@ const ChangePasswordForm = () => {
     // Validate token before page loads
     useEffect(() => {
         // Check if the token is available in the query and update the stat
-        console.log("we are here")
         if (router.query.token && typeof router.query.token === 'string') {
-            console.log("it went through")
             const token = router.query.token;
             dispatch(confirmRegistrationToken({ token: token as string })).unwrap()
                 .then(() => {

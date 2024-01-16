@@ -1,13 +1,28 @@
 // components/Sidebar.tsx
 
 import Interests from '@/components/Interests';
+import { selectIsAuthenticated } from '@/lib/features/user/slice';
+import { fetchUserFollowings } from '@/lib/features/user/thunks';
+import { useAppDispatch } from '@/lib/hooks';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { use, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
     let interests: string[] = [];
     const router = useRouter();
+    const dispatch = useAppDispatch();
+    const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
+    let userFollowings = useSelector((state: RootState) => state.user.followings);
+    if (userFollowings === undefined){
+        userFollowings = [];
+    }
+    useEffect(() => {
+        if (isAuthenticated){
+            dispatch(fetchUserFollowings());
+        }
+    }, [isAuthenticated]);
     
 
     const isActive = (path) => {
@@ -37,7 +52,7 @@ const Sidebar = () => {
                         </Link>
                     </ul>
                 </nav>
-                <Interests interests={interests} />
+                <Interests interests={userFollowings} />
             </div>
             <nav className="absolute bottom-0 left-0 right-0 py-2 mx-2 border-t border-neutral-200">
                 <ul className="flex w-full">

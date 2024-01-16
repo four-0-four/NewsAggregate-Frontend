@@ -1,11 +1,13 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/user/slice';
+import newsReducer from './features/news/slice';
 
 export const makeStore = ()=> {
   return configureStore({
     reducer: {
       user: userReducer,
+      news: newsReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

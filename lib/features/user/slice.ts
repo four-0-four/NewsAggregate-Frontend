@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { confirmRegistrationToken, fetchUserDetails, forgetPassword, loginUser, registerUser } from './thunks';
+import { confirmRegistrationToken, fetchUserDetails, fetchUserFollowings, forgetPassword, loginUser, registerUser } from './thunks';
 
 export interface UserDetails {
   username?: string;
@@ -13,6 +13,7 @@ export interface UserState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null | undefined;
   userDetails: UserDetails | null;
+  followings?: string[];
   isAuthenticated: boolean;
 }
 
@@ -102,6 +103,19 @@ const userSlice = createSlice({
     .addCase(confirmRegistrationToken.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.payload;
+    })
+    .addCase(fetchUserFollowings.pending, (state) => {
+      state.status = 'loading';
+      state.error = null;
+    })
+    .addCase(fetchUserFollowings.fulfilled, (state, action: PayloadAction<string[]>) => {
+      state.status = 'succeeded';
+      state.followings = action.payload;
+      state.error = null;
+    })
+    .addCase(fetchUserFollowings.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload;
     });
   },
 });
@@ -109,6 +123,7 @@ const userSlice = createSlice({
 export const { setUserAuthentication, setAuthenticationState } = userSlice.actions;
 export const selectUserStatus = (state: { user: UserState }) => state.user.status;
 export const selectUserError = (state: { user: UserState }) => state.user.error;
+export const selectUserFollowings = (state: { user: UserState }) => state.user.followings;
 export const selectIsAuthenticated = (state: { user: UserState }) => state.user.isAuthenticated;
 
 export default userSlice.reducer;
