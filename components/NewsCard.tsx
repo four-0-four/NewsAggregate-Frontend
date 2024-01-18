@@ -49,15 +49,17 @@ const NewsCard: React.FC<NewsComponentProps> = ({ imageSrc, title, description, 
                 <img src={imageSrc} alt="News" className="block md:hidden xs:w-1/3 md:w-full object-cover rounded-[25px]" />
                 <h2 className="hidden xs:block md:hidden text-lg sm:text-xl font-bold mb-2 p-5">{title}</h2>
             </div>
-            <div className="flex flex-col justify-start p-2 px-1 sm:px-4">
-                <h2 className="block xs:hidden md:block text-lg sm:text-xl font-bold mb-2">{title}</h2>
-                <p className="text-sm sm:text-md">{truncateDescription(description)}</p>
-                <div className='flex flex-col xs:flex-row justify-between items-center mt-4'>
+            <div className="flex flex-col justify-start p-2 px-1 sm:px-4 w-full">
+                <div>
+                    <h2 className="block xs:hidden md:block text-lg sm:text-xl font-bold mb-2">{title}</h2>
+                    <p className="text-sm sm:text-md">{truncateDescription(description)}</p>
+                </div>
+                <div className='flex flex-col xs:flex-row justify-between items-end mt-4 h-full flex-grow'>
                     <div className="flex items-center gap-2 xs:w-fit w-full">
                         <img className="w-10 h-10 rounded-full" src={fromImage} alt="news creator image"/>
                         <div className="flex-1 font-medium leading-5 flex flex-row xs:flex-col justify-between items-center xs:justify-start xs:items-start ">
-                            <div>{from}</div>
-                            <div className="text-sm text-gray-500">{formatDate(date)}</div>
+                        <div>{from}</div>
+                        <div className="text-sm text-gray-500">{formatDate(date)}</div>
                         </div>
                     </div>
                     <div className="flex flex-wrap gap-2 xs:max-w-[300px] w-full justify-start xs:justify-end mt-4 sm:mt-0">

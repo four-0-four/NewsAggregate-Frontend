@@ -313,3 +313,33 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
       }
     }
   );
+
+  export const contactUs = createAsyncThunk<string, { full_name:string, email:string, topic:string, message:string }, { rejectValue: string }>(
+    'user/contactUs',
+    async ({ full_name, email, topic, message }, thunkAPI) => {
+      try {
+        console.log({ full_name, email, topic, message })
+        const response = await fetch(BaseURL + '/user/contactUs', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ full_name, email, topic, message }),
+        });
+  
+        if (!response.ok) {
+          // Adjust this message to reflect the failure of sending a contact message
+          throw new Error('Failed to send contact message');
+        }
+  
+        const responseData = await response.json(); // Correctly parsing JSON response
+        return responseData.message; // Assuming the response has a 'message' key
+      } catch (error) {
+        if (error instanceof Error) {
+          return thunkAPI.rejectWithValue(error.message);
+        }
+        // Adjust this message as well
+        return thunkAPI.rejectWithValue('Failed to send contact message');
+      }
+    }  
+  );

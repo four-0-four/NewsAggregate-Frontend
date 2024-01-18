@@ -4,24 +4,13 @@ import NewsCard from "@/components/NewsCard";
 import { fetchNewsArticles } from "@/lib/features/news/thunks";
 import { selectIsAuthenticated } from "@/lib/features/user/slice";
 import { fetchUserFollowings } from "@/lib/features/user/thunks";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import news from "./news/[newsID]";
-export let default_news = {
-    imageSrc: "https://www.theglobeandmail.com/resizer/v2/CTKPEANIJBAHVPGGHJCK2PPPVU.jpg?auth=42539e44cbb52811507dfe779a9e93536ce7982f5213f61a1fc31cff2bdd9c35&width=600&quality=80",
-    title: "Decisive Victory: Progressive Alliance Wins the General Elections",
-    description: "Elections 2024: Read the latest Elections news and updates on The Economic Times. Get updates on General Elections, Lok Sabha elections, assembly elections, and more. Stay informed about the candidates, their campaigns, polling data, and everything you need to know about the upcoming national elections. From in-depth analysis to expert opinions, get comprehensive coverage of the political landscape. Explore detailed reports on electoral strategies, party manifestos, and the impact of recent policy changes. Understand the implications of election outcomes on domestic and international politics. With exclusive interviews, live updates, and breaking news, stay ahead of the curve in understanding the dynamics of democracy. This year's elections are expected to be a turning point in shaping the future direction of the country. Don't miss out on any developments in this pivotal moment in history.",
-    from: "BBC",
-    fromImage: "https://yt3.googleusercontent.com/y_esGAQOhX4rTpWvrALErAJlFbm_2TIVrvcVfcZny7TuA8dJZgOQcC6KRfd_J5hljFe-foYXj9U=s900-c-k-c0x00ffffff-no-rj",
-    date: new Date('2024-01-07T14:00:00'),
-    tags: ["Politics", "Elections", "India", "International", "Economy", "Environment", "Technology", "Health", "Education", "Sports"]
-  }
-
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -37,7 +26,7 @@ const Home: React.FC = () => {
 
   return (
     newsArticles.length > 0 ? (
-      newsArticles.map((newsCard) => (
+      newsArticles.map((newsCard: { media: string[]; title: string; content: string; from: string; fromImage: string; publishedDate: string | number | Date; keywords: string[]; }) => (
         <NewsCard 
           imageSrc={newsCard.media[0]} 
           title={newsCard.title} 
@@ -57,7 +46,7 @@ const Home: React.FC = () => {
           </svg>
           <p className="text-lg md:text-xl mt-4">
             Oops! There seems to be no news for you at this moment. Have you followed any topics so far?
-            <a href="/explore" className="text-primary underline"> go to explore</a>
+            <a href="/topics" className="text-primary underline"> go to explore</a>
           </p>
         </div>
       </div>
