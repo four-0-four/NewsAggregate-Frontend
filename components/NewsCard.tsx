@@ -12,7 +12,6 @@ type NewsComponentProps = {
 
 const NewsCard: React.FC<NewsComponentProps> = ({ imageSrc, title, description, from, fromImage, date, tags }) => {
     // Function to format the date
-    console.log(tags,typeof(tags))
     const formatDate = (date: Date) => {
         const now = new Date();
         const differenceInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);

@@ -3,7 +3,7 @@
 import Interests from '@/components/Interests';
 import { selectIsAuthenticated } from '@/lib/features/user/slice';
 import { fetchUserFollowings } from '@/lib/features/user/thunks';
-import { useAppDispatch } from '@/lib/hooks';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { use, useEffect } from 'react';
@@ -13,15 +13,13 @@ const Sidebar = () => {
     let interests: string[] = [];
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
     let userFollowings = useSelector((state: RootState) => state.user.followings);
     if (userFollowings === undefined){
         userFollowings = [];
     }
     useEffect(() => {
-        if (isAuthenticated){
-            dispatch(fetchUserFollowings());
-        }
+        dispatch(fetchUserFollowings());
     }, [isAuthenticated]);
     
 

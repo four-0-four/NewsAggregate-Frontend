@@ -1,34 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { useSelector } from 'react-redux';
-import { selectIsAuthenticated } from '@/lib/features/user/slice';
+import { addFollowingStatus, selectIsAuthenticated, selectUserFollowings } from '@/lib/features/user/slice';
 import { fetchOneNewsArticle, fetchTopicNews } from '@/lib/features/news/thunks';
 import {selectTopicArticles} from '@/lib/features/news/slice';
 import NewsCard from '@/components/NewsCard';
+import { addFollowing, removeFollowing } from '@/lib/features/user/thunks';
 
 const topic: React.FC<> = ({}) => {
     // Function to format the date
+    const [following,setFollowing] = useState<string[]>([]);
     const router = useRouter()
     
     const dispatch = useAppDispatch();
     const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
+    const userFollowing = useAppSelector(selectUserFollowings);
+    let categoryArticles = useAppSelector(selectTopicArticles);
     const topic = router.query.newsTopic as string;
+
+    console.log(following);
+
     useEffect(() => {
-        if (isAuthenticated) {
-            const topic = router.query.newsTopic as string;
+        const topic = router.query.newsTopic as string;
+        if (isAuthenticated && topic) {
             dispatch(fetchTopicNews(topic));
         }
     }, [dispatch, isAuthenticated, router.query.newsTopic]);
 
+    useEffect(() => {
+      setFollowing(userFollowing)
+    },[userFollowing])
 
-    let categoryArticles = useAppSelector(selectTopicArticles);
+    let handleClick = (topic: string) => {
+      if(following?.includes(topic)){
+        dispatch(removeFollowing({topic}));
+      }else{
+        dispatch(addFollowing({topic}));
+      }
+    }
+
     return (
         <div className='mb-5'>
           <div className="" key={topic}>
             <div className='my-1 mb-6 capitalize flex'>
               <h2 className="text-3xl font-bold inline-block">{topic}</h2>
-              <button className='text-sm text-black bg-primary ml-4 rounded-[25px] p-1 px-3 hover:bg-amber-400'>+ Follow Topic</button>
+              <button onClick={()=>handleClick(topic)} className={`text-sm  ${following?.includes(topic)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[25px] p-1 px-3 ${following?.includes(topic)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
+                {following?.includes(topic)?"Following":"+ Follow Topic"}
+              </button>
             </div>
             {categoryArticles && categoryArticles?.map(newsCard => (
               <NewsCard

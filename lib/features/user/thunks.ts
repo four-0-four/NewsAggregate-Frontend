@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
-import { UserDetails } from './slice';
+import { UserDetails, followingReturnI } from './slice';
 
 const BaseURL = "http://127.0.0.1:8080"
 const ProductionBaseURL = "https://api.farabix.com/mainframe2"
@@ -276,17 +276,11 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
 
   export const fetchUserFollowings = createAsyncThunk<string[], void, { rejectValue: string }>(
     'user/fetchUserFollowings',
-    async (_, thunkAPI) => {
+    async (_, thunkAPI): Promise<string[]> => {
       const token = Cookies.get('access_token');
-      const cachedUserFollowings = Cookies.get('followings');
   
       if (!token) {
-        return thunkAPI.rejectWithValue('No access token available');
-      }
-  
-      // Check if user details are cached and valid
-      if (cachedUserFollowings) {
-        return JSON.parse(cachedUserFollowings);
+        return thunkAPI.rejectWithValue('No access token available') as unknown as Promise<string[]>;
       }
   
       try {
@@ -298,18 +292,16 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         });
   
         if (!response.ok) {
-          throw new Error('Failed to fetch user followings');
+          return thunkAPI.rejectWithValue('Failed to fetch user followings') as unknown as Promise<string[]>;
         }
   
-        const userFollowings = await response.json() as String[];
-        // Store user details in cookies for caching
-        Cookies.set('followings', JSON.stringify(userFollowings), { expires: 1 }); // expires in 1 day
+        const userFollowings: string[] = await response.json();
         return userFollowings;
       } catch (error) {
         if (error instanceof Error) {
-          return thunkAPI.rejectWithValue(error.message);
+          return thunkAPI.rejectWithValue(error.message) as unknown as Promise<string[]>;
         }
-        return thunkAPI.rejectWithValue('Failed to fetch user details');
+        return thunkAPI.rejectWithValue('Failed to fetch user details') as unknown as Promise<string[]>;
       }
     }
   );
@@ -318,7 +310,6 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
     'user/contactUs',
     async ({ full_name, email, topic, message }, thunkAPI) => {
       try {
-        console.log({ full_name, email, topic, message })
         const response = await fetch(BaseURL + '/user/contactUs', {
           method: 'POST',
           headers: {
@@ -343,3 +334,88 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
       }
     }  
   );
+
+
+  export const addFollowing = createAsyncThunk<
+  followingReturnI,
+  { topic: string },
+  { rejectValue: string }
+>(
+  'user/addFollowing',
+  async ({ topic }, thunkAPI) => {
+    const token = Cookies.get('access_token');
+    if (!token) {
+      return thunkAPI.rejectWithValue('No access token available');
+    }
+
+    try {
+      const searchParams = new URLSearchParams();
+      searchParams.append('topic', topic);
+
+      const url = new URL(BaseURL + '/user/add-following');
+      url.search = searchParams.toString();
+
+      const response = await fetch(url.toString(), {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add following');
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
+      }
+      return thunkAPI.rejectWithValue('Failed to add following');
+    }
+  }
+);
+
+export const removeFollowing = createAsyncThunk<
+  followingReturnI,
+  { topic: string },
+  { rejectValue: string }
+>(
+  'user/removeFollowing',
+  async ({ topic }, thunkAPI) => {
+    const token = Cookies.get('access_token');
+    if (!token) {
+      return thunkAPI.rejectWithValue('No access token available');
+    }
+
+    try {
+      const searchParams = new URLSearchParams();
+      searchParams.append('topic', topic);
+
+      const url = new URL(BaseURL + '/user/remove-following');
+      url.search = searchParams.toString();
+
+      const response = await fetch(url.toString(), {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to remove following');
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
+      }
+      return thunkAPI.rejectWithValue('Failed to remove following');
+    }
+  }
+);
