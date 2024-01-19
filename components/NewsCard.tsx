@@ -1,6 +1,8 @@
+import router from 'next/router';
 import React from 'react';
 
 type NewsComponentProps = {
+    id: number;
     imageSrc: string;
     title: string;
     description: string;
@@ -10,7 +12,7 @@ type NewsComponentProps = {
     tags: string[];
 };
 
-const NewsCard: React.FC<NewsComponentProps> = ({ imageSrc, title, description, from, fromImage, date, tags }) => {
+const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, description, from, fromImage, date, tags }) => {
     // Function to format the date
     const formatDate = (date: Date) => {
         const now = new Date();
@@ -42,7 +44,8 @@ const NewsCard: React.FC<NewsComponentProps> = ({ imageSrc, title, description, 
     };
 
     return (
-        <div className="flex flex-col md:flex-row w-full rounded-[25px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-4 cursor-pointer">
+        <div className="flex flex-col md:flex-row w-full rounded-[25px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-4 cursor-pointer"
+        onClick={() => router.push('/news/' + id)}>
             <img src={imageSrc} alt="News" className="hidden md:block xs:w-1/3 object-cover rounded-[25px]" />
             <div className='flex flex-row md:flex-col items-center mb-4'>
                 <img src={imageSrc} alt="News" className="block md:hidden xs:w-1/3 md:w-full object-cover rounded-[25px]" />

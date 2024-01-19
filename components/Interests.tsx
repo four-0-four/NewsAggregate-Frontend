@@ -15,7 +15,7 @@ const Interests: React.FC<Props> = ({interests}) => {
             <>
                 <div className={`flex flex-wrap gap-1 xl:gap-2 overflow-y-auto max-h-[240px] snap-y pr-3`}>
                     {interests.map(interest => (
-                        <div key={interest} className="snap-start bg-neutral-100 text-neutral-400 p-1 px-3 rounded-[25px] text-sm xl:text-md hover:bg-black hover:cursor-pointer hover:text-neutral-100">
+                        <div onClick={() => router.push('/topics/'+interest)} key={interest} className="snap-start bg-neutral-100 text-neutral-400 p-1 px-3 rounded-[25px] text-sm xl:text-md hover:bg-black cursor-pointer hover:text-neutral-100">
                             {interest}
                         </div>
                     ))}

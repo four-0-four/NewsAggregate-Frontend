@@ -3,6 +3,7 @@ import { selectCategoryArticles, selectNewsCategories } from '@/lib/features/new
 import { fetchVarietyTopicsNews } from '@/lib/features/news/thunks';
 import { selectIsAuthenticated } from '@/lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import router from 'next/router';
 import React, { useEffect, useState } from 'react'
 
 type Props = {}
@@ -35,50 +36,53 @@ const topics = (props: Props) => {
       setStartIndex(startIndex + itemsPerPage);
     }
   };
-  
+
   return (
     <div>
-      <div className="bg-white rounded-[25px] border-solid border border-gray-100 p-5 xl:p-7">
-        <h1 className="text-xl font-bold mb-4">
-          Explore a range of subjects to find your interest
-        </h1>
-        <div className="flex flex-wrap gap-2">
-          <button
-            className={`px-2 py-2 rounded-full text-2xl ${
-              startIndex === 0 ? 'text-gray-300 cursor-default disable' : 'cursor-pointer text-black'
-            }`}
-            onClick={handlePrev}
-          >
-            &lt;
-          </button>
-          {categories.slice(startIndex, startIndex + itemsPerPage).map((category) => (
+      {categories.length > 0 && (
+        <div className="bg-white rounded-[25px] border-solid border border-gray-100 p-5 xl:p-7">
+          <h1 className="text-xl font-bold mb-4">
+            Explore a range of subjects to find your interest
+          </h1>
+          <div className="flex flex-wrap gap-2">
             <button
-              key={category}
-              className="w-[14%] bg-gray-100 text-gray-500 hover:bg-black hover:text-neutral-100 py-2 rounded-full"
+              className={`px-2 py-2 rounded-full text-2xl ${
+                startIndex === 0 ? 'text-gray-300 cursor-default disable' : 'cursor-pointer text-black'
+              }`}
+              onClick={handlePrev}
             >
-              {category}
+              &lt;
             </button>
-          ))}
-          <button
-          className={`px-2 py-2 rounded-full text-2xl ${
-            startIndex + itemsPerPage >= categories.length ? 'text-gray-300 cursor-default disable' : 'cursor-pointer text-black'
-          }`}
-          onClick={handleNext}
-        >
-          &gt;
-        </button>
+            {categories.slice(startIndex, startIndex + itemsPerPage).map((category) => (
+              <button
+                key={category}
+                className="w-[14%] bg-gray-100 text-gray-500 hover:bg-black hover:text-neutral-100 py-2 rounded-full"
+                onClick={() => router.push('/topics/'+category)}
+              >
+                {category}
+              </button>
+            ))}
+            <button
+            className={`px-2 py-2 rounded-full text-2xl ${
+              startIndex + itemsPerPage >= categories.length ? 'text-gray-300 cursor-default disable' : 'cursor-pointer text-black'
+            }`}
+            onClick={handleNext}
+          >
+            &gt;
+          </button>
+          </div>
         </div>
-      </div>
+      )}
       <div className='mb-5'>
         {Object.keys(categoryArticles).map(category => (
           <div className="mt-20" key={category}>
             <div className='my-6 capitalize flex'>
-              <h2 className="text-3xl font-bold inline-block">{category}</h2>
+              <h2 className="text-3xl font-bold inline-block cursor-pointer" onClick={() => router.push('/topics/'+category)}>{category}</h2>
               <button className='text-sm text-black bg-primary ml-4 rounded-[25px] p-1 px-3 hover:bg-amber-400'>+ Follow Topic</button>
             </div>
             {categoryArticles[category].map(newsCard => (
               <NewsCard
-                key={newsCard.id}
+                id={newsCard.id}
                 imageSrc={newsCard.media[0]}
                 title={newsCard.title}
                 description={newsCard.content}
@@ -89,7 +93,8 @@ const topics = (props: Props) => {
               />
             ))}
             <div className="flex justify-start">
-              <div className="text-2xl text-primary underline flex items-center cursor-pointer hover:text-amber-400">
+              <div className="text-2xl text-primary underline flex items-center cursor-pointer hover:text-amber-400"
+              onClick={() => router.push('/topics/'+category)}>
                 <h3>View all</h3>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-2 w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

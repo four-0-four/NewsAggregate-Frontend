@@ -24,7 +24,7 @@ const Header: React.FC = () => {
       <div className="max-w-[1450px] mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <div className='cursor-pointer flex flex-row items-center' onClick={()=>router.push('/')}>
-            <img src={'./logo_transparent.png'} alt="Farabix" className="w-12" />
+            <img src={'/logo_transparent.png'} alt="Farabix" className="w-12" />
             <p className="hidden sm:block md:ml-2 text-xl sm:text-2xl text-primary uppercase">Farabix</p>
           </div>
           <p className="block ml-2 md:ml-6 sm:ml-4 bg-neutral-800 border border-neutral-600 px-3 py-1 rounded-full text-md text-neutral-300">{shortFormattedDate}</p>

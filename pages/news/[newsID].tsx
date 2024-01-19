@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '@/lib/features/user/slice';
 import { fetchOneNewsArticle } from '@/lib/features/news/thunks';
-import { NewsArticle, selectchoosenArticle } from '@/lib/features/news/slice';
+import { NewsArticle, selectSelectedArticle} from '@/lib/features/news/slice';
 
 type NewsComponentProps = {};
 
@@ -13,7 +13,7 @@ const news: React.FC<NewsComponentProps> = ({}) => {
     const router = useRouter()
     
     const dispatch = useAppDispatch();
-    const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -26,7 +26,7 @@ const news: React.FC<NewsComponentProps> = ({}) => {
 
     let selectedArticle: undefined|NewsArticle|null = undefined;
     if (isAuthenticated) {
-        selectedArticle = useAppSelector(selectchoosenArticle);
+        selectedArticle = useAppSelector(selectSelectedArticle);
     }
 
     const formatDate = (stringdate: str) => {

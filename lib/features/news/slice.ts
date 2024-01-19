@@ -25,7 +25,7 @@ export interface NewsState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null | undefined;
     articles: NewsArticle[];
-    topicArticles?: NewsArticle[];
+    topicArticles: NewsArticle[];
     selectedArticle?: NewsArticle | null;
     categories: string[]; // Store categories in the state
     categoryArticles: {
@@ -37,6 +37,7 @@ export interface NewsState {
     status: 'idle',
     error: null,
     articles: [],
+    topicArticles: [],
     selectedArticle: null,
     categories: [], 
     categoryArticles: {},

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { addFollowing, confirmRegistrationToken, contactUs, fetchUserDetails, fetchUserFollowings, forgetPassword, loginUser, registerUser, removeFollowing } from './thunks';
+import { addFollowing, confirmRegistrationToken, contactUs, fetchUserDetails, fetchUserFollowings, forgetPassword, loginUser, registerUser, removeFollowing, reportBug } from './thunks';
 
 
 export interface followingReturnI {
@@ -145,6 +145,18 @@ const userSlice = createSlice({
       state.error = null;
     })
     .addCase(contactUs.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload;
+    })
+    .addCase(reportBug.pending, (state) => {
+      state.status = 'loading';
+      state.error = null;
+    })
+    .addCase(reportBug.fulfilled, (state) => {
+      state.status = 'succeeded';
+      state.error = null;
+    })
+    .addCase(reportBug.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.payload;
     })

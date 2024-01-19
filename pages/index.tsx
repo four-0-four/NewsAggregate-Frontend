@@ -26,8 +26,9 @@ const Home: React.FC = () => {
 
   return (
     newsArticles.length > 0 ? (
-      newsArticles.map((newsCard: { media: string[]; title: string; content: string; from: string; fromImage: string; publishedDate: string | number | Date; keywords: string[]; }) => (
+      newsArticles.map((newsCard: {id:number , media: string[]; title: string; content: string; from: string; fromImage: string; publishedDate: string | number | Date; keywords: string[]; }) => (
         <NewsCard 
+          id={newsCard.id}
           imageSrc={newsCard.media[0]} 
           title={newsCard.title} 
           description={newsCard.content}  

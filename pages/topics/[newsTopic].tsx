@@ -8,7 +8,7 @@ import {selectTopicArticles} from '@/lib/features/news/slice';
 import NewsCard from '@/components/NewsCard';
 import { addFollowing, removeFollowing } from '@/lib/features/user/thunks';
 
-const topic: React.FC<> = ({}) => {
+const topic: React.FC = ({}) => {
     // Function to format the date
     const [following,setFollowing] = useState<string[]>([]);
     const router = useRouter()
@@ -18,8 +18,6 @@ const topic: React.FC<> = ({}) => {
     const userFollowing = useAppSelector(selectUserFollowings);
     let categoryArticles = useAppSelector(selectTopicArticles);
     const topic = router.query.newsTopic as string;
-
-    console.log(following);
 
     useEffect(() => {
         const topic = router.query.newsTopic as string;
@@ -49,9 +47,9 @@ const topic: React.FC<> = ({}) => {
                 {following?.includes(topic)?"Following":"+ Follow Topic"}
               </button>
             </div>
-            {categoryArticles && categoryArticles?.map(newsCard => (
+            {categoryArticles.length > 0 && categoryArticles?.map(newsCard => (
               <NewsCard
-                key={newsCard.id}
+                id={newsCard.id}
                 imageSrc={newsCard.media[0]}
                 title={newsCard.title}
                 description={newsCard.content}
