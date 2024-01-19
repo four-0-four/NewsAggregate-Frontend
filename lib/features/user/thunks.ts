@@ -378,6 +378,47 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
   );
 
 
+  export const requestFeature = createAsyncThunk<string, { full_name:string, email:string, feature:string, description:string, files:File[] }, { rejectValue: string }>(
+    'user/requestFeature',
+    async ({ full_name, email, feature, description, files }, thunkAPI) => {
+      try {
+        const formData = new FormData();
+        formData.append('full_name', full_name);
+        formData.append('email', email);
+        formData.append('feature', feature);
+        formData.append('description', description);
+        // Append file if present
+
+        if(files.length > 0){
+          files.forEach(file => {
+            formData.append('files', file);
+          });
+        }else{
+          formData.append('files', new File([], ''));
+        }
+
+        const response = await fetch(BaseURL + '/user/requestFeature', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        if (!response.ok) {
+          // Adjust this message to reflect the failure of sending a contact message
+          throw new Error('Failed to send contact message');
+        }
+  
+        const responseData = await response.json(); // Correctly parsing JSON response
+        return responseData.message; // Assuming the response has a 'message' key
+      } catch (error) {
+        if (error instanceof Error) {
+          return thunkAPI.rejectWithValue(error.message);
+        }
+        // Adjust this message as well
+        return thunkAPI.rejectWithValue('Failed to send contact message');
+      }
+    }  
+  );
+
 
   export const addFollowing = createAsyncThunk<
   followingReturnI,
