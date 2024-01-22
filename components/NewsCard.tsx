@@ -44,11 +44,11 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, descripti
     };
 
     return (
-        <div className="flex flex-col md:flex-row w-full rounded-[25px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-4 cursor-pointer"
+        <div className="flex flex-col md:flex-row w-full rounded-[25px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-2 md:mb-4 cursor-pointer"
         onClick={() => router.push('/news/' + id)}>
             <img src={imageSrc} alt="News" className="hidden md:block xs:w-1/3 object-cover rounded-[25px]" />
-            <div className='flex flex-row md:flex-col items-center mb-4'>
-                <img src={imageSrc} alt="News" className="block md:hidden xs:w-1/3 md:w-full object-cover rounded-[25px]" />
+            <div className='flex flex-row md:flex-col items-center sm:mb-0 md:mb-4'>
+                <img src={imageSrc} alt="News" className="block md:hidden xs:w-1/3 md:w-full h-full object-cover rounded-[25px]" />
                 <h2 className="hidden xs:block md:hidden text-lg sm:text-xl font-bold mb-2 p-5">{title}</h2>
             </div>
             <div className="flex flex-col justify-start p-2 px-1 sm:px-4 w-full">
@@ -63,14 +63,6 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, descripti
                         <div>{from}</div>
                         <div className="text-sm text-gray-500">{formatDate(date)}</div>
                         </div>
-                    </div>
-                    <div className="flex flex-wrap gap-2 xs:max-w-[300px] w-full justify-start xs:justify-end mt-4 sm:mt-0">
-                        {tags.slice(0, 4).map((tag, index) => (
-                            <span key={index} className="inline-block bg-neutral-100 rounded-full px-3 py-1 text-xs sm:text-sm font-normal text-neutral-400">{tag}</span>
-                        ))}
-                        {tags.length > 4 && (
-                            <span className="inline-block bg-neutral-100 rounded-full px-3 py-1 text-xs sm:text-sm font-normal text-neutral-400">+{tags.length - 4} more tags</span>
-                        )}
                     </div>
                 </div>
             </div>

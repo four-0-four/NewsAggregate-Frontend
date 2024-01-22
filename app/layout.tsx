@@ -19,7 +19,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Header />
       <div className="flex max-w-[1450px] mx-auto pt-[60px]">
         {isAuthenticated && (<Sidebar />)}
-        <main className={`flex-1 p-2 px-1 sm:px-4 xl:px-6 justify-start p-5`}>
+        <main className={`flex-1 p-2 px-1 sm:px-2 justify-start pt-5`}>
           {children}
         </main>
       </div>

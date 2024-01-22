@@ -1,6 +1,6 @@
 import NewsCard from '@/components/NewsCard';
-import { selectCategoryArticles, selectNewsCategories } from '@/lib/features/news/slice';
-import { fetchVarietyTopicsNews } from '@/lib/features/news/thunks';
+import { NewsArticle, selectCategoryArticles, selectNewsCategories } from '@/lib/features/news/slice';
+import { fetchCategories, fetchTopicNews } from '@/lib/features/news/thunks';
 import { selectIsAuthenticated } from '@/lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import router from 'next/router';
@@ -11,76 +11,53 @@ type Props = {}
 const topics = (props: Props) => {
   const dispatch = useAppDispatch();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const categories = useAppSelector(selectNewsCategories);
+  const categoryArticles = useAppSelector(selectCategoryArticles);
+
+  useEffect(() => {
+    if(isAuthenticated){
+      categories.map(topic => {
+        dispatch(fetchTopicNews(topic));
+      });
+    }
+  }, [categories, isAuthenticated])
+
 
   useEffect(() => {
     if (isAuthenticated) {
-        dispatch(fetchVarietyTopicsNews(0));
+      dispatch(fetchCategories({parent_category_id:0}))
     }
   }, [dispatch, isAuthenticated]);
 
 
-
-  const categories = useAppSelector(selectNewsCategories);
-  const categoryArticles = useAppSelector(selectCategoryArticles);
-  const [startIndex, setStartIndex] = useState(0);
-  const itemsPerPage = 6; // Number of items to show at a time
-
-  const handlePrev = () => {
-    if (startIndex > 0) {
-      setStartIndex(startIndex - itemsPerPage);
-    }
-  };
-
-  const handleNext = () => {
-    if (startIndex + itemsPerPage < categories.length) {
-      setStartIndex(startIndex + itemsPerPage);
-    }
-  };
-
   return (
     <div>
       {categories.length > 0 && (
-        <div className="bg-white rounded-[25px] border-solid border border-gray-100 p-5 xl:p-7">
+        <div className="bg-white rounded-[25px] border-solid border border-gray-100 p-5 xl:p-7 mb-10">
           <h1 className="text-xl font-bold mb-4">
             Explore a range of subjects to find your interest
           </h1>
-          <div className="flex flex-wrap gap-2">
-            <button
-              className={`px-2 py-2 rounded-full text-2xl ${
-                startIndex === 0 ? 'text-gray-300 cursor-default disable' : 'cursor-pointer text-black'
-              }`}
-              onClick={handlePrev}
-            >
-              &lt;
-            </button>
-            {categories.slice(startIndex, startIndex + itemsPerPage).map((category) => (
+          <div className="overflow-auto gap-1">
+            {categories.map((category) => (
               <button
                 key={category}
-                className="w-[14%] bg-gray-100 text-gray-500 hover:bg-black hover:text-neutral-100 py-2 rounded-full"
+                className="bg-gray-100 text-gray-500 hover:bg-black hover:text-neutral-100 py-[5px] px-3 rounded-[25px] m-1"
                 onClick={() => router.push('/topics/'+category)}
               >
                 {category}
               </button>
             ))}
-            <button
-            className={`px-2 py-2 rounded-full text-2xl ${
-              startIndex + itemsPerPage >= categories.length ? 'text-gray-300 cursor-default disable' : 'cursor-pointer text-black'
-            }`}
-            onClick={handleNext}
-          >
-            &gt;
-          </button>
           </div>
         </div>
       )}
       <div className='mb-5'>
         {Object.keys(categoryArticles).map(category => (
-          <div className="mt-20" key={category}>
-            <div className='my-6 capitalize flex'>
+          <div className="mt-10 mb-16" key={category}>
+            <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
               <h2 className="text-3xl font-bold inline-block cursor-pointer" onClick={() => router.push('/topics/'+category)}>{category}</h2>
               <button className='text-sm text-black bg-primary ml-4 rounded-[25px] p-1 px-3 hover:bg-amber-400'>+ Follow Topic</button>
             </div>
-            {categoryArticles[category].map(newsCard => (
+            {typeof categoryArticles[category] !== 'string' && categoryArticles[category].slice(0, 5).map(newsCard => (
               <NewsCard
                 id={newsCard.id}
                 imageSrc={newsCard.media[0]}
@@ -92,7 +69,7 @@ const topics = (props: Props) => {
                 tags={newsCard.keywords}
               />
             ))}
-            <div className="flex justify-start">
+            <div className="flex justify-start md:ml-0 ml-3">
               <div className="text-2xl text-primary underline flex items-center cursor-pointer hover:text-amber-400"
               onClick={() => router.push('/topics/'+category)}>
                 <h3>View all</h3>

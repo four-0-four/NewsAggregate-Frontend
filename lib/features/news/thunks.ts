@@ -153,57 +153,8 @@ export const fetchCategories = createAsyncThunk<string[], { parent_category_id: 
 );
 
 
-export interface topicsPageNews {
-    categories: string[];
-    news: { [key: string]: NewsArticle[] };
-}
-
-export const fetchVarietyTopicsNews = createAsyncThunk<
-    topicsPageNews,
-    number,
-    { rejectValue: string }
->(
-    'news/getDifferentNewsForTopicPage',
-    async (parent_category_id, thunkAPI) => {
-        const token = Cookies.get('access_token');
-        if (!token) {
-        return thunkAPI.rejectWithValue('No access token available');
-        }
-
-        try {
-        const searchParams = new URLSearchParams();
-        searchParams.append('parent_category_id', parent_category_id.toString());
-
-        const url = new URL(BaseURL + '/news/getDifferentNewsForTopicPage');
-        url.search = searchParams.toString();
-
-        const response = await fetch(url.toString(), {
-            method: 'GET',
-            headers: {
-            Authorization: `Bearer ${token}`,
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch news for different topics');
-        }
-
-        const data = await response.json();
-
-        // Assuming the API response structure matches the topicsPageNews interface
-        return data as topicsPageNews;
-        } catch (error) {
-        if (error instanceof Error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
-        return thunkAPI.rejectWithValue('Failed to fetch news for different categories');
-        }
-    }
-);
-
-
 export const fetchTopicNews = createAsyncThunk<
-    NewsArticle[],
+    { articles: NewsArticle[]; topic: string },
     string,
     { rejectValue: string }
 >(
@@ -231,8 +182,9 @@ export const fetchTopicNews = createAsyncThunk<
         if (!response.ok) {
             throw new Error('Failed to fetch news for different topics');
         }
-
+        
         const data = await response.json();
+        return { articles: data as NewsArticle[], topic };
 
         // Assuming the API response structure matches the topicsPageNews interface
         return data as NewsArticle[];

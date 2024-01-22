@@ -41,7 +41,7 @@ const topic: React.FC = ({}) => {
     return (
         <div className='mb-5'>
           <div className="" key={topic}>
-            <div className='my-1 mb-6 capitalize flex'>
+            <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
               <h2 className="text-3xl font-bold inline-block">{topic}</h2>
               <button onClick={()=>handleClick(topic)} className={`text-sm  ${following?.includes(topic)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[25px] p-1 px-3 ${following?.includes(topic)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
                 {following?.includes(topic)?"Following":"+ Follow Topic"}

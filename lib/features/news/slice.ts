@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchCategories, fetchNewsArticles, fetchNewsByCategory, fetchOneNewsArticle, fetchTopicNews, fetchVarietyTopicsNews, topicsPageNews } from './thunks';
+import { fetchCategories, fetchNewsArticles, fetchNewsByCategory, fetchOneNewsArticle, fetchTopicNews } from './thunks';
 
 export interface NewsArticle {
     id: number;
@@ -20,16 +20,15 @@ export interface NewsArticle {
 }
 
 
-
 export interface NewsState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null | undefined;
-    articles: NewsArticle[];
-    topicArticles: NewsArticle[];
+    articles: NewsArticle[]; // this is for home page
+    topicArticles: NewsArticle[]; // this is for  topic page
     selectedArticle?: NewsArticle | null;
-    categories: string[]; // Store categories in the state
-    categoryArticles: {
-        [key: string]: NewsArticle[];
+    categories: string[]; // this is for explore page
+    categoryArticles: { // this is for explore page
+        [key: string]: NewsArticle[]|string;
     };
   }
   
@@ -47,7 +46,9 @@ export interface NewsState {
     name: 'news',
     initialState,
     reducers: {
-      // You can add reducers here if needed
+      setCategories: (state, action: PayloadAction<string[]>) => {
+        state.categories = action.payload;
+      }
     },
     extraReducers: (builder) => {
       builder
@@ -95,25 +96,27 @@ export interface NewsState {
           state.error = null;
         })
         .addCase(fetchCategories.fulfilled, (state, action: PayloadAction<string[]>) => {
-          state.status = 'succeeded';
-          state.categories = action.payload;
-          state.error = null;
+            state.status = 'succeeded';
+            state.categories = action.payload;
+        
+            // Initialize a new object for categoryArticles
+            let newCategoryArticles = {...state.categoryArticles};
+            console.log(action.payload)
+            // Iterate through the categories
+            action.payload.forEach(category => {
+                if (!newCategoryArticles[category]) {
+                    // Add the category with an empty list if it doesn't exist
+                    newCategoryArticles[category] = "loading";
+                }
+            });
+            console.log("hello")
+            console.log(newCategoryArticles)
+        
+            // Update the state with the new categoryArticles
+            state.categoryArticles = newCategoryArticles;
+            state.error = null;
         })
         .addCase(fetchCategories.rejected, (state, action) => {
-          state.status = 'failed';
-          state.error = action.payload;
-        })
-        .addCase(fetchVarietyTopicsNews.pending, (state) => {
-          state.status = 'loading';
-          state.error = null;
-        })
-        .addCase(fetchVarietyTopicsNews.fulfilled, (state, action: PayloadAction<topicsPageNews>) => {
-          state.status = 'succeeded';
-          state.categories = action.payload.categories;
-          state.categoryArticles = action.payload.news;
-          state.error = null;
-        })
-        .addCase(fetchVarietyTopicsNews.rejected, (state, action) => {
           state.status = 'failed';
           state.error = action.payload;
         })
@@ -121,9 +124,10 @@ export interface NewsState {
           state.status = 'loading';
           state.error = null;
         })
-        .addCase(fetchTopicNews.fulfilled, (state, action: PayloadAction<NewsArticle[]>) => {
+        .addCase(fetchTopicNews.fulfilled, (state, action: PayloadAction<{ articles: NewsArticle[]; topic: string }>) => {
           state.status = 'succeeded';
-          state.topicArticles = action.payload;
+          state.topicArticles = action.payload.articles;
+          state.categoryArticles[action.payload.topic] = action.payload.articles;
           state.error = null;
         })
         .addCase(fetchTopicNews.rejected, (state, action) => {
