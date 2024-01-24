@@ -23,13 +23,12 @@ const Header: React.FC = () => {
     <header className="bg-black text-white p-2 px-4 fixed top-0 left-0 right-0 z-10 mb-10">
       <div className="max-w-[1450px] mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <div className='cursor-pointer flex flex-row items-center' onClick={()=>router.push('/')}>
-            <img src={'/logo_transparent.png'} alt="Farabix" className="w-12" />
-            <p className="hidden sm:block md:ml-2 text-xl sm:text-2xl text-primary uppercase">Farabix</p>
-          </div>
-          <p className="block ml-2 md:ml-6 sm:ml-4 bg-neutral-800 border border-neutral-600 px-3 py-1 rounded-full text-md text-neutral-300">{shortFormattedDate}</p>
+          <p className="block sm:ml-2 md:ml-6 bg-neutral-800 border border-neutral-600 py-2 px-3 sm:py-2 rounded-full text-sm sm:text-md text-neutral-300">{shortFormattedDate}</p>
         </div>
-
+        <div className='cursor-pointer flex flex-row items-center' onClick={()=>router.push('/')}>
+          <img src={'/logo_transparent.png'} alt="Farabix" className="w-12" />
+          <p className="hidden sm:block md:ml-2 text-xl sm:text-2xl text-primary uppercase">Farabix</p>
+        </div>
 
         {/* Conditional rendering based on user status */}
         {isAuthenticated && userDetails ? (
@@ -37,7 +36,7 @@ const Header: React.FC = () => {
             <ProfileDropdown firstName={userDetails.first_name} lastName={"Rafiei"} username={"rafieisi"}/>
           </>
         ) : (
-          <button className="bg-primary text-black py-2 px-4 sm:px-8 rounded-[25px] uppercase text-sm sm:text-md" onClick={()=>router.push('/auth/Register')}>
+          <button className="bg-primary text-black py-2 px-3 sm:px-8 rounded-[25px] uppercase text-sm sm:text-md" onClick={()=>router.push('/auth/Register')}>
             Register
           </button>
         )}

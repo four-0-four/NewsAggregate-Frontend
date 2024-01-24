@@ -1,8 +1,11 @@
+import Loading from '@/components/Loading';
+import Loading2 from '@/components/Loading2';
 import NewsCard from '@/components/NewsCard';
-import { NewsArticle, selectCategoryArticles, selectNewsCategories } from '@/lib/features/news/slice';
+import { NewsArticle, selectCategoryArticles, selectNewsCategories, selectNewsStatus } from '@/lib/features/news/slice';
 import { fetchCategories, fetchTopicNews } from '@/lib/features/news/thunks';
 import { selectIsAuthenticated } from '@/lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { loading2 } from '@/util/illustrations';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react'
 
@@ -29,6 +32,12 @@ const topics = (props: Props) => {
     }
   }, [dispatch, isAuthenticated]);
 
+  const newsStatus = useAppSelector(selectNewsStatus);
+  if(newsStatus === 'loading'){
+    return(
+      <Loading />
+    )
+  }
 
   return (
     <div>
@@ -65,24 +74,47 @@ const topics = (props: Props) => {
                 description={newsCard.content}
                 from={newsCard.from}
                 fromImage={newsCard.fromImage}
-                date={new Date(newsCard.publishedDate)}
+                date={newsCard.publishedDate}
                 tags={newsCard.keywords}
               />
             ))}
-            <div className="flex justify-start md:ml-0 ml-3">
-              <div className="text-2xl text-primary underline flex items-center cursor-pointer hover:text-amber-400"
-              onClick={() => router.push('/topics/'+category)}>
-                <h3>View all</h3>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-2 w-6 h-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                </svg>
+            {typeof categoryArticles[category] === 'string' && (
+              <Loading2 />
+            )}
+            {typeof categoryArticles[category] !== 'string' && categoryArticles[category].length > 3 && (
+              <div className="flex justify-start md:ml-0 ml-3">
+                <div className="text-2xl text-primary underline flex items-center cursor-pointer hover:text-amber-400"
+                onClick={() => router.push('/topics/'+category)}>
+                  <h3>View all</h3>
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-2 w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ))}
       </div>
     </div>
   )
 }
+
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Check authentication (e.g., check cookies or token)
+  const cookies = nookies.get(context);
+  const token = cookies['access_token'];
+  const refresh_token = cookies['refresh_token'];
+  if (!token || !refresh_token) {
+    return {
+      redirect: {
+        destination: '/landing',
+        permanent: false,
+      },
+    };
+  }
+  return { props: {} };
+};
 
 export default topics

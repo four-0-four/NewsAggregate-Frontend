@@ -182,12 +182,9 @@ export const fetchTopicNews = createAsyncThunk<
         if (!response.ok) {
             throw new Error('Failed to fetch news for different topics');
         }
-        
+
         const data = await response.json();
         return { articles: data as NewsArticle[], topic };
-
-        // Assuming the API response structure matches the topicsPageNews interface
-        return data as NewsArticle[];
         } catch (error) {
         if (error instanceof Error) {
             return thunkAPI.rejectWithValue(error.message);

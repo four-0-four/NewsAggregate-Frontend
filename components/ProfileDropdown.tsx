@@ -1,6 +1,7 @@
 import { logoutUser } from '@/lib/features/user/thunks';
 import { useAppDispatch } from '@/lib/hooks';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface ProfileDropdownProps {
@@ -11,13 +12,15 @@ interface ProfileDropdownProps {
 
 function ProfileDropdown({ firstName, lastName, username }: ProfileDropdownProps) {
     const dispatch = useAppDispatch();
+    const router = useRouter();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef(null); // Ref for the dropdown container
 
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
     const handleLogout = () => {
-        dispatch(logoutUser());
+        router.push('/landing')
         setIsDropdownOpen(false);
+        dispatch(logoutUser());
     }
     const closeDropdown = () => setIsDropdownOpen(false);
 

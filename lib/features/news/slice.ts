@@ -101,7 +101,6 @@ export interface NewsState {
         
             // Initialize a new object for categoryArticles
             let newCategoryArticles = {...state.categoryArticles};
-            console.log(action.payload)
             // Iterate through the categories
             action.payload.forEach(category => {
                 if (!newCategoryArticles[category]) {
@@ -109,8 +108,6 @@ export interface NewsState {
                     newCategoryArticles[category] = "loading";
                 }
             });
-            console.log("hello")
-            console.log(newCategoryArticles)
         
             // Update the state with the new categoryArticles
             state.categoryArticles = newCategoryArticles;

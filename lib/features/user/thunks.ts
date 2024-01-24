@@ -12,6 +12,7 @@ export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
     try {
       // Delete the access token cookie
       Cookies.remove('access_token');
+      Cookies.remove('refresh_token');
 
     } catch (error) {
       if (error instanceof Error) {
@@ -203,6 +204,9 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         const data = await loginResponse.json();
         const token = data['access_token'];
         Cookies.set('access_token', token, { secure: true, sameSite: 'Strict' });
+
+        const refreshtoken = data['refresh_token'];
+        Cookies.set('refresh_token', refreshtoken, { secure: true, sameSite: 'Strict' });
   
         // Fetch user details after successful login
         return await thunkAPI.dispatch(fetchUserDetails()).unwrap();
@@ -235,6 +239,9 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         const data = await registerResponse.json();
         const token = data['access_token'];
         Cookies.set('access_token', token, { secure: true, sameSite: 'Strict' });
+
+        const refreshtoken = data['refresh_token'];
+        Cookies.set('refresh_token', refreshtoken, { secure: true, sameSite: 'Strict' });
   
         // Fetch user details after successful registration
         return await thunkAPI.dispatch(fetchUserDetails()).unwrap();
@@ -253,6 +260,9 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
       try {
         const response = await fetch(BaseURL + '/auth/refresh/', {
           method: 'POST',
+          headers: {
+            'refresh-token': Cookies.get('refresh_token') || '',
+          }
         });
   
         if (!response.ok) {
@@ -262,6 +272,9 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         const data = await response.json();
         const newAccessToken = data['access_token'];
         Cookies.set('access_token', newAccessToken, { secure: true, sameSite: 'Strict' });
+
+        const refreshToken = data['refresh_token'];
+        Cookies.set('refresh_token', refreshToken, { secure: true, sameSite: 'Strict' });
   
         return newAccessToken;
       } catch (error) {

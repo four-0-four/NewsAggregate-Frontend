@@ -1,32 +1,42 @@
 // pages/index.tsx
 
+import Loading from "@/components/Loading";
 import NewsCard from "@/components/NewsCard";
+import { selectNewsArticles, selectNewsStatus } from "@/lib/features/news/slice";
 import { fetchNewsArticles } from "@/lib/features/news/thunks";
 import { selectIsAuthenticated } from "@/lib/features/user/slice";
 import { fetchUserFollowings } from "@/lib/features/user/thunks";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { loading } from "@/util/illustrations";
+import { Router, useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const [newsArticles, setNewsArticles] = useState(useAppSelector(selectNewsArticles));
 
   useEffect(() => {
     if (isAuthenticated) {
         dispatch(fetchNewsArticles());
+    }else{
+      setNewsArticles([]);
+      router.push("/landing")
     }
   }, [dispatch, isAuthenticated]);
 
 
-  let newsArticles = [];
-  if (isAuthenticated) {
-      newsArticles = useSelector((state: RootState) => state.news.articles);
+  const newsStatus = useAppSelector(selectNewsStatus);
+  if(newsStatus === 'loading'){
+    return(
+      <Loading />
+    )
   }
-
+  
   return (
     newsArticles.length > 0 ? (
-      newsArticles.map((newsCard: {id:number , media: string[]; title: string; content: string; from: string; fromImage: string; publishedDate: string | number | Date; keywords: string[]; }) => (
+      newsArticles.map((newsCard: {id:number , media: string[]; title: string; content: string; from: string; fromImage: string; publishedDate: string ; keywords: string[]; }) => (
         <NewsCard 
           id={newsCard.id}
           imageSrc={newsCard.media[0]} 
@@ -34,7 +44,7 @@ const Home: React.FC = () => {
           description={newsCard.content}  
           from={newsCard.from}
           fromImage={newsCard.fromImage}
-          date={new Date(newsCard.publishedDate)}
+          date={newsCard.publishedDate}
           tags={newsCard.keywords}
         />
       ))
@@ -53,6 +63,24 @@ const Home: React.FC = () => {
       </div>
     )
   );
+};
+
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Check authentication (e.g., check cookies or token)
+  const cookies = nookies.get(context);
+  const token = cookies['access_token'];
+  const refresh_token = cookies['refresh_token'];
+  if (!token || !refresh_token) {
+    return {
+      redirect: {
+        destination: '/landing',
+        permanent: false,
+      },
+    };
+  }
+  return { props: {} };
 };
 
 export default Home;

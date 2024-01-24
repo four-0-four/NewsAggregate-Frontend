@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { addFollowing, confirmRegistrationToken, contactUs, fetchUserDetails, fetchUserFollowings, forgetPassword, loginUser, registerUser, removeFollowing, reportBug, requestFeature } from './thunks';
+import { addFollowing, confirmRegistrationToken, contactUs, fetchUserDetails, fetchUserFollowings, forgetPassword, loginUser, logoutUser, registerUser, removeFollowing, reportBug, requestFeature } from './thunks';
 
 
 export interface followingReturnI {
@@ -80,6 +80,22 @@ const userSlice = createSlice({
       state.isAuthenticated = true;
     })
     .addCase(loginUser.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload;
+      state.isAuthenticated = false;
+    })
+    .addCase(logoutUser.pending, (state) => {
+      state.status = 'loading';
+      state.error = null;
+    })
+    .addCase(logoutUser.fulfilled, (state) => {
+      state.status = 'succeeded';
+      state.userDetails = null;
+      state.error = null;
+      state.isAuthenticated = false;
+      state.followings = [];
+    })
+    .addCase(logoutUser.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.payload;
       state.isAuthenticated = false;

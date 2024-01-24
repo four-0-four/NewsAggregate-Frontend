@@ -4,9 +4,10 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { useSelector } from 'react-redux';
 import { addFollowingStatus, selectIsAuthenticated, selectUserFollowings } from '@/lib/features/user/slice';
 import { fetchOneNewsArticle, fetchTopicNews } from '@/lib/features/news/thunks';
-import {selectTopicArticles} from '@/lib/features/news/slice';
+import {selectNewsStatus, selectTopicArticles} from '@/lib/features/news/slice';
 import NewsCard from '@/components/NewsCard';
 import { addFollowing, removeFollowing } from '@/lib/features/user/thunks';
+import Loading from '@/components/Loading';
 
 const topic: React.FC = ({}) => {
     // Function to format the date
@@ -14,7 +15,7 @@ const topic: React.FC = ({}) => {
     const router = useRouter()
     
     const dispatch = useAppDispatch();
-    const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
+    const isAuthenticated = useAppSelector(selectIsAuthenticated);
     const userFollowing = useAppSelector(selectUserFollowings);
     let categoryArticles = useAppSelector(selectTopicArticles);
     const topic = router.query.newsTopic as string;
@@ -38,6 +39,13 @@ const topic: React.FC = ({}) => {
       }
     }
 
+    const newsStatus = useAppSelector(selectNewsStatus);
+    if(newsStatus === 'loading'){
+      return(
+        <Loading />
+      )
+    }
+
     return (
         <div className='mb-5'>
           <div className="" key={topic}>
@@ -55,7 +63,7 @@ const topic: React.FC = ({}) => {
                 description={newsCard.content}
                 from={newsCard.from}
                 fromImage={newsCard.fromImage}
-                date={new Date(newsCard.publishedDate)}
+                date={newsCard.publishedDate}
                 tags={newsCard.keywords}
               />
             ))}
@@ -70,5 +78,24 @@ const topic: React.FC = ({}) => {
       </div>
     );
 }
+
+
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Check authentication (e.g., check cookies or token)
+  const cookies = nookies.get(context);
+  const token = cookies['access_token'];
+  const refresh_token = cookies['refresh_token'];
+  if (!token || !refresh_token) {
+    return {
+      redirect: {
+        destination: '/landing',
+        permanent: false,
+      },
+    };
+  }
+  return { props: {} };
+};
 
 export default topic;

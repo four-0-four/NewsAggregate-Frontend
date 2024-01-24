@@ -8,29 +8,24 @@ type NewsComponentProps = {
     description: string;
     from: string;
     fromImage: string;
-    date: Date;
+    date: string;
     tags: string[];
 };
 
 const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, description, from, fromImage, date, tags }) => {
     // Function to format the date
-    const formatDate = (date: Date) => {
+    const formatDate = (dateString:string) => {
+        const date = new Date(dateString); // Convert string to Date object
+    
         const now = new Date();
-        const differenceInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
+        const utcNow = new Date(now.toISOString());
+        const utcDate = new Date(date.toISOString());
     
-        if (differenceInHours < 24) {
-            return `${Math.round(differenceInHours)} hours ago`;
-        }
+        const differenceInSeconds = (utcNow.getTime() - utcDate.getTime()) / 1000;
     
-        const differenceInDays = differenceInHours / 24;
-        if (differenceInDays < 7) {
-            const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            //return `${Math.round(differenceInDays)} days ago at ${timeString}`;
-            return `${Math.round(differenceInDays)} days ago`;
-        }
-    
-        return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+        return date.toLocaleString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
     };
+
 
     const truncateDescription = (description:string) => {
         if (description.length <= 300) return description;
@@ -60,8 +55,8 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, descripti
                     <div className="flex items-center gap-2 xs:w-fit w-full">
                         <img className="w-10 h-10 rounded-full" src={fromImage} alt="news creator image"/>
                         <div className="flex-1 font-medium leading-5 flex flex-row xs:flex-col justify-between items-center xs:justify-start xs:items-start ">
-                        <div>{from}</div>
-                        <div className="text-sm text-gray-500">{formatDate(date)}</div>
+                            <div>{from}</div>
+                            <div className="text-sm text-gray-500">{formatDate(date)}</div>
                         </div>
                     </div>
                 </div>

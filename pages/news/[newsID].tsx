@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '@/lib/features/user/slice';
 import { fetchOneNewsArticle } from '@/lib/features/news/thunks';
-import { NewsArticle, selectSelectedArticle} from '@/lib/features/news/slice';
+import { NewsArticle, selectNewsStatus, selectSelectedArticle} from '@/lib/features/news/slice';
+import Loading from '@/components/Loading';
 
 type NewsComponentProps = {};
 
@@ -29,7 +30,7 @@ const news: React.FC<NewsComponentProps> = ({}) => {
         selectedArticle = useAppSelector(selectSelectedArticle);
     }
 
-    const formatDate = (stringdate: str) => {
+    const formatDate = (stringdate: string) => {
         if(stringdate === undefined) return;
         
         let date = new Date(stringdate)
@@ -50,6 +51,13 @@ const news: React.FC<NewsComponentProps> = ({}) => {
         return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
     }; 
 
+
+    const newsStatus = useAppSelector(selectNewsStatus);
+    if(newsStatus === 'loading' || !selectedArticle){
+        return(
+            <Loading />
+        )
+    }
     return (
         <div className="flex flex-col lg:max-w-[750px] w-full rounded-[25px] bg-white border-solid border border-gray-100 overflow-hidden p-2">
             <div className="relative rounded-[25px] max-h-[300px] overflow-hidden">
@@ -87,5 +95,23 @@ const news: React.FC<NewsComponentProps> = ({}) => {
         </div>
     );
 }
+
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // Check authentication (e.g., check cookies or token)
+  const cookies = nookies.get(context);
+  const token = cookies['access_token'];
+  const refresh_token = cookies['refresh_token'];
+  if (!token || !refresh_token) {
+    return {
+      redirect: {
+        destination: '/landing',
+        permanent: false,
+      },
+    };
+  }
+  return { props: {} };
+};
 
 export default news;
