@@ -27,7 +27,7 @@ const Header: React.FC = () => {
         </div>
         <div className='cursor-pointer flex flex-row items-center' onClick={()=>router.push('/')}>
           <img src={'/logo_transparent.png'} alt="Farabix" className="w-12" />
-          <p className="hidden sm:block md:ml-2 text-xl sm:text-2xl text-primary uppercase">Farabix</p>
+          <p className="hidden sm:block md:ml-2 text-2xl sm:text-3xl text-primary uppercase">Farabix</p>
         </div>
 
         {/* Conditional rendering based on user status */}

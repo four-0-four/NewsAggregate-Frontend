@@ -3,7 +3,7 @@ import Loading2 from '@/components/Loading2';
 import NewsCard from '@/components/NewsCard';
 import { NewsArticle, selectCategoryArticles, selectNewsCategories, selectNewsStatus } from '@/lib/features/news/slice';
 import { fetchCategories, fetchTopicNews } from '@/lib/features/news/thunks';
-import { selectIsAuthenticated } from '@/lib/features/user/slice';
+import { selectIsAuthenticated, selectUserFollowings } from '@/lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { loading2 } from '@/util/illustrations';
 import router from 'next/router';
@@ -16,6 +16,13 @@ const topics = (props: Props) => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const categories = useAppSelector(selectNewsCategories);
   const categoryArticles = useAppSelector(selectCategoryArticles);
+  const userFollowing = useAppSelector(selectUserFollowings);
+
+  const [following,setFollowing] = useState<string[]>([]);
+
+  useEffect(() => {
+    setFollowing(userFollowing)
+  },[userFollowing])
 
   useEffect(() => {
     if(isAuthenticated){
@@ -33,10 +40,16 @@ const topics = (props: Props) => {
   }, [dispatch, isAuthenticated]);
 
   const newsStatus = useAppSelector(selectNewsStatus);
-  if(newsStatus === 'loading'){
-    return(
-      <Loading />
-    )
+  if(newsStatus == 'failed'){
+    return(<InternalError />)
+  }
+
+  let handleClick = (topic: string) => {
+    if(following?.includes(topic)){
+      dispatch(removeFollowing({topic}));
+    }else{
+      dispatch(addFollowing({topic}));
+    }
   }
 
   return (
@@ -64,7 +77,9 @@ const topics = (props: Props) => {
           <div className="mt-10 mb-16" key={category}>
             <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
               <h2 className="text-3xl font-bold inline-block cursor-pointer" onClick={() => router.push('/topics/'+category)}>{category}</h2>
-              <button className='text-sm text-black bg-primary ml-4 rounded-[25px] p-1 px-3 hover:bg-amber-400'>+ Follow Topic</button>
+              <button onClick={()=>handleClick(category)} className={`text-sm  ${following?.includes(category)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[25px] p-1 px-3 ${following?.includes(category)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
+                {following?.includes(category)?"Following":"+ Follow Topic"}
+              </button>
             </div>
             {typeof categoryArticles[category] !== 'string' && categoryArticles[category].slice(0, 5).map(newsCard => (
               <NewsCard
@@ -79,7 +94,13 @@ const topics = (props: Props) => {
               />
             ))}
             {typeof categoryArticles[category] === 'string' && (
-              <Loading2 />
+              <>
+                <Placeholder />
+                <Placeholder />
+                <Placeholder />
+                <Placeholder />
+                <Placeholder />
+              </>
             )}
             {typeof categoryArticles[category] !== 'string' && categoryArticles[category].length > 3 && (
               <div className="flex justify-start md:ml-0 ml-3">
@@ -101,6 +122,9 @@ const topics = (props: Props) => {
 
 import nookies from "nookies";
 import { GetServerSideProps } from "next";
+import { addFollowing, removeFollowing } from '@/lib/features/user/thunks';
+import Placeholder from '@/components/Placeholder';
+import InternalError from '@/components/InternalError';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);
