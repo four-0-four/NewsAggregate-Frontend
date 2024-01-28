@@ -18,10 +18,11 @@ function ProfileDropdown({ firstName, lastName, username }: ProfileDropdownProps
 
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
     const handleLogout = () => {
-        router.push('/landing')
-        setIsDropdownOpen(false);
+    router.push('/landing').then(() => {
         dispatch(logoutUser());
-    }
+    });
+        setIsDropdownOpen(false);
+    };
     const closeDropdown = () => setIsDropdownOpen(false);
 
     useEffect(() => {

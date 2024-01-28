@@ -4,8 +4,8 @@ import { reportBug } from '@/lib/features/user/thunks';
 import Textarea from '@/components/Textarea';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { resetStatus, selectUserError, selectUserStatus } from '@/lib/features/user/slice';
-import Input from '@/components/Input';
-import FileInput from '@/components/FileInput';
+import Input from '@/components/Inputs/Input';
+import FileInput from '@/components/Inputs/FileInput';
 import SocialMedia from '@/components/SocialMedia';
 
 const reportBugForm = () => {

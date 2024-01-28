@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Input from '../../components/Input'; // Adjust the path according to your file structure
+import Input from '../../components/Inputs/Input'; // Adjust the path according to your file structure
 import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks'; // Adjust the import path
 import { forgetPassword } from '@/lib/features/user/thunks';
@@ -43,7 +43,7 @@ const PasswordEmailForm = () => {
 
                         <div className="mt-10 flex flex-col md:flex-row justify-between items-center w-full">
                             <p className="text-xs md:text-sm order-2 md:order-1">
-                                <a href="/auth/Login" className="text-primary"><span className="text-lg">&#8592;</span> Go Back</a>
+                                <Link href="/auth/Login" className="text-primary"><span className="text-lg">&#8592;</span> Go Back</Link>
                             </p>
                             <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[25px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
                                 Submit
@@ -62,7 +62,7 @@ const PasswordEmailForm = () => {
                                 </g>
                             </svg>
                             <p className="w-full xs:w-2/3 text-sm md:text-base text-left md:ml-8">
-                                Check your email for a password reset link. If it doesn't arrive within 10 minutes, please check your spam folder or contact support for help.
+                                Please Check your email. If it doesn't arrive within 10 minutes, please check your spam folder or contact support for help.
                             </p>
                         </div>
                     </>
@@ -74,6 +74,7 @@ const PasswordEmailForm = () => {
 
 import nookies from "nookies";
 import { GetServerSideProps } from "next";
+import Link from 'next/link';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

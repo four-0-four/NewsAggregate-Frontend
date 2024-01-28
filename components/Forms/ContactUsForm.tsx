@@ -3,7 +3,7 @@ import { contactUs, registerUser } from '@/lib/features/user/thunks';
 import Textarea from '@/components/Textarea';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { resetStatus, selectUserError, selectUserStatus } from '@/lib/features/user/slice';
-import Input from '@/components/Input';
+import Input from '@/components/Inputs/Input';
 
 type Props = {}
 

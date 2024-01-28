@@ -80,7 +80,7 @@ export const confirmResetToken = createAsyncThunk<string, { token: string }, { r
   );
 
 
-  export const changePassword = createAsyncThunk<string, { token: string, newPassword: string, confirmPassword: string }, { rejectValue: string }>(
+  export const changePassword = createAsyncThunk<UserDetails, { token: string, newPassword: string, confirmPassword: string }, { rejectValue: string }>(
     'user/changePassword',
     async ({ token, newPassword, confirmPassword }, thunkAPI) => {
       try {
@@ -103,9 +103,14 @@ export const confirmResetToken = createAsyncThunk<string, { token: string }, { r
         if (newAccessToken) {
           Cookies.set('access_token', newAccessToken, { secure: true, sameSite: 'Strict' });
         }
+
+        const refreshtoken = data['refresh_token'];
+        if (refreshtoken) {
+          Cookies.set('refresh_token', refreshtoken, { secure: true, sameSite: 'Strict' });
+        }
   
         // Return a message indicating success
-        return 'Password changed successfully';
+        return await thunkAPI.dispatch(fetchUserDetails()).unwrap();
       } catch (error) {
         if (error instanceof Error) {
           return thunkAPI.rejectWithValue(error.message);
@@ -148,15 +153,9 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
     'user/fetchUserDetails',
     async (_, thunkAPI) => {
       const token = Cookies.get('access_token');
-      const cachedUserDetails = Cookies.get('user_details');
   
       if (!token) {
         return thunkAPI.rejectWithValue('No access token available');
-      }
-  
-      // Check if user details are cached and valid
-      if (cachedUserDetails) {
-        return JSON.parse(cachedUserDetails);
       }
   
       try {
@@ -172,8 +171,6 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         }
   
         const userDetails = await response.json() as UserDetails;
-        // Store user details in cookies for caching
-        Cookies.set('user_details', JSON.stringify(userDetails), { expires: 1 }); // expires in 1 day
         return userDetails;
       } catch (error) {
         if (error instanceof Error) {
@@ -196,9 +193,10 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
           },
           body: new URLSearchParams(credentials),
         });
-  
+        
         if (!loginResponse.ok) {
-          throw new Error('Login failed');
+          const res = await loginResponse.json()
+          throw new Error(res.detail);
         }
   
         const data = await loginResponse.json();
@@ -220,7 +218,7 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
   );
   
   // Async thunk for user registration
-  export const registerUser = createAsyncThunk<UserDetails, { first_name: string; last_name: string; email: string; password: string; confirmPassword: string }, { rejectValue: string }>(
+  export const registerUser = createAsyncThunk<string, { first_name: string; last_name: string; email: string; password: string; confirmPassword: string }, { rejectValue: string }>(
     'user/register',
     async (userData, thunkAPI) => {
       try {
@@ -236,15 +234,8 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
           throw new Error('Registration failed');
         }
   
-        const data = await registerResponse.json();
-        const token = data['access_token'];
-        Cookies.set('access_token', token, { secure: true, sameSite: 'Strict' });
-
-        const refreshtoken = data['refresh_token'];
-        Cookies.set('refresh_token', refreshtoken, { secure: true, sameSite: 'Strict' });
-  
         // Fetch user details after successful registration
-        return await thunkAPI.dispatch(fetchUserDetails()).unwrap();
+        return "Registration successful";
       } catch (error) {
         if (error instanceof Error) {
           return thunkAPI.rejectWithValue(error.message);
@@ -266,6 +257,8 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         });
   
         if (!response.ok) {
+          Cookies.remove('access_token');
+          Cookies.remove('refresh_token');
           throw new Error('Token refresh failed');
         }
   
@@ -515,4 +508,115 @@ export const removeFollowing = createAsyncThunk<
       return thunkAPI.rejectWithValue('Failed to remove following');
     }
   }
+);
+
+export const checkUsername = createAsyncThunk<
+    { exists: boolean }, 
+    string,
+    { rejectValue: string }
+>(
+    'user/check-username',
+    async (username, thunkAPI) => {
+          try {
+            const response = await fetch(`${BaseURL}/user/profile/check-username?username=${encodeURIComponent(username)}`, {
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+          });
+
+          if (!response.ok) {
+              throw new Error('Failed to check username');
+          }
+
+          const data = await response.json();
+          return data;
+        } catch (error) {
+        if (error instanceof Error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+        return thunkAPI.rejectWithValue('Failed to check username');
+        }
+    }
+);
+
+
+export const updateProfile = createAsyncThunk<
+    UserDetails, 
+    {first_name:string, last_name:string, username:string},
+    { rejectValue: string }
+>(
+    'user/update-profile',
+    async ({first_name, last_name, username}, thunkAPI) => {
+          const token = Cookies.get('access_token');
+          if (!token) {
+            return thunkAPI.rejectWithValue('No access token available');
+          }
+          
+          try {
+            const response = await fetch(`${BaseURL}/user/profile/profile`, {
+              method: 'PATCH',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({first_name, last_name, username})
+          });
+
+          if (!response.ok) {
+              throw new Error('Failed to update the profile');
+          }
+
+          const data = await response.json();
+          return data;
+        } catch (error) {
+        if (error instanceof Error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+        return thunkAPI.rejectWithValue('Failed to update the profile');
+        }
+    }
+);
+
+
+export const changeProfilePassword = createAsyncThunk<
+  number, 
+  {old_password:string, new_password:string, confirm_password:string},
+  { rejectValue: string }
+>(
+    'user/profile/change-password',
+    async ({old_password, new_password, confirm_password}, thunkAPI) => {
+          let token = Cookies.get('access_token');
+          if (!token) {
+            return thunkAPI.rejectWithValue('No access token available');
+          }
+          
+          try {
+            const response = await fetch(`${BaseURL}/user/profile/change-password`, {
+              method: 'PATCH',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({old_password, new_password, confirm_password})
+          });
+          
+          if (!response.ok) {
+            return response.status
+          }
+
+          const data = await response.json();
+          let atoken = data['access_token'];
+          Cookies.set('access_token', atoken, { secure: true, sameSite: 'Strict' });
+
+          const refreshtoken = data['refresh_token'];
+          Cookies.set('refresh_token', refreshtoken, { secure: true, sameSite: 'Strict' });
+          return 1;
+        } catch (error) {
+        if (error instanceof Error) {
+            return thunkAPI.rejectWithValue(error.message);
+        }
+        return thunkAPI.rejectWithValue('Failed to change the password from profile');
+        }
+    }
 );

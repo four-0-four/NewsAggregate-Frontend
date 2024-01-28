@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Input from '../../components/Input';
+import Input from '../../components/Inputs/Input';
 import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks';
 import { confirmResetToken, changePassword, confirmRegistrationToken, loginUser } from '../../lib/features/user/thunks'; // Adjust the import path

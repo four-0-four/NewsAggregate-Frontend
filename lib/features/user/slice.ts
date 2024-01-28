@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { addFollowing, confirmRegistrationToken, contactUs, fetchUserDetails, fetchUserFollowings, forgetPassword, loginUser, logoutUser, registerUser, removeFollowing, reportBug, requestFeature } from './thunks';
+import { addFollowing, changePassword, confirmRegistrationToken, contactUs, fetchUserDetails, fetchUserFollowings, forgetPassword, loginUser, logoutUser, refreshAccessToken, registerUser, removeFollowing, reportBug, requestFeature, updateProfile } from './thunks';
 
 
 export interface followingReturnI {
@@ -69,6 +69,23 @@ const userSlice = createSlice({
       state.userDetails = null;
       state.error = action.payload;
     })
+    .addCase(refreshAccessToken.rejected, (state, action) => {
+      state.status = 'failed';
+      state.userDetails = null;
+      state.error = action.payload;
+      state.isAuthenticated = false;
+      state.followings = [];
+    })
+    .addCase(updateProfile.fulfilled, (state, action: PayloadAction<UserDetails>) => {
+      state.userDetails = action.payload;
+      state.status = 'succeeded';
+      state.error = null;
+    })
+    .addCase(updateProfile.rejected, (state, action) => {
+      state.status = 'failed';
+      state.userDetails = null;
+      state.error = action.payload;
+    })
     .addCase(loginUser.pending, (state) => {
       state.status = 'loading';
       state.error = null;
@@ -80,6 +97,21 @@ const userSlice = createSlice({
       state.isAuthenticated = true;
     })
     .addCase(loginUser.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload;
+      state.isAuthenticated = false;
+    })
+    .addCase(changePassword.pending, (state) => {
+      state.status = 'loading';
+      state.error = null;
+    })
+    .addCase(changePassword.fulfilled, (state, action: PayloadAction<UserDetails>) => {
+      state.status = 'succeeded';
+      state.userDetails = action.payload;
+      state.error = null;
+      state.isAuthenticated = true;
+    })
+    .addCase(changePassword.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.payload;
       state.isAuthenticated = false;
@@ -104,11 +136,9 @@ const userSlice = createSlice({
       state.status = 'loading';
       state.error = null;
     })
-    .addCase(registerUser.fulfilled, (state, action: PayloadAction<UserDetails>) => {
+    .addCase(registerUser.fulfilled, (state) => {
       state.status = 'succeeded';
-      state.userDetails = action.payload;
       state.error = null;
-      state.isAuthenticated = true;
     })
     .addCase(registerUser.rejected, (state, action) => {
       state.status = 'failed';
@@ -222,6 +252,7 @@ const userSlice = createSlice({
 export const { setUserAuthentication, setAuthenticationState, resetStatus, addFollowingStatus, removeFollowingStatus } = userSlice.actions;
 export const selectUserStatus = (state: { user: UserState }) => state.user.status;
 export const selectUserError = (state: { user: UserState }) => state.user.error;
+export const selectUserDetails = (state: { user: UserState }) => state.user.userDetails;
 export const selectUserFollowings = (state: { user: UserState }) => state.user.followings;
 export const selectIsAuthenticated = (state: { user: UserState }) => state.user.isAuthenticated;
 

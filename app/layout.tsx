@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
-import Header from './Header';
+import Header from '../pages/Header';
 import Sidebar from './Sidebar';
-import BottomNavbar from './BottomNavbar';
+import BottomNavbar from '../pages/BottomNavbar';
 import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '@/lib/features/user/slice';
 import { RootState } from '@/lib/store';

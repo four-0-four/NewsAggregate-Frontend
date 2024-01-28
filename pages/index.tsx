@@ -2,7 +2,7 @@
 
 import Loading from "@/components/Loading";
 import NewsCard from "@/components/NewsCard";
-import { selectNewsArticles, selectNewsStatus } from "@/lib/features/news/slice";
+import { NewsArticle, selectNewsArticles, selectNewsStatus } from "@/lib/features/news/slice";
 import { fetchNewsArticles } from "@/lib/features/news/thunks";
 import { selectIsAuthenticated } from "@/lib/features/user/slice";
 import { fetchUserFollowings } from "@/lib/features/user/thunks";
@@ -15,14 +15,20 @@ const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  const [newsArticles, setNewsArticles] = useState(useAppSelector(selectNewsArticles));
+
+  const fetchedNews = useAppSelector(selectNewsArticles);
+  const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
+
+  useEffect(() => {
+    setNewsArticles(fetchedNews);
+  }, [fetchedNews]);
 
   useEffect(() => {
     if (isAuthenticated) {
-        dispatch(fetchNewsArticles());
-    }else{
+      dispatch(fetchNewsArticles());
+    } else {
       setNewsArticles([]);
-      router.push("/landing")
+      router.push("/landing");
     }
   }, [dispatch, isAuthenticated]);
 
@@ -66,7 +72,7 @@ const Home: React.FC = () => {
                   </svg>
                   <p className="text-lg md:text-xl mt-4">
                     Oops! There seems to be no news for you at this moment. Have you followed any topics so far?
-                    <a href="/topics" className="text-primary underline"> go to explore</a>
+                    <Link href="/topics" className="text-primary underline"> go to explore</Link>
                   </p>
                 </div>
               </div>
@@ -82,6 +88,7 @@ import nookies from "nookies";
 import { GetServerSideProps } from "next";
 import Placeholder from "@/components/Placeholder";
 import InternalError from "@/components/InternalError";
+import Link from "next/link";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

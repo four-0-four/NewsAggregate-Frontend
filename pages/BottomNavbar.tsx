@@ -13,7 +13,7 @@ const BottomNavbar = () => {
     const router = useRouter();
     
 
-    const isActive = (path) => {
+    const isActive = (path:any) => {
         return router.pathname === path;
     };
 

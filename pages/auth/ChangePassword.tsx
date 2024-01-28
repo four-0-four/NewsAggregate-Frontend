@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Input from '../../components/Input';
+import Input from '../../components/Inputs/Input';
 import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks';
 import { confirmResetToken, changePassword } from '../../lib/features/user/thunks'; // Adjust the import path
@@ -66,14 +66,14 @@ const ChangePasswordForm = () => {
                 <h1 className={`text-xl md:text-2xl font-bold text-center uppercase pb-4 ${(status === 'succeeded' || status === 'failed') ? "mb-1" : "mb-4"} border-b border-light-gray`}>
                     Change Password
                 </h1>
-                {error === '' && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
+                {error !== '' && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
 
                 <Input headerText="New Password" placeholder="New Password" name="newPassword" value={formData.newPassword} onChange={handleChange} />
                 <Input headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
 
                 <div className="mt-10 flex flex-col md:flex-row justify-between items-center w-full">
                     <p className="text-xs md:text-sm order-2 md:order-1">
-                        <a href="/auth/Login" className="text-primary">Cancel</a>
+                        <Link href="/auth/Login" className="text-primary">Cancel</Link>
                     </p>
                     <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[25px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
                         Change
@@ -86,6 +86,7 @@ const ChangePasswordForm = () => {
 
 import nookies from "nookies";
 import { GetServerSideProps } from "next";
+import Link from 'next/link';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

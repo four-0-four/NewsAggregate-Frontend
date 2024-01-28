@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import Input from '../../components/Input'; // Adjust the path according to your file structure
+import Input from '../../components/Inputs/Input'; // Adjust the path according to your file structure
 import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks'; // Adjust the import path
 import { registerUser } from '@/lib/features/user/thunks';
@@ -10,6 +10,7 @@ const RegisterForm = () => {
     const router = useRouter();
     const status = useAppSelector(selectUserStatus);
     const error = useAppSelector(selectUserError);
+    const [registered, setRegistered] = useState(false);
 
     const [formData, setFormData] = useState({
         first_name: '',
@@ -25,7 +26,9 @@ const RegisterForm = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        dispatch(registerUser(formData));
+        dispatch(registerUser(formData)).unwrap().then(() => {
+            setRegistered(true);
+        });
     };
 
     return (
@@ -33,7 +36,7 @@ const RegisterForm = () => {
             <form onSubmit={handleSubmit} className="w-full px-4 md:w-full lg:max-w-xl xl:max-w-2xl mx-auto bg-white p-6 rounded-[25px] border border-light-gray">
                 <h1 className={`text-xl md:text-2xl font-bold text-center uppercase pb-4 ${(status === 'succeeded' || status === 'failed') ? "mb-1" : "mb-4"} border-b border-light-gray`}>Register</h1>
                 
-                {status === 'succeeded' && (
+                {registered && (
                     <div className="flex flex-col xs:flex-row items-center mt-10">
                         <svg className="w-1/2 xs:w-1/3 h-auto mb-4 md:mb-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
                             <g fill="#000000">
@@ -48,24 +51,24 @@ const RegisterForm = () => {
                 {status === 'failed' && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
 
 
-                {status !== 'succeeded' && status !== 'failed' && (
+                {!registered && status !== 'failed' && (
                     <>
                         <div className="grid sm:grid-cols-2 grid-cols-1 sm:gap-4">
                             <Input headerText="First Name" placeholder="First Name" name="first_name" value={formData.first_name} onChange={handleChange} />
                             <Input headerText="Last Name" placeholder="Last Name" name="last_name" value={formData.last_name} onChange={handleChange} />
                         </div>
 
-                        <Input headerText="Email" placeholder="email@example.com" name="email" value={formData.email} onChange={handleChange} />
+                        <Input headerText="Email" placeholder="email@example.com" name="email" type="email" value={formData.email} onChange={handleChange} />
 
                         <div className="grid sm:grid-cols-2 grid-cols-1 sm:gap-4">
-                            <Input headerText="Password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
-                            <Input headerText="Confirm Password" placeholder="Confirm Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
+                            <PasswordInput headerText="Password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
+                            <PasswordInput headerText="Confirm Password" placeholder="Confirm Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
                         </div>
 
                         <div className="mt-10 flex flex-col md:flex-row justify-between items-center w-full">
                             <p className="text-xs md:text-sm order-2 md:order-1">
                                 Already have an account? 
-                                <a href="/auth/Login" className="text-primary"> Log In</a>
+                                <Link href="/auth/Login" className="text-primary"> Log In</Link>
                             </p>
                             <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[25px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
                                 Register
@@ -81,6 +84,8 @@ const RegisterForm = () => {
 
 import nookies from "nookies";
 import { GetServerSideProps } from "next";
+import PasswordInput from '@/components/Inputs/PasswordInput';
+import Link from 'next/link';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

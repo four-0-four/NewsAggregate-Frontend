@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { RootState } from '../lib/store'; // Adjust the path according to your file structure
-import { selectIsAuthenticated } from '../lib/features/user/slice';
+import { selectIsAuthenticated, selectUserDetails } from '../lib/features/user/slice';
 import ProfileDropdown from '@/components/ProfileDropdown';
+import { useAppSelector } from '@/lib/hooks';
 const Header: React.FC = () => {
   const today = new Date();
   const router = useRouter();
@@ -16,8 +17,8 @@ const Header: React.FC = () => {
   const options = { month: 'short', day: 'numeric' };
   const shortFormattedDate = today.toLocaleDateString('en-US', options);
 
-  const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
-  const userDetails = useSelector((state: RootState) => state.user.userDetails);
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const userDetails = useAppSelector(selectUserDetails)
 
   return (
     <header className="bg-black text-white p-2 px-4 fixed top-0 left-0 right-0 z-10 mb-10">
@@ -33,11 +34,11 @@ const Header: React.FC = () => {
         {/* Conditional rendering based on user status */}
         {isAuthenticated && userDetails ? (
           <>
-            <ProfileDropdown firstName={userDetails.first_name} lastName={"Rafiei"} username={"rafieisi"}/>
+            <ProfileDropdown firstName={userDetails.first_name} lastName={userDetails.last_name} username={userDetails.username}/>
           </>
         ) : (
-          <button className="bg-primary text-black py-2 px-3 sm:px-8 rounded-[25px] uppercase text-sm sm:text-md" onClick={()=>router.push('/auth/Register')}>
-            Register
+          <button className="bg-primary text-black py-2 px-3 sm:px-8 rounded-[25px] uppercase text-sm sm:text-md" onClick={()=>router.push('/auth/Login')}>
+            Login
           </button>
         )}
       </div>

@@ -18,10 +18,10 @@ interface MyAppProps {
 function MyApp({ Component, pageProps }: MyAppProps) {
   const storeRef = useRef<AppStore | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const isAuthenticated = storeRef.current?.getState().user.isAuthenticated;
 
   if (!storeRef.current) {
     storeRef.current = makeStore();
-    // Other initial store setup...
   }
 
   useEffect(() => {
@@ -38,13 +38,27 @@ function MyApp({ Component, pageProps }: MyAppProps) {
     };
 
     checkAuth();
-
-    const interval = setInterval(() => {
-      storeRef.current?.dispatch(refreshAccessToken());
-    }, 15 * 60 * 1000);
-
-    return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | undefined;
+
+    if (isAuthenticated) {
+      interval = setInterval(() => {
+        storeRef.current?.dispatch(refreshAccessToken());
+      }, 15 * 60 * 1000);
+    } else {
+      if (interval) {
+        clearInterval(interval);
+      }
+    }
+  
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [isAuthenticated]);
 
   if (isLoading) {
     return <div>Loading...</div>; // Or any loading component
