@@ -14,7 +14,7 @@ function ProfileDropdown({ firstName, lastName, username }: ProfileDropdownProps
     const dispatch = useAppDispatch();
     const router = useRouter();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const dropdownRef = useRef(null); // Ref for the dropdown container
+    const dropdownRef = useRef<HTMLDivElement | null>(null); // Ref for the dropdown container
 
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
     const handleLogout = () => {
@@ -26,9 +26,9 @@ function ProfileDropdown({ firstName, lastName, username }: ProfileDropdownProps
     const closeDropdown = () => setIsDropdownOpen(false);
 
     useEffect(() => {
-        function handleClickOutside(event) {
+        function handleClickOutside(event: MouseEvent) {
             // If the clicked element is not within the dropdownRef, close the dropdown
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
                 closeDropdown();
             }
         }

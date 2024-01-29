@@ -73,7 +73,7 @@ const Profile = () => {
         }
     };
 
-    const validateName = (name) => /^[A-Za-z]{2,}$/.test(name);
+    const validateName = (name:string) => /^[A-Za-z]{2,}$/.test(name);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -100,11 +100,11 @@ const Profile = () => {
     };
 
 
-    const handlePasswordChange = (e) => {
+    const handlePasswordChange = (e: React.FormEvent<HTMLFormElement>) => {
         setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmitPasswordChange = (e) => {
+    const handleSubmitPasswordChange = (e: React.FormEvent) => {
         e.preventDefault();
         if (passwordData.newPassword !== passwordData.confirmPassword) {
             setPasswordError("New passwords do not match.");
@@ -213,9 +213,9 @@ const Profile = () => {
                 {showPasswordChange && (
                   <>
                     {passwordError && <p className="text-left text-red-500 text-sm mt-2">* {passwordError}</p>}
-                    <PasswordInput headerText="Current Password" placeholder="Current Password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} type="password" />
-                    <PasswordInput headerText="New Password" placeholder="New Password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} type="password" />
-                    <PasswordInput headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange} type="password" />
+                    <PasswordInput headerText="Current Password" placeholder="Current Password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange}/>
+                    <PasswordInput headerText="New Password" placeholder="New Password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange}/>
+                    <PasswordInput headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange}/>
 
                     <div className="mt-8 flex justify-end">
                       <button onClick={handleCancelPasswordChange} className="border border-primary text-primary px-4 py-2 rounded-[25px] uppercase mr-2">Cancel</button>

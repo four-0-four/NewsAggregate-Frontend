@@ -14,7 +14,7 @@ const Header: React.FC = () => {
     day: 'numeric' 
   });
 
-  const options = { month: 'short', day: 'numeric' };
+  const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
   const shortFormattedDate = today.toLocaleDateString('en-US', options);
 
   const isAuthenticated = useAppSelector(selectIsAuthenticated);

@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import Cookies from 'js-cookie';
 import { makeStore, AppStore } from '../lib/store';
 import { setAuthenticationState } from '../lib/features/user/slice';
-import '../app/globals.css';
-import Layout from '../app/Layout';
+import '../styles/globals.css';
 import { fetchUserDetails, refreshAccessToken } from '@/lib/features/user/thunks';
 import { isTokenValid } from '../util/token';
 import Head from 'next/head';
+import Layout from './layout';
 
 interface MyAppProps {
   Component: React.ComponentType;

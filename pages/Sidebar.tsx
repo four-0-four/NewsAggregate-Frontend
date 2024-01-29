@@ -4,6 +4,7 @@ import Interests from '@/components/Interests';
 import { selectIsAuthenticated } from '@/lib/features/user/slice';
 import { fetchUserFollowings } from '@/lib/features/user/thunks';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import { RootState } from '@/lib/store';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { use, useEffect } from 'react';
@@ -23,7 +24,7 @@ const Sidebar = () => {
     }, [isAuthenticated]);
     
 
-    const isActive = (path) => {
+    const isActive = (path:any) => {
         return router.pathname === path;
     };
 
