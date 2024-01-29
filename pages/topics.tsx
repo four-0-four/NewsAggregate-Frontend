@@ -1,13 +1,16 @@
-import Loading from '@/components/Loading';
-import Loading2 from '@/components/Loading2';
-import NewsCard from '@/components/NewsCard';
-import { NewsArticle, selectCategoryArticles, selectNewsCategories, selectNewsStatus } from '@/lib/features/news/slice';
-import { fetchCategories, fetchTopicNews } from '@/lib/features/news/thunks';
-import { selectIsAuthenticated, selectUserFollowings } from '@/lib/features/user/slice';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { loading2 } from '@/util/illustrations';
 import router from 'next/router';
 import React, { useEffect, useState } from 'react'
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
+import { selectIsAuthenticated, selectUserFollowings } from '../lib/features/user/slice';
+import { NewsArticle, selectCategoryArticles, selectNewsCategories, selectNewsStatus } from '../lib/features/news/slice';
+import { fetchCategories, fetchTopicNews } from '../lib/features/news/thunks';
+import { addFollowing, removeFollowing } from '../lib/features/user/thunks';
+import NewsCard from '../components/NewsCard';
+import InternalError from '../components/InternalError';
+import Placeholder from '../components/Placeholder';
+
 
 type Props = {}
 
@@ -81,8 +84,9 @@ const topics = (props: Props) => {
                 {following?.includes(category)?"Following":"+ Follow Topic"}
               </button>
             </div>
-            {typeof categoryArticles[category] !== 'string' && categoryArticles[category].slice(0, 5).map(newsCard => (
+            {typeof categoryArticles[category] !== 'string' && (categoryArticles[category] as NewsArticle[]).slice(0, 5).map(newsCard => (
               <NewsCard
+                key={newsCard.id}
                 id={newsCard.id}
                 imageSrc={newsCard.media[0]}
                 title={newsCard.title}
@@ -120,11 +124,7 @@ const topics = (props: Props) => {
   )
 }
 
-import nookies from "nookies";
-import { GetServerSideProps } from "next";
-import { addFollowing, removeFollowing } from '@/lib/features/user/thunks';
-import Placeholder from '@/components/Placeholder';
-import InternalError from '@/components/InternalError';
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

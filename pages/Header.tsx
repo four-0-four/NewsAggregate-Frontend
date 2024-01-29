@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { RootState } from '../lib/store'; // Adjust the path according to your file structure
 import { selectIsAuthenticated, selectUserDetails } from '../lib/features/user/slice';
-import ProfileDropdown from '@/components/ProfileDropdown';
-import { useAppSelector } from '@/lib/hooks';
+import { useAppSelector } from '../lib/hooks';
+import ProfileDropdown from '../components/ProfileDropdown';
+
 const Header: React.FC = () => {
   const today = new Date();
   const router = useRouter();

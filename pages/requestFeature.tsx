@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { requestFeature } from '@/lib/features/user/thunks';
-import Textarea from '@/components/Textarea';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { resetStatus, selectUserError, selectUserStatus } from '@/lib/features/user/slice';
-import Input from '@/components/Inputs/Input';
-import FileInput from '@/components/Inputs/FileInput';
-import SocialMedia from '@/components/SocialMedia';
+import SocialMedia from '../components/SocialMedia';
+import Input from '../components/Inputs/Input';
+import Textarea from '../components/Textarea';
+import FileInput from '../components/Inputs/FileInput';
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
+import { selectUserError, selectUserStatus } from '../lib/features/user/slice';
+import { requestFeature } from '../lib/features/user/thunks';
 
 const requestFeatureForm = () => {
     const dispatch = useAppDispatch();
@@ -136,8 +138,6 @@ const requestFeatureForm = () => {
 }
 
 
-import nookies from "nookies";
-import { GetServerSideProps } from "next";
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

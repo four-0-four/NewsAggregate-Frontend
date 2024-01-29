@@ -1,8 +1,8 @@
 // pages/landing.tsx
 
-import Accordion from '@/components/Accordion';
-import ContactUsForm from '@/components/Forms/ContactUsForm';
-import { InterestIcon, LikeIcon, QuickIcon, landingIllustration } from '@/util/illustrations';
+import Accordion from '../components/Accordion';
+import ContactUsForm from '../components/Forms/ContactUsForm';
+import { landingIllustration, LikeIcon, QuickIcon, InterestIcon } from '../util/illustrations';
 import Link from 'next/link';
 import React from 'react';
 

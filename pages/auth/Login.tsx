@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Input from '../../components/Inputs/Input'; // Adjust the path according to your file structure
 import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks'; // Adjust the import path
-import { loginUser } from '@/lib/features/user/thunks';
+import PasswordInput from '../../components/Inputs/PasswordInput'; // Adjust the path according to your file structure
 
 const LoginForm = () => {
     const dispatch = useAppDispatch();
@@ -43,7 +43,7 @@ const LoginForm = () => {
 
                 <div className="mt-10 flex flex-col md:flex-row justify-between items-center w-full">
                     <p className="text-xs md:text-sm order-2 md:order-1">
-                        Doesn't Have an Account?
+                        Doesn&apos;t Have an Account?
                         <Link href="/auth/Register" className="text-primary"> Register</Link>
                     </p>
                     <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[25px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
@@ -57,8 +57,8 @@ const LoginForm = () => {
 
 import nookies from "nookies";
 import { GetServerSideProps } from "next";
-import PasswordInput from '@/components/Inputs/PasswordInput';
 import Link from 'next/link';
+import { loginUser } from '../../lib/features/user/thunks';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

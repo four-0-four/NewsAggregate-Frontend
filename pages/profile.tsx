@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { changeProfilePassword, checkUsername, reportBug, updateProfile } from '@/lib/features/user/thunks';
-import Textarea from '@/components/Textarea';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { resetStatus, selectUserDetails, selectUserError, selectUserStatus } from '@/lib/features/user/slice';
-import Input from '@/components/Inputs/Input';
-import FileInput from '@/components/Inputs/FileInput';
-import SocialMedia from '@/components/SocialMedia';
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
+import { selectUserDetails, selectUserError, selectUserStatus } from '../lib/features/user/slice';
+import { changeProfilePassword, checkUsername, updateProfile } from '../lib/features/user/thunks';
+import PasswordInput from '../components/Inputs/PasswordInput';
+import EditableInput from '../components/Inputs/EditableInput';
+import Toast from '../components/Toast';
 
 interface FormData {
   first_name: string;
@@ -100,8 +101,8 @@ const Profile = () => {
     };
 
 
-    const handlePasswordChange = (e: React.FormEvent<HTMLFormElement>) => {
-        setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setPasswordData({ ...passwordData, [e.target.name]: e.target.value });
     };
 
     const handleSubmitPasswordChange = (e: React.FormEvent) => {
@@ -230,11 +231,7 @@ const Profile = () => {
 }
 
 
-import nookies from "nookies";
-import { GetServerSideProps } from "next";
-import EditableInput from '@/components/Inputs/EditableInput';
-import PasswordInput from '@/components/Inputs/PasswordInput';
-import Toast from '@/components/Toast';
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

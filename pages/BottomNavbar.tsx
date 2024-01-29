@@ -1,6 +1,6 @@
 // components/BottomNavbar.tsx
 
-import InterestsModal from '@/components/InterestsModal';
+import InterestsModal from '../components/InterestsModal';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';

@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Input from '../../components/Inputs/Input'; // Adjust the path according to your file structure
 import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks'; // Adjust the import path
-import { forgetPassword } from '@/lib/features/user/thunks';
 
 const PasswordEmailForm = () => {
     const dispatch = useAppDispatch();
@@ -62,7 +61,7 @@ const PasswordEmailForm = () => {
                                 </g>
                             </svg>
                             <p className="w-full xs:w-2/3 text-sm md:text-base text-left md:ml-8">
-                                Please Check your email. If it doesn't arrive within 10 minutes, please check your spam folder or contact support for help.
+                                Please Check your email. If it doesn&apos;t arrive within 10 minutes, please check your spam folder or contact support for help.
                             </p>
                         </div>
                     </>
@@ -75,6 +74,7 @@ const PasswordEmailForm = () => {
 import nookies from "nookies";
 import { GetServerSideProps } from "next";
 import Link from 'next/link';
+import { forgetPassword } from '../../lib/features/user/thunks';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

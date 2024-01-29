@@ -1,15 +1,18 @@
 // pages/index.tsx
-
-import Loading from "@/components/Loading";
-import NewsCard from "@/components/NewsCard";
-import { NewsArticle, selectNewsArticles, selectNewsStatus } from "@/lib/features/news/slice";
-import { fetchNewsArticles } from "@/lib/features/news/thunks";
-import { selectIsAuthenticated } from "@/lib/features/user/slice";
-import { fetchUserFollowings } from "@/lib/features/user/thunks";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { loading } from "@/util/illustrations";
+import React from 'react';
 import { Router, useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "../lib/hooks";
+import { selectIsAuthenticated } from "../lib/features/user/slice";
+import { NewsArticle, selectNewsArticles, selectNewsStatus } from "../lib/features/news/slice";
+import { fetchNewsArticles } from "../lib/features/news/thunks";
+import InternalError from "../components/InternalError";
+import NewsCard from "../components/NewsCard";
+import Placeholder from "../components/Placeholder";
+
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -84,11 +87,7 @@ const Home: React.FC = () => {
   )
 };
 
-import nookies from "nookies";
-import { GetServerSideProps } from "next";
-import Placeholder from "@/components/Placeholder";
-import InternalError from "@/components/InternalError";
-import Link from "next/link";
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

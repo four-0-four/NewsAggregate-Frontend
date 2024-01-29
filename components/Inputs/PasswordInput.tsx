@@ -1,4 +1,4 @@
-import { ClosedEyeIcon, OpenEyeIcon } from '@/util/illustrations';
+import { ClosedEyeIcon, OpenEyeIcon } from '../../util/illustrations';
 import React, { useState } from 'react';
 
 type PasswordInputProps = {

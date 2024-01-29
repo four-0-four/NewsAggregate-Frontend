@@ -1,13 +1,15 @@
 import React, { use, useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { useSelector } from 'react-redux';
-import { addFollowingStatus, selectIsAuthenticated, selectUserFollowings } from '@/lib/features/user/slice';
-import { fetchOneNewsArticle, fetchTopicNews } from '@/lib/features/news/thunks';
-import {selectNewsStatus, selectTopicArticles} from '@/lib/features/news/slice';
-import NewsCard from '@/components/NewsCard';
-import { addFollowing, removeFollowing } from '@/lib/features/user/thunks';
-import Loading from '@/components/Loading';
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { selectIsAuthenticated, selectUserFollowings } from '../../lib/features/user/slice';
+import { selectNewsStatus, selectTopicArticles } from '../../lib/features/news/slice';
+import { fetchTopicNews } from '../../lib/features/news/thunks';
+import { addFollowing, removeFollowing } from '../../lib/features/user/thunks';
+import NewsCard from '../../components/NewsCard';
+import InternalError from '../../components/InternalError';
+import Placeholder from '../../components/Placeholder';
 
 const topic: React.FC = ({}) => {
     // Function to format the date
@@ -41,7 +43,7 @@ const topic: React.FC = ({}) => {
     }
 
     const newsStatus = useAppSelector(selectNewsStatus);
-
+    
     return (
         <div className='mb-5'>
           <div className="" key={topic}>
@@ -89,10 +91,6 @@ const topic: React.FC = ({}) => {
 }
 
 
-import nookies from "nookies";
-import { GetServerSideProps } from "next";
-import Placeholder from '@/components/Placeholder';
-import InternalError from '@/components/InternalError';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

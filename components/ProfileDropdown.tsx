@@ -1,8 +1,8 @@
-import { logoutUser } from '@/lib/features/user/thunks';
-import { useAppDispatch } from '@/lib/hooks';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
+import { useAppDispatch } from '../lib/hooks';
+import { logoutUser } from '../lib/features/user/thunks';
 
 interface ProfileDropdownProps {
     firstName?: string;

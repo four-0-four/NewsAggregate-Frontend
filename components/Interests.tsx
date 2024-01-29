@@ -33,7 +33,7 @@ const Interests: React.FC<Props> = ({interests}) => {
                     <button 
                         onClick={() => router.push('/explore')}
                         className="bg-primary hover:bg-amber-400 text-black font-light rounded-[25px] p-2 px-5 leading-5">
-                            Let's go exploring to see what you like!
+                            Let&apos;s go exploring to see what you like!
                     </button>
                 </div>
             )}

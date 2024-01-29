@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router'
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { useSelector } from 'react-redux';
-import { selectIsAuthenticated } from '@/lib/features/user/slice';
-import { fetchOneNewsArticle } from '@/lib/features/news/thunks';
-import { NewsArticle, selectNewsStatus, selectSelectedArticle} from '@/lib/features/news/slice';
-import Loading from '@/components/Loading';
+import { useRouter } from 'next/router';
+import nookies from "nookies";
+import { GetServerSideProps } from "next";
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { selectIsAuthenticated } from '../../lib/features/user/slice';
+import { fetchOneNewsArticle } from '../../lib/features/news/thunks';
+import { NewsArticle, selectNewsStatus, selectSelectedArticle } from '../../lib/features/news/slice';
+import Loading from '../../components/Loading';
 
 type NewsComponentProps = {};
 
@@ -96,8 +97,7 @@ const news: React.FC<NewsComponentProps> = ({}) => {
     );
 }
 
-import nookies from "nookies";
-import { GetServerSideProps } from "next";
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

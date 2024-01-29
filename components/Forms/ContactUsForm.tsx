@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { contactUs, registerUser } from '@/lib/features/user/thunks';
-import Textarea from '@/components/Textarea';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { resetStatus, selectUserError, selectUserStatus } from '@/lib/features/user/slice';
-import Input from '@/components/Inputs/Input';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { selectUserError, selectUserStatus } from '../../lib/features/user/slice';
+import { contactUs } from '../../lib/features/user/thunks';
+import Input from '../Inputs/Input';
+import Textarea from '../Textarea';
 
 type Props = {}
 

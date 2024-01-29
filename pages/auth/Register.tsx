@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import Input from '../../components/Inputs/Input'; // Adjust the path according to your file structure
 import { selectUserStatus, selectUserError } from '../../lib/features/user/slice';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks'; // Adjust the import path
-import { registerUser } from '@/lib/features/user/thunks';
+import PasswordInput from '../../components/Inputs/PasswordInput'; // Adjust the path according to your file structure
+import { registerUser } from '../../lib/features/user/thunks';
 
 const RegisterForm = () => {
     const dispatch = useAppDispatch();
@@ -84,7 +85,6 @@ const RegisterForm = () => {
 
 import nookies from "nookies";
 import { GetServerSideProps } from "next";
-import PasswordInput from '@/components/Inputs/PasswordInput';
 import Link from 'next/link';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)

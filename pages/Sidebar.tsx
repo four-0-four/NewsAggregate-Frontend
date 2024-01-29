@@ -1,14 +1,14 @@
 // components/Sidebar.tsx
 
-import Interests from '@/components/Interests';
-import { selectIsAuthenticated } from '@/lib/features/user/slice';
-import { fetchUserFollowings } from '@/lib/features/user/thunks';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
-import { RootState } from '@/lib/store';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { use, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../lib/hooks';
+import { selectIsAuthenticated } from '../lib/features/user/slice';
+import { RootState } from '../lib/store';
+import Interests from '../components/Interests';
+import { fetchUserFollowings } from '../lib/features/user/thunks';
 
 const Sidebar = () => {
     let interests: string[] = [];
