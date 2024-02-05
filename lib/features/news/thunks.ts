@@ -1,11 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import { NewsArticle } from './slice';
+import { RootState } from '@/lib/store';
 
 const BaseURL = "http://127.0.0.1:8080"
 const ProductionBaseURL = "https://api.farabix.com/mainframe2"
 
-export const fetchNewsArticles = createAsyncThunk<NewsArticle[], void, { rejectValue: string }>(
+export const fetchNewsArticles = createAsyncThunk<
+    {articles: NewsArticle[], last_news_time: string, load_more: boolean}, 
+    void, 
+    { state: RootState, rejectValue: string } 
+>(
     'news/fetchNewsArticles',
     async (_, thunkAPI) => {
         const token = Cookies.get('access_token');
@@ -14,8 +19,18 @@ export const fetchNewsArticles = createAsyncThunk<NewsArticle[], void, { rejectV
             return thunkAPI.rejectWithValue('No access token available');
         }
 
+        const state = thunkAPI.getState();
+        const userArticles = state.news.articles
+
         try {
-            const response = await fetch(BaseURL + '/news/user/get', {
+            const searchParams = new URLSearchParams();
+            searchParams.append('last_news_time', (userArticles?.last_news_time ?? '').toString());
+            searchParams.append('number_of_articles_to_fetch', (userArticles?.number_of_articles_to_fetch ?? '').toString())
+
+            const url = new URL(BaseURL + '/news/user/get');
+            url.search = searchParams.toString();
+
+            const response = await fetch(url.toString(), {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -26,8 +41,8 @@ export const fetchNewsArticles = createAsyncThunk<NewsArticle[], void, { rejectV
                 throw new Error('Failed to fetch news articles');
             }
 
-            const articles = await response.json() as NewsArticle[];
-            return articles;
+            const data = await response.json();
+            return { articles: data.news as NewsArticle[], last_news_time: data.last_news_time, load_more: data.load_more };
         } catch (error) {
             if (error instanceof Error) {
                 return thunkAPI.rejectWithValue(error.message);
@@ -76,45 +91,6 @@ export const fetchOneNewsArticle = createAsyncThunk<NewsArticle, string, { rejec
 );
 
 
-export const fetchNewsByCategory = createAsyncThunk<NewsArticle[], { category_id: number, past_hours: number }, { rejectValue: string }>(
-    'news/fetchNewsByCategory',
-    async ({ category_id, past_hours }, thunkAPI) => {
-        const token = Cookies.get('access_token');
-        if (!token) {
-            return thunkAPI.rejectWithValue('No access token available');
-        }
-
-        try {
-            const searchParams = new URLSearchParams();
-            searchParams.append('category_id', category_id.toString());
-            searchParams.append('past_hours', past_hours.toString());
-
-            const url = new URL(BaseURL + '/news/getByCategory');
-            url.search = searchParams.toString();
-
-            const response = await fetch(url.toString(), {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch news articles by category');
-            }
-
-            const articles = await response.json() as NewsArticle[];
-            return articles;
-        } catch (error) {
-            if (error instanceof Error) {
-                return thunkAPI.rejectWithValue(error.message);
-            }
-            return thunkAPI.rejectWithValue('Failed to fetch news articles by category');
-        }
-    }
-);
-
-
 export const fetchCategories = createAsyncThunk<string[], { parent_category_id: number }, { rejectValue: string }>(
     'news/fetchCategories',
     async ({ parent_category_id }, thunkAPI) => {
@@ -154,42 +130,48 @@ export const fetchCategories = createAsyncThunk<string[], { parent_category_id: 
 
 
 export const fetchTopicNews = createAsyncThunk<
-    { articles: NewsArticle[]; topic: string },
+    { articles: NewsArticle[]; topic: string; last_news_time:string; load_more: boolean},
     string,
-    { rejectValue: string }
+    { state: RootState, rejectValue: string } 
 >(
     'news/getTopicNews',
     async (topic, thunkAPI) => {
         const token = Cookies.get('access_token');
         if (!token) {
-        return thunkAPI.rejectWithValue('No access token available');
+            return thunkAPI.rejectWithValue('No access token available');
         }
+
+        const state = thunkAPI.getState();
+        const categoryArticles = state.news.categoryArticles;
+        const category = categoryArticles.find(cat => cat.name === topic)
 
         try {
-        const searchParams = new URLSearchParams();
-        searchParams.append('topic', topic);
+            const searchParams = new URLSearchParams();
+            searchParams.append('topic', topic);
+            searchParams.append('last_news_time', (category?.last_news_time ?? '').toString());
+            searchParams.append('number_of_articles_to_fetch', (category?.number_of_articles_to_fetch ?? '').toString());
 
-        const url = new URL(BaseURL + '/news/getNewsbyTopic');
-        url.search = searchParams.toString();
+            const url = new URL(BaseURL + '/news/getNewsbyTopic');
+            url.search = searchParams.toString();
 
-        const response = await fetch(url.toString(), {
-            method: 'GET',
-            headers: {
-            Authorization: `Bearer ${token}`,
-            },
-        });
+            const response = await fetch(url.toString(), {
+                method: 'GET',
+                headers: {
+                Authorization: `Bearer ${token}`,
+                },
+            });
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch news for different topics');
-        }
+            if (!response.ok) {
+                throw new Error('Failed to fetch news for different topics');
+            }
 
-        const data = await response.json();
-        return { articles: data as NewsArticle[], topic };
+            const data = await response.json();
+            return { articles: data.news as NewsArticle[], last_news_time: data.last_news_time, topic: topic, load_more: data.load_more };
         } catch (error) {
-        if (error instanceof Error) {
-            return thunkAPI.rejectWithValue(error.message);
-        }
-        return thunkAPI.rejectWithValue('Failed to fetch news for different categories');
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            return thunkAPI.rejectWithValue('Failed to fetch news for different categories');
         }
     }
 );

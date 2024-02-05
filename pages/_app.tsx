@@ -5,10 +5,11 @@ import Cookies from 'js-cookie';
 import { makeStore, AppStore } from '../lib/store';
 import { setAuthenticationState } from '../lib/features/user/slice';
 import '../styles/globals.css';
-import { fetchUserDetails, refreshAccessToken } from '@/lib/features/user/thunks';
+import { fetchUserDetails, fetchUserFollowings, refreshAccessToken } from '@/lib/features/user/thunks';
 import { isTokenValid } from '../util/token';
 import Head from 'next/head';
 import Layout from './layout';
+import { wrapper } from '../lib/store';
 
 interface MyAppProps {
   Component: React.ComponentType;
@@ -19,6 +20,8 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   const storeRef = useRef<AppStore | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const isAuthenticated = storeRef.current?.getState().user.isAuthenticated;
+
+  
 
   if (!storeRef.current) {
     storeRef.current = makeStore();
@@ -81,4 +84,4 @@ function MyApp({ Component, pageProps }: MyAppProps) {
   );
 }
 
-export default MyApp;
+export default wrapper.withRedux(MyApp);

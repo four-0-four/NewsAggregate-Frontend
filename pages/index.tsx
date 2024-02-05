@@ -7,7 +7,7 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { selectIsAuthenticated } from "../lib/features/user/slice";
-import { NewsArticle, selectNewsArticles, selectNewsStatus } from "../lib/features/news/slice";
+import { NewsArticle, selectLoadMore, selectNewsArticles, selectNewsStatus } from "../lib/features/news/slice";
 import { fetchNewsArticles } from "../lib/features/news/thunks";
 import InternalError from "../components/InternalError";
 import NewsCard from "../components/NewsCard";
@@ -18,43 +18,31 @@ const Home: React.FC = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const LoadMore = useAppSelector(selectLoadMore);
 
-  const fetchedNews = useAppSelector(selectNewsArticles);
-  const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
-
-  useEffect(() => {
-    setNewsArticles(fetchedNews);
-  }, [fetchedNews]);
+  const userNews = useAppSelector(selectNewsArticles);
 
   useEffect(() => {
     if (isAuthenticated) {
       dispatch(fetchNewsArticles());
     } else {
-      setNewsArticles([]);
       router.push("/landing");
     }
   }, [dispatch, isAuthenticated]);
 
+  let HandleLoadMore = async () => {
+    dispatch(fetchNewsArticles())
+  }
 
-  const newsStatus = useAppSelector(selectNewsStatus);
-  
   return (
     <>
-      {newsStatus == 'failed' && (
+      {userNews.status == 'failed' && (
         <InternalError />
       )}
-      {newsStatus == 'loading' && (
+      {userNews.status !== 'failed' && userNews.news.length > 0 && (
         <>
-          <Placeholder />
-          <Placeholder />
-          <Placeholder />
-          <Placeholder />
-        </>
-      )}
-      {newsStatus !== 'loading' && newsStatus === 'succeeded' && (
-        <>
-          { newsArticles.length > 0 ? (
-              newsArticles.map((newsCard: {id:number , media: string[]; title: string; content: string; from: string; fromImage: string; publishedDate: string ; keywords: string[]; }) => (
+          { userNews.news.length > 0 ? (
+              userNews.news.map((newsCard: {id:number , media: string[]; title: string; content: string; from: string; fromImage: string; publishedDate: string ; keywords: string[]; }) => (
                 <NewsCard 
                   id={newsCard.id}
                   imageSrc={newsCard.media[0]} 
@@ -82,6 +70,21 @@ const Home: React.FC = () => {
             )
           }
         </>
+      )}
+      {userNews.status == 'loading' && (
+        <>
+          <Placeholder />
+          <Placeholder />
+          <Placeholder />
+          <Placeholder />
+        </>
+      )}
+      {userNews && userNews.status === 'succeeded' && LoadMore && (
+        <div className="flex justify-center mt-5">
+          <button onClick={HandleLoadMore} className="text-2xl text-primary flex items-center cursor-pointer hover:text-amber-400 px-4 py-1 border-2 border-primary rounded-[25px]">
+            <h3>Load More</h3>
+          </button>
+        </div>
       )}
   </>
   )

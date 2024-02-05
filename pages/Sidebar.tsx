@@ -6,7 +6,7 @@ import React, { use, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { selectIsAuthenticated } from '../lib/features/user/slice';
-import { RootState } from '../lib/store';
+import { RootState, wrapper } from '../lib/store';
 import Interests from '../components/Interests';
 import { fetchUserFollowings } from '../lib/features/user/thunks';
 
@@ -66,5 +66,16 @@ const Sidebar = () => {
         </aside>
     );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async (context) => {
+    // Dispatch your Redux action. Assuming fetchUserFollowings returns a Promise.
+    await store.dispatch(fetchUserFollowings());
+
+    // Return an empty props object, or any props you want to pass to your component.
+    // This ensures the function returns a Promise that resolves to an object conforming to GetServerSidePropsResult.
+    return {
+        props: {}, // You can pass any props to the component here.
+    };
+});
 
 export default Sidebar;

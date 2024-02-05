@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import nookies from "nookies";
 import { GetServerSideProps } from "next";
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
-import { selectUserDetails, selectUserError, selectUserStatus } from '../lib/features/user/slice';
+import { UserDetails, selectUserDetails, selectUserError, selectUserStatus } from '../lib/features/user/slice';
 import { changeProfilePassword, checkUsername, updateProfile } from '../lib/features/user/thunks';
 import PasswordInput from '../components/Inputs/PasswordInput';
 import EditableInput from '../components/Inputs/EditableInput';
@@ -48,11 +48,11 @@ const Profile = () => {
     const [usernameAvailabilityMessage, setUsernameAvailabilityMessage] = useState("");
 
     // Function to compare formData with userDetails
-    const hasFormDataChanged = (formData, userDetails) => {
-      return formData.first_name !== userDetails?.first_name ||
-             formData.last_name !== userDetails?.last_name ||
-             formData.email !== userDetails?.email ||
-             formData.username !== userDetails?.username;
+    const hasFormDataChanged = (formData: FormData, userDetails: UserDetails) => {
+      return formData.first_name !== userDetails.first_name ||
+             formData.last_name !== userDetails.last_name ||
+             formData.email !== userDetails.email ||
+             formData.username !== userDetails.username;
     };
 
     useEffect(() => {

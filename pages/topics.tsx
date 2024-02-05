@@ -29,11 +29,13 @@ const topics = (props: Props) => {
 
   useEffect(() => {
     if(isAuthenticated){
-      categories.map(topic => {
-        dispatch(fetchTopicNews(topic));
+      categoryArticles.map(category => {
+        if(category.status === 'idle'){
+          dispatch(fetchTopicNews(category.name));
+        }
       });
     }
-  }, [categories, isAuthenticated])
+  }, [categoryArticles, isAuthenticated])
 
 
   useEffect(() => {
@@ -57,6 +59,19 @@ const topics = (props: Props) => {
 
   return (
     <div>
+      {categories.length == 0 && (
+        <div>
+          <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
+            <h2 className="text-3xl font-bold inline-block">Explore Page</h2>
+          </div>
+          <div className='flex flex-col items-center'>
+            <img src={"/empty.png"} alt="No News Found" className='max-w-[10%] sm:max-w-[50%] md:max-w-[30%]'/>
+            <h1 className='text-center text-sm sm:text-md font-medium mt-4 max-w-[500px]'>
+              Sorry, something went wrong. We're very sorry for the inconvenience. We would thankful if you could report this issue to us. 
+            </h1>
+          </div>
+        </div>
+      )}
       {categories.length > 0 && (
         <div className="bg-white rounded-[25px] border-solid border border-gray-100 p-5 xl:p-7 mb-10">
           <h1 className="text-xl font-bold mb-4">
@@ -76,15 +91,17 @@ const topics = (props: Props) => {
         </div>
       )}
       <div className='mb-5'>
-        {Object.keys(categoryArticles).map(category => (
-          <div className="mt-10 mb-16" key={category}>
-            <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
-              <h2 className="text-3xl font-bold inline-block cursor-pointer" onClick={() => router.push('/topics/'+category)}>{category}</h2>
-              <button onClick={()=>handleClick(category)} className={`text-sm  ${following?.includes(category)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[25px] p-1 px-3 ${following?.includes(category)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
-                {following?.includes(category)?"Following":"+ Follow Topic"}
-              </button>
-            </div>
-            {typeof categoryArticles[category] !== 'string' && (categoryArticles[category] as NewsArticle[]).slice(0, 5).map(newsCard => (
+        {categoryArticles.map(category => (
+          <div className="mt-10 mb-16" key={category.name}>
+            {category.status != "idle" && (
+              <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
+                <h2 className="text-3xl font-bold inline-block cursor-pointer" onClick={() => router.push('/topics/'+category.name)}>{category.name}</h2>
+                <button onClick={()=>handleClick(category.name)} className={`text-sm  ${following?.includes(category.name)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[25px] p-1 px-3 ${following?.includes(category.name)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
+                  {following?.includes(category.name)?"Following":"+ Follow Topic"}
+                </button>
+              </div>
+            )}
+            {category.status == "succeeded" && category.news?.length > 0 && category.news.slice(0, 5).map(newsCard => (
               <NewsCard
                 key={newsCard.id}
                 id={newsCard.id}
@@ -97,7 +114,7 @@ const topics = (props: Props) => {
                 tags={newsCard.keywords}
               />
             ))}
-            {typeof categoryArticles[category] === 'string' && (
+            {category.status == "loading" && (
               <>
                 <Placeholder />
                 <Placeholder />
@@ -106,7 +123,7 @@ const topics = (props: Props) => {
                 <Placeholder />
               </>
             )}
-            {typeof categoryArticles[category] !== 'string' && categoryArticles[category].length > 3 && (
+            {category.status == "succeeded" && (category.news?.length) > 3 && (
               <div className="flex justify-start md:ml-0 ml-3">
                 <div className="text-2xl text-primary underline flex items-center cursor-pointer hover:text-amber-400"
                 onClick={() => router.push('/topics/'+category)}>
