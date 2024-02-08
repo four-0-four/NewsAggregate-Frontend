@@ -15,7 +15,7 @@ const Interests: React.FC<Props> = ({interests}) => {
             <>
                 <div className={`flex flex-wrap gap-1 xl:gap-2 overflow-y-auto max-h-[240px] snap-y pr-3`}>
                     {interests.map(interest => (
-                        <div onClick={() => router.push('/topics/'+interest)} key={interest} className="snap-start bg-neutral-100 text-neutral-400 p-1 px-3 rounded-[25px] text-sm xl:text-md hover:bg-black cursor-pointer hover:text-neutral-100">
+                        <div onClick={() => router.push('/topics/'+interest)} key={interest} className="snap-start bg-neutral-100 text-neutral-400 p-1 px-3 rounded-[20px] text-sm xl:text-md hover:bg-black cursor-pointer hover:text-neutral-100">
                             {interest}
                         </div>
                     ))}
@@ -32,7 +32,7 @@ const Interests: React.FC<Props> = ({interests}) => {
                     </svg>
                     <button 
                         onClick={() => router.push('/explore')}
-                        className="bg-primary hover:bg-amber-400 text-black font-light rounded-[25px] p-2 px-5 leading-5">
+                        className="bg-primary hover:bg-amber-400 text-black font-light rounded-[20px] p-2 px-5 leading-5">
                             Let&apos;s go exploring to see what you like!
                     </button>
                 </div>

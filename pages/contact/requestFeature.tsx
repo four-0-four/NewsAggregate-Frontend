@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import SocialMedia from '../components/SocialMedia';
-import Input from '../components/Inputs/Input';
-import Textarea from '../components/Textarea';
-import FileInput from '../components/Inputs/FileInput';
+import SocialMedia from '../../components/SocialMedia';
+import Input from '../../components/Inputs/Input';
+import Textarea from '../../components/Textarea';
+import FileInput from '../../components/Inputs/FileInput';
 import nookies from "nookies";
 import { GetServerSideProps } from "next";
-import { useAppDispatch, useAppSelector } from '../lib/hooks';
-import { selectUserError, selectUserStatus } from '../lib/features/user/slice';
-import { requestFeature } from '../lib/features/user/thunks';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { selectUserError, selectUserStatus } from '../../lib/features/user/slice';
+import { requestFeature } from '../../lib/features/user/thunks';
 
 const requestFeatureForm = () => {
     const dispatch = useAppDispatch();
@@ -85,7 +85,7 @@ const requestFeatureForm = () => {
     
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start">
-            <form onSubmit={handleSubmit} className="w-full px-4 sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl bg-white p-6 rounded-[25px] border border-gray-100 ">
+            <form onSubmit={handleSubmit} className="w-full px-4 sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl bg-white p-6 rounded-[20px] border border-gray-100 ">
                 <h1 className={`text-xl md:text-2xl font-bold text-left uppercase pb-4 font-semibold`}>
                   Request a Feature
                 </h1>
@@ -125,7 +125,7 @@ const requestFeatureForm = () => {
                         <FileInput files={formData.files} headerText="[Optional] Related Screenshots to help us understand better" onFileChange={handleFileChange} clearFile={clearFile}/>
 
                         <div className="mt-10 flex flex-col md:flex-row justify-end items-center w-full">
-                            <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[25px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
+                            <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[20px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
                                 Submit
                             </button>
                         </div>

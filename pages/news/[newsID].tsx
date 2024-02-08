@@ -60,9 +60,9 @@ const news: React.FC<NewsComponentProps> = ({}) => {
         )
     }
     return (
-        <div className="flex flex-col lg:max-w-[750px] w-full rounded-[25px] bg-white border-solid border border-gray-100 overflow-hidden p-2">
-            <div className="relative rounded-[25px] max-h-[300px] overflow-hidden">
-                <img src={selectedArticle?.media[0]} alt="News" className="block object-cover rounded-[25px] max-h-[300px] w-full" />
+        <div className="flex flex-col lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2">
+            <div className="relative rounded-[20px] max-h-[300px] overflow-hidden">
+                <img src={selectedArticle?.media[0]} alt="News" className="block object-cover rounded-[20px] max-h-[300px] w-full" />
                 <h2 className="hidden xs:block absolute bottom-0 left-0 right-0 block md:block text-lg sm:text-xl font-bold text-white p-4 bg-gradient-to-t from-black to-transparent">
                     {selectedArticle?.title}
                 </h2>

@@ -73,7 +73,7 @@ const topics = (props: Props) => {
         </div>
       )}
       {categories.length > 0 && (
-        <div className="bg-white rounded-[25px] border-solid border border-gray-100 p-5 xl:p-7 mb-10">
+        <div className="bg-white rounded-[20px] border-solid border border-gray-100 p-5 xl:p-7 mb-10">
           <h1 className="text-xl font-bold mb-4">
             Explore a range of subjects to find your interest
           </h1>
@@ -81,7 +81,7 @@ const topics = (props: Props) => {
             {categories.map((category) => (
               <button
                 key={category}
-                className="bg-gray-100 text-gray-500 hover:bg-black hover:text-neutral-100 py-[5px] px-3 rounded-[25px] m-1"
+                className="bg-gray-100 text-gray-500 hover:bg-black hover:text-neutral-100 py-[5px] px-3 rounded-[20px] m-1"
                 onClick={() => router.push('/topics/'+category)}
               >
                 {category}
@@ -96,7 +96,7 @@ const topics = (props: Props) => {
             {category.status != "idle" && (
               <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
                 <h2 className="text-3xl font-bold inline-block cursor-pointer" onClick={() => router.push('/topics/'+category.name)}>{category.name}</h2>
-                <button onClick={()=>handleClick(category.name)} className={`text-sm  ${following?.includes(category.name)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[25px] p-1 px-3 ${following?.includes(category.name)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
+                <button onClick={()=>handleClick(category.name)} className={`text-sm  ${following?.includes(category.name)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[20px] p-1 px-3 ${following?.includes(category.name)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
                   {following?.includes(category.name)?"Following":"+ Follow Topic"}
                 </button>
               </div>

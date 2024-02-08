@@ -54,7 +54,7 @@ const topic: React.FC = ({}) => {
           <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
             <h2 className="text-3xl font-bold inline-block">{topic}</h2>
             {category.status === 'succeeded'  && (
-              <button onClick={()=>handleClick(topic)} className={`text-sm  ${following?.includes(topic)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[25px] p-1 px-3 ${following?.includes(topic)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
+              <button onClick={()=>handleClick(topic)} className={`text-sm  ${following?.includes(topic)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[20px] p-1 px-3 ${following?.includes(topic)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
                 {following?.includes(topic)?"Following":"+ Follow Topic"}
               </button>
             )}
@@ -76,7 +76,7 @@ const topic: React.FC = ({}) => {
             <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
               <h2 className="text-3xl font-bold inline-block">{topic}</h2>
               {category && category.status === 'succeeded'  && (
-                <button onClick={()=>handleClick(topic)} className={`text-sm  ${following?.includes(topic)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[25px] p-1 px-3 ${following?.includes(topic)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
+                <button onClick={()=>handleClick(topic)} className={`text-sm  ${following?.includes(topic)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[20px] p-1 px-3 ${following?.includes(topic)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
                   {following?.includes(topic)?"Following":"+ Follow Topic"}
                 </button>
               )}
@@ -108,7 +108,7 @@ const topic: React.FC = ({}) => {
             )}
             {category && category.status === 'succeeded' && LoadMore && (
                 <div className="flex justify-center mt-5">
-                    <button onClick={HandleLoadMore} className="text-2xl text-primary flex items-center cursor-pointer hover:text-amber-400 px-4 py-1 border-2 border-primary rounded-[25px]">
+                    <button onClick={HandleLoadMore} className="text-2xl text-primary flex items-center cursor-pointer hover:text-amber-400 px-4 py-1 border-2 border-primary rounded-[20px]">
                         <h3>Load More</h3>
                     </button>
                 </div>

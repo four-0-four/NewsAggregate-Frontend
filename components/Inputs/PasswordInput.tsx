@@ -19,7 +19,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ headerText, placeholder, 
 
     return (
         <div className="flex flex-col mt-6 relative">
-            <h1 className="text-sm sm:text-md mb-1 ml-2">{headerText}</h1>
+            <h1 className="text-sm sm:text-md mb-[3px] font-bold">{headerText}</h1>
             <input
                 type={viewPassword ? 'text' : 'password'}
                 name={name}
@@ -27,7 +27,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ headerText, placeholder, 
                 value={value}
                 required={required}
                 onChange={onChange}
-                className="p-2 pl-5 pr-10 bg-very-light-gray rounded-[25px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm"
+                className="p-2 px-3 border border-gray rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm"
             />
             <div className="absolute inset-y-0 right-3 top-6 flex items-center cursor-pointer" onClick={togglePasswordVisibility}>
                 {viewPassword ? (

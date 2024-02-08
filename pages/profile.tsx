@@ -157,7 +157,7 @@ const Profile = () => {
     
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start">
-            <form onSubmit={handleSubmit} className="w-full px-4 sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl bg-white p-6 rounded-[25px] border border-gray-100 ">
+            <form onSubmit={handleSubmit} className="w-full px-4 sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl bg-white p-6 rounded-[20px] border border-gray-100 ">
                 <h1 className={`text-xl md:text-2xl font-bold text-left uppercase pb-4 font-semibold border-b border-gray-100 ${(status === 'succeeded' || status === 'failed') ? "mb-1" : "mb-4"}`}>
                   My Profile
                 </h1>
@@ -187,7 +187,7 @@ const Profile = () => {
                           <button 
                             type="submit"
                             disabled={!isChanged && !usernameAvailable}
-                            className={`w-full md:w-auto px-12 py-2 ${isChanged ? 'bg-primary text-black' : 'bg-gray-300 text-gray-500'} rounded-[25px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm`}
+                            className={`w-full md:w-auto px-12 py-2 ${isChanged ? 'bg-primary text-black' : 'bg-gray-300 text-gray-500'} rounded-[20px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm`}
                           >
                             Update
                           </button>
@@ -195,7 +195,7 @@ const Profile = () => {
                     </>
                 )}
             </form>
-            <form onSubmit={handleSubmitPasswordChange} className="mt-8 w-full px-4 sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl bg-white p-6 rounded-[25px] border border-gray-100 ">
+            <form onSubmit={handleSubmitPasswordChange} className="mt-8 w-full px-4 sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl bg-white p-6 rounded-[20px] border border-gray-100 ">
                 <h1 className="text-xl md:text-2xl font-bold text-left uppercase pb-4 font-semibold border-b border-gray-100">
                   Security
                 </h1>
@@ -205,7 +205,7 @@ const Profile = () => {
                       <button 
                         type="button"
                         onClick={() => setShowPasswordChange(true)}
-                        className="bg-primary text-black w-full md:w-auto px-8 py-2 rounded-[25px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm"
+                        className="bg-primary text-black w-full md:w-auto px-8 py-2 rounded-[20px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm"
                       >
                         Change Password
                       </button>
@@ -219,8 +219,8 @@ const Profile = () => {
                     <PasswordInput headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange}/>
 
                     <div className="mt-8 flex justify-end">
-                      <button onClick={handleCancelPasswordChange} className="border border-primary text-primary px-4 py-2 rounded-[25px] uppercase mr-2">Cancel</button>
-                      <button type="submit" className="bg-primary text-black px-4 py-2 rounded-[25px] uppercase">Submit</button>
+                      <button onClick={handleCancelPasswordChange} className="border border-primary text-primary px-4 py-2 rounded-[20px] uppercase mr-2">Cancel</button>
+                      <button type="submit" className="bg-primary text-black px-4 py-2 rounded-[20px] uppercase">Submit</button>
                     </div>
                   </>
                 )}

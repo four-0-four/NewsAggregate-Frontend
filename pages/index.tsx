@@ -81,7 +81,7 @@ const Home: React.FC = () => {
       )}
       {userNews && userNews.status === 'succeeded' && LoadMore && (
         <div className="flex justify-center mt-5">
-          <button onClick={HandleLoadMore} className="text-2xl text-primary flex items-center cursor-pointer hover:text-amber-400 px-4 py-1 border-2 border-primary rounded-[25px]">
+          <button onClick={HandleLoadMore} className="text-2xl text-primary flex items-center cursor-pointer hover:text-amber-400 px-4 py-1 border-2 border-primary rounded-[20px]">
             <h3>Load More</h3>
           </button>
         </div>

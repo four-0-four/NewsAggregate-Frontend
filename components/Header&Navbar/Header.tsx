@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { RootState } from '../lib/store'; // Adjust the path according to your file structure
-import { selectIsAuthenticated, selectUserDetails } from '../lib/features/user/slice';
-import { useAppSelector } from '../lib/hooks';
-import ProfileDropdown from '../components/ProfileDropdown';
+import { RootState } from '../../lib/store'; // Adjust the path according to your file structure
+import { selectIsAuthenticated, selectUserDetails } from '../../lib/features/user/slice';
+import { useAppSelector } from '../../lib/hooks';
+import ProfileDropdown from '../ProfileDropdown';
 
 const Header: React.FC = () => {
   const today = new Date();
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
             <ProfileDropdown firstName={userDetails.first_name} lastName={userDetails.last_name} username={userDetails.username}/>
           </>
         ) : (
-          <button className="bg-primary text-black py-2 px-3 sm:px-8 rounded-[25px] uppercase text-sm sm:text-md" onClick={()=>router.push('/auth/Login')}>
+          <button className="bg-primary text-black py-2 px-3 sm:px-8 rounded-[20px] uppercase text-sm sm:text-md" onClick={()=>router.push('/auth/Login')}>
             Login
           </button>
         )}

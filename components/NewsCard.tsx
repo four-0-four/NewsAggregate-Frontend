@@ -39,11 +39,11 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, descripti
     };
 
     return (
-        <div className="flex flex-col md:flex-row w-full rounded-[25px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-2 md:mb-4 cursor-pointer"
+        <div className="flex flex-col md:flex-row w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-2 md:mb-4 cursor-pointer"
         onClick={() => router.push('/news/' + id)}>
-            <img src={imageSrc} alt="News" className="hidden md:block xs:w-1/2 object-cover rounded-[25px] max-h-48" />
+            <img src={imageSrc} alt="News" className="hidden md:block xs:w-1/2 object-cover rounded-[20px] max-h-48" />
             <div className='flex flex-row md:flex-col items-center sm:mb-0 md:mb-4'>
-                <img src={imageSrc} alt="News" className="block md:hidden xs:w-1/2 md:w-full h-full object-cover rounded-[25px] max-h-48" />
+                <img src={imageSrc} alt="News" className="block md:hidden xs:w-1/2 md:w-full h-full object-cover rounded-[20px] max-h-48" />
                 <h2 className="hidden xs:block md:hidden text-lg sm:text-xl font-bold mb-2 p-5">{title}</h2>
             </div>
             <div className="flex flex-col justify-between items-between p-2 px-1 sm:px-4 w-full">

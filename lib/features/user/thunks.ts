@@ -554,7 +554,7 @@ export const updateProfile = createAsyncThunk<
           }
           
           try {
-            const response = await fetch(`${BaseURL}/user/profile/profile`, {
+            const response = await fetch(`${BaseURL}/user/profile/update`, {
               method: 'PATCH',
               headers: {
                 'Authorization': `Bearer ${token}`,

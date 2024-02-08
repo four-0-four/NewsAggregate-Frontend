@@ -1,17 +1,17 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
 import nookies from 'nookies';
-import { useAppSelector } from '../lib/hooks';
-import { selectUserStatus } from '../lib/features/user/slice';
-import ContactUsForm from '../components/Forms/ContactUsForm';
-import SocialMedia from '../components/SocialMedia';
+import { useAppSelector } from '../../lib/hooks';
+import { selectUserStatus } from '../../lib/features/user/slice';
+import ContactUsForm from '../../components/Forms/ContactUsForm';
+import SocialMedia from '../../components/SocialMedia';
 
 const ContactUs = () => {
     const status = useAppSelector(selectUserStatus);
     
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start">
-            <div className="w-full px-4 sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl bg-white p-6 rounded-[25px] border border-gray-100 ">
+            <div className="w-full px-4 sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl bg-white p-6 rounded-[20px] border border-gray-100 ">
                 <h1 className={`text-lg sm:text-xl md:text-2xl font-bold text-left uppercase pb-4 font-semibold`}>
                   Let&apos;s Chat, Reach Out to Us
                 </h1>
