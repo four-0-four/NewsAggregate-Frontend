@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           // Show ProfileSidebar if the route includes /profile, otherwise show the normal Sidebar
           isProfileRoute ? <ProfileSidebar /> : <Sidebar />
         )}
-        <main className={`${isLandingPage ? '' : 'flex-1 p-2 px-1 sm:px-2 justify-start pt-5 '}`}>
+        <main className={`${isLandingPage ? '' : 'flex-1 p-2 px-1 sm:px-2 justify-start pt-5'}`}>
           {children}
         </main>
       </div>

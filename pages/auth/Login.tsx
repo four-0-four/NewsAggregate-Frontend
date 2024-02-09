@@ -29,28 +29,27 @@ const LoginForm = () => {
 
     return (
         <div className="flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36">
-            <form onSubmit={handleSubmit} className="w-full px-4 md:w-full lg:max-w-xl xl:max-w-2xl mx-auto bg-white p-6 rounded-[20px] border border-light-gray">
-                <h1 className={`text-xl md:text-2xl font-bold text-center uppercase pb-4 ${(status === 'succeeded' || status === 'failed')?"mb-1":"mb-4"} border-b border-light-gray`}>Login</h1>
-                {error && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
+            <Box title="Login">
+                <form onSubmit={handleSubmit}>
+                    {error && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
 
 
-                <Input headerText="Username/Email" placeholder="Username/Email" name="username" value={formData.username} onChange={handleChange} />
+                    <Input headerText="Username/Email" placeholder="Username/Email" name="username" value={formData.username} onChange={handleChange} />
 
-                <PasswordInput headerText="Password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
-                <div className='text-right text-dark-gray mt-1'>
-                    <Link href="/auth/ForgetPassword" className='cursor-pointer'>forget password?</Link>
-                </div>
+                    <PasswordInput headerText="Password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
+                    <div className='text-right text-dark-gray mt-1'>
+                        <Link href="/auth/ForgetPassword" className='cursor-pointer'>forget password?</Link>
+                    </div>
 
-                <div className="mt-10 flex flex-col md:flex-row justify-between items-center w-full">
-                    <p className="text-xs md:text-sm order-2 md:order-1">
-                        Doesn&apos;t Have an Account?
-                        <Link href="/auth/Register" className="text-primary"> Register</Link>
-                    </p>
-                    <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[20px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
-                        Log In
-                    </button>
-                </div>
-            </form>
+                    <div className="mt-5 flex flex-col md:flex-row justify-between items-center w-full">
+                        <p className="text-xs md:text-sm order-2 md:order-1">
+                            Doesn&apos;t Have an Account?
+                            <Link href="/auth/Register" className="text-primary"> Register</Link>
+                        </p>
+                        <PrimaryButton type="submit" text="Login" disabled={status === 'loading'} />
+                    </div>
+                </form>
+            </Box>
         </div>
     );
 }
@@ -59,6 +58,8 @@ import nookies from "nookies";
 import { GetServerSideProps } from "next";
 import Link from 'next/link';
 import { loginUser } from '../../lib/features/user/thunks';
+import PrimaryButton from '@/components/Buttons/PrimaryButton';
+import Box from '@/components/Box/Box';
 export const getServerSideProps: GetServerSideProps = async (context) => {
   // Check authentication (e.g., check cookies or token)
   const cookies = nookies.get(context);

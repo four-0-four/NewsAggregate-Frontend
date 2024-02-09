@@ -14,7 +14,7 @@ type InputProps = {
 const Input: React.FC<InputProps> = ({ headerText, placeholder, name, value, onChange, required = true, type="text" }) => {
     return (
         <div className="flex flex-col mt-6">
-            <h1 className="text-sm sm:text-md mb-1 ml-2">{headerText}</h1>
+            <h1 className="text-sm sm:text-md mb-[3px] font-bold">{headerText}</h1>
             <input
                 type={type}
                 name={name}
@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({ headerText, placeholder, name, value, onC
                 value={value}
                 required={required}
                 onChange={onChange}
-                className="p-2 px-5 bg-very-light-gray rounded-[20px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm"
+                className="p-2 px-3 border border-gray rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm"
             />
         </div>
     );
