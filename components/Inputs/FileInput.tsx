@@ -10,14 +10,14 @@ type Props = {
 const FileInput: React.FC<Props> = ({ headerText, onFileChange, clearFile, files }) => {
   return (
     <div className="flex flex-col mt-6">
-        <h1 className="text-sm sm:text-md mb-1 ml-2">{headerText}</h1>
+        <h1 className="text-sm sm:text-md mb-[3px] font-bold">{headerText}</h1>
         <div className="flex items-center justify-center w-full">
-            <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-[20px] cursor-pointer bg-gray-50 hover:bg-gray-100">
+            <label className="flex flex-col items-center justify-center w-full h-32 border-dashed cursor-pointer p-2 px-3 bg-gray-50 border border-gray rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm">
                 <div className="flex flex-col items-center justify-center pt-2 pb-3">
-                    <svg className="w-8 h-8 mb-2 mt-2 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 mb-2 text-gray-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15" />
                     </svg>
-                    <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                    <p className="mb-1 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
                     <p className="text-xs text-gray-500">{"SVG, PNG, JPG or GIF (MAX. 5MB)"}</p>
                 </div>
                 <input id="dropzone-file" type="file" className="hidden" onChange={onFileChange} accept=".svg, .png, .jpg, .jpeg, .gif"/>

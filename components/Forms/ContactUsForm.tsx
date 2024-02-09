@@ -3,7 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../lib/hooks';
 import { selectUserError, selectUserStatus } from '../../lib/features/user/slice';
 import { contactUs } from '../../lib/features/user/thunks';
 import Input from '../Inputs/Input';
-import Textarea from '../Textarea';
+import Textarea from '../Inputs/Textarea';
+import PrimaryButton from '../Buttons/PrimaryButton';
 
 type Props = {}
 
@@ -58,10 +59,8 @@ const ContactUsForm = (props: Props) => {
 
                     <Textarea headerText="Message" placeholder="Message" name="message" value={formData.message} onChange={handleChangetextarea} />
 
-                    <div className="mt-10 flex flex-col md:flex-row justify-end items-center w-full">
-                        <button className="w-full md:w-auto px-12 py-2 bg-primary text-black rounded-[20px] uppercase mb-4 md:mb-0 order-1 md:order-2 text-sm">
-                            Submit
-                        </button>
+                    <div className="mt-5 flex flex-col md:flex-row justify-end items-end w-full">
+                        <PrimaryButton type="submit" text="Submit" />
                     </div>
                 </>
             )}

@@ -5,20 +5,20 @@ import { useAppSelector } from '../../lib/hooks';
 import { selectUserStatus } from '../../lib/features/user/slice';
 import ContactUsForm from '../../components/Forms/ContactUsForm';
 import SocialMedia from '../../components/SocialMedia';
+import Box from '@/components/Box/Box';
 
 const ContactUs = () => {
     const status = useAppSelector(selectUserStatus);
     
     return (
-        <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start">
-            <div className="w-full px-4 sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl bg-white p-6 rounded-[20px] border border-gray-100 ">
-                <h1 className={`text-lg sm:text-xl md:text-2xl font-bold text-left uppercase pb-4 font-semibold`}>
-                  Let&apos;s Chat, Reach Out to Us
-                </h1>
-                <p className={`text-sm sm:text-md border-b border-gray-100 text-neutral-500 pb-4 ${(status === 'succeeded' || status === 'failed') ? "mb-1" : "mb-4"}`}>Have a question or feedback? We&apos;re here to help. Send us a message, and we&apos;ll respond within 24 hours</p>
-                <ContactUsForm />
-            </div>
+        <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
+          <Box title="Let&apos;s Chat, Reach Out to Us">
+            <p className={`text-sm sm:text-md text-neutral-500 ${(status === 'succeeded' || status === 'failed') ? "mb-1" : "mb-4"}`}>Have a question or feedback? We&apos;re here to help. Send us a message, and we&apos;ll respond within 24 hours</p>
+            <ContactUsForm />
+          </Box>
+          <Box title="Other Ways to Reach Us">
             <SocialMedia />
+          </Box>
         </div>
     );
 }
