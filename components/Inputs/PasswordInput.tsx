@@ -27,7 +27,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ headerText, placeholder, 
                 value={value}
                 required={required}
                 onChange={onChange}
-                className="p-2 px-3 border border-gray rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm"
+                className="p-2 px-3 border border-gray rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary  placeholder:text-xs sm:placeholder:text-sm"
             />
             <div className="absolute inset-y-0 right-3 top-6 flex items-center cursor-pointer" onClick={togglePasswordVisibility}>
                 {viewPassword ? (

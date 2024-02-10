@@ -26,7 +26,7 @@ const EditableInput: React.FC<InputProps> = ({ headerText, placeholder, name, va
                 readOnly={readOnly}
                 onBlur={onBlur}
                 onChange={onChange}
-                className={`p-2 px-3 border border-gray rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm ${readOnly?'text-gray-400 cursor-default':''}`}
+                className={`p-2 px-3 border border-gray rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-xs sm:placeholder:text-sm ${readOnly?'text-gray-400 cursor-default':''}`}
             />
             {!readOnly && (
                 <div className="absolute inset-y-0 right-3 top-6 flex items-center pointer-events-none">

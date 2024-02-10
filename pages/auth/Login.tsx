@@ -28,8 +28,8 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36">
-            <Box title="Login">
+        <div className="flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36 px-2 sm:px-10">
+            <Box title="Login" size="small">
                 <form onSubmit={handleSubmit}>
                     {error && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
 

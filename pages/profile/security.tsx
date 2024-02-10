@@ -78,7 +78,7 @@ const security = () => {
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start">
             <Box title="Sign in & Security">
               <form onSubmit={handleSubmitPasswordChange}>
-                <div className={`${!showPasswordChange?'mt-6':''} flex flex-col md:flex-row justify-between items-center w-full`}>
+                <div className={`${!showPasswordChange?'mt-6':''} flex flex-col sm:flex-row justify-between items-center w-full`}>
                     {!showPasswordChange && (
                       <>
                         <h1 className="font-bold">Password</h1>
@@ -93,7 +93,7 @@ const security = () => {
                     <PasswordInput headerText="New Password" placeholder="New Password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange}/>
                     <PasswordInput headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange}/>
 
-                    <div className="mt-8 flex justify-end">
+                    <div className="mt-8 flex flex-col sm:flex-row justify-end items-center w-full">
                       <SecondaryButton onClick={handleCancelPasswordChange} text="Cancel"/>
                       <PrimaryButton type="submit" text="Change Password"/>
                     </div>

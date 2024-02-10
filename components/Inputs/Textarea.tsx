@@ -22,7 +22,7 @@ const Textarea: React.FC<InputProps> = ({ headerText, placeholder, name, value, 
                 required={required}
                 onChange={onChange}
                 rows={5}
-                className="p-2 px-3 border border-gray rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary placeholder:text-sm"
+                className="p-2 px-3 border border-gray rounded-[8px] focus:outline-none focus:ring-2 focus:ring-primary  placeholder:text-xs sm:placeholder:text-sm"
             />
         </div>
     );

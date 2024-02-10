@@ -60,7 +60,7 @@ const news: React.FC<NewsComponentProps> = ({}) => {
         )
     }
     return (
-        <div className="flex flex-col lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2">
+        <div className="flex flex-col lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6">
             <div className="relative rounded-[20px] max-h-[300px] overflow-hidden">
                 <img src={selectedArticle?.media[0]} alt="News" className="block object-cover rounded-[20px] max-h-[300px] w-full" />
                 <h2 className="hidden xs:block absolute bottom-0 left-0 right-0 block md:block text-lg sm:text-xl font-bold text-white p-4 bg-gradient-to-t from-black to-transparent">
@@ -86,12 +86,14 @@ const news: React.FC<NewsComponentProps> = ({}) => {
                         <div className="text-sm text-gray-500">{formatDate(selectedArticle?.publishedDate)}</div>
                     </div>
                 </div>
-                <div className='flex gap-2 flex-wrap my-5'>
-                    <span className='font-bold mr-2'>Tags: </span>
-                    {selectedArticle?.keywords.map((tag, index) => (
-                        <span key={index} className="inline-block bg-neutral-100 rounded-full px-3 py-1 text-xs sm:text-sm font-normal text-neutral-400">{tag}</span>
-                    ))}
-                </div>
+                {selectedArticle?.keywords && selectedArticle?.keywords.length > 0 && (
+                    <div className='flex gap-2 flex-wrap my-5'>
+                        <span className='font-bold mr-2'>Tags: </span>
+                        {selectedArticle?.keywords.map((tag, index) => (
+                            <span key={index} className="inline-block bg-neutral-100 rounded-full px-3 py-1 text-xs sm:text-sm font-normal text-neutral-400">{tag}</span>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

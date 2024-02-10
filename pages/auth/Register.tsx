@@ -33,7 +33,7 @@ const RegisterForm = () => {
     };
 
     return (
-        <div className="flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36">
+        <div className="flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36 px-2 sm:px-10">
             <Box title="Register">
                 <form onSubmit={handleSubmit}>
                     {registered && (

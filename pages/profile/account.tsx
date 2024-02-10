@@ -144,7 +144,7 @@ const account = () => {
                     />
                     {usernameAvailabilityMessage && <p className={`text-sm ml-2 mt-1 ${usernameAvailable ? 'text-green-500' : 'text-red-500'}`}>*{usernameAvailabilityMessage}</p>}
 
-                    <div className="mt-10 flex flex-col md:flex-row justify-end items-center w-full">
+                    <div className="mt-10 flex flex-col sm:flex-row justify-end items-center w-full">
                       {!(!isChanged || !usernameAvailable) && (<SecondaryButton onClick={handleCancelUpdate} text="Cancel"/>)}
                       <PrimaryButton type="submit" text="Update" disabled={!isChanged || !usernameAvailable}/>
                     </div>
