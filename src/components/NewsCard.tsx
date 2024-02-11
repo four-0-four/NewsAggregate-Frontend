@@ -13,18 +13,21 @@ type NewsComponentProps = {
 };
 
 const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, description, from, fromImage, date, tags }) => {
-    // Function to format the date
-    const formatDate = (dateString:string) => {
-        const date = new Date(dateString); // Convert string to Date object
     
-        const now = new Date();
-        const utcNow = new Date(now.toISOString());
-        const utcDate = new Date(date.toISOString());
+    const formatDate = (dateString: string) => {
+        // Assuming dateString is in UTC, parse it as such
+        const date = new Date(dateString + 'Z'); // Add 'Z' to indicate UTC time
     
-        const differenceInSeconds = (utcNow.getTime() - utcDate.getTime()) / 1000;
-    
-        return date.toLocaleString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        // Format and return the date in the user's local timezone
+        return date.toLocaleString(undefined, {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
     };
+    
 
 
     const truncateDescription = (description:string) => {
@@ -44,10 +47,10 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, descripti
     return (
         <div className="flex flex-col md:flex-row w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-2 md:mb-4 cursor-pointer"
         onClick={() => navigate('/news/' + id)}>
-            <img src={imageSrc} alt="News" className="hidden md:block xs:w-1/2 object-cover rounded-[20px] max-h-48" />
-            <div className='flex flex-row md:flex-col items-center sm:mb-0 md:mb-4'>
-                <img src={imageSrc} alt="News" className="block md:hidden xs:w-1/2 md:w-full h-full object-cover rounded-[20px] max-h-48" />
-                <h2 className="hidden xs:block md:hidden text-lg sm:text-xl font-bold mb-2 p-5">{title}</h2>
+            <img src={imageSrc} alt="News" className="hidden md:block min-w-[33%] w-1/3 object-cover object-top rounded-[20px] max-h-48 min-h-100%" />
+            <div className='flex flex-row md:flex-col items-center md:mb-4'>
+                <img src={imageSrc} alt="News" className="block md:hidden w-full xs:w-2/5 h-32 object-cover object-top rounded-[20px]" />
+                <h2 className="w-full xs:w-3/5 hidden xs:block md:hidden text-lg sm:text-xl font-bold mb-2 p-5">{title}</h2>
             </div>
             <div className="flex flex-col justify-between items-between p-2 px-1 sm:px-4 w-full">
                 <div>

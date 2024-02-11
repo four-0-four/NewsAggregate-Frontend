@@ -22,26 +22,28 @@ const News: React.FC<NewsComponentProps> = ({}) => {
 
     const selectedArticle = useAppSelector(selectSelectedArticle);
 
-    const formatDate = (stringdate: string) => {
-        if(stringdate === undefined) return;
+    const formatDate = (stringdate:string) => {
+        if (stringdate === undefined) return;
         
-        let date = new Date(stringdate)
+        // Parse the input string as UTC by appending 'Z' if it doesn't already end with 'Z'
+        let date = new Date(stringdate.endsWith('Z') ? stringdate : stringdate + 'Z');
+        
         const now = new Date();
         const differenceInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
-    
+        
         if (differenceInHours < 24) {
             return `${Math.round(differenceInHours)} hours ago`;
         }
-    
+        
         const differenceInDays = differenceInHours / 24;
         if (differenceInDays < 7) {
-            const timeString = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            //return `${Math.round(differenceInDays)} days ago at ${timeString}`;
+            // For "days ago", no need to append time since it's already in a relatively broad time frame
             return `${Math.round(differenceInDays)} days ago`;
         }
-    
+        
+        // For dates older than a week, display the full date in the user's local timezone
         return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
-    }; 
+    };
 
 
     const newsStatus = useAppSelector(selectNewsStatus);
@@ -55,7 +57,7 @@ const News: React.FC<NewsComponentProps> = ({}) => {
     return (
         <div className="flex flex-col lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6">
             <div className="relative rounded-[20px] max-h-[300px] overflow-hidden">
-                <img src={selectedArticle?.media[0]?selectedArticle?.media[0]:"/breaking_news.png"} alt="News" className="block object-cover rounded-[20px] max-h-[300px] w-full" />
+                <img src={selectedArticle?.media[0]?selectedArticle?.media[0]:"/breaking_news.png"} alt="News" className="block object-cover object-top rounded-[20px] max-h-[300px] w-full" />
                 <h2 className="hidden xs:block absolute bottom-0 left-0 right-0 block md:block text-lg sm:text-xl font-bold text-white p-4 bg-gradient-to-t from-black to-transparent">
                     {selectedArticle?.title}
                 </h2>
