@@ -22,8 +22,8 @@ input::-ms-clear {
 }
 
 body {
-  @apply font-sans;
   background-color: #FBFCFD;
+  font-family: 'Poppins', sans-serif;
 }
 
 

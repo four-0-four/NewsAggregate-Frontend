@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 type NewsComponentProps = {
@@ -41,28 +41,31 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, descripti
         return truncated + "... (read more)"
     };
 
-    if (!imageSrc) imageSrc = '/breaking_news.png';
+    const [image, setImage] = useState<string>("");
+
+    useEffect(() => {
+        const img = new Image();
+        img.onload = () => setImage(imageSrc || "/breaking_news.png");
+        img.onerror = () => setImage("/breaking_news.png"); // Fallback image on error
+        img.src = imageSrc || "";
+    }, [imageSrc]);
+
     const navigate = useNavigate();
         
     return (
-        <div className="flex flex-col md:flex-row w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-2 md:mb-4 cursor-pointer"
+        <div className="flex flex-col xs:flex-row lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-2 md:mb-4 cursor-pointer"
         onClick={() => navigate('/news/' + id)}>
-            <img src={imageSrc} alt="News" className="hidden md:block min-w-[33%] w-1/3 object-cover object-top rounded-[20px] max-h-48 min-h-100%" />
-            <div className='flex flex-row md:flex-col items-center md:mb-4'>
-                <img src={imageSrc} alt="News" className="block md:hidden w-full xs:w-2/5 h-32 object-cover object-top rounded-[20px]" />
-                <h2 className="w-full xs:w-3/5 hidden xs:block md:hidden text-lg sm:text-xl font-bold mb-2 p-5">{title}</h2>
-            </div>
-            <div className="flex flex-col justify-between items-between p-2 px-1 sm:px-4 w-full">
+            <img src={image} alt="News" className="block w-full xs:min-w-[33%] xs:w-1/3 object-cover object-top rounded-[20px] max-h-44 min-h-100%" />
+            <div className="flex flex-col justify-between items-between p-2 px-1 xs:px-4 w-full">
                 <div>
-                    <h2 className="block xs:hidden md:block text-lg sm:text-xl font-bold mb-2">{title}</h2>
-                    <p className="text-sm sm:text-md">{truncateDescription(description)}</p>
+                    <h2 className="block text-lg sm:text-xl mb-2 !leading-7">{title}</h2>
+                    <div className="text-sm md:text-md text-gray-400 mb-3">{formatDate(date)}</div>
                 </div>
-                <div className='flex flex-col items-start justify-end mt-4 h-full'>
+                <div className='flex flex-col items-start justify-end mt-1'>
                     <div className="flex items-center gap-2 xs:w-fit w-full">
                         <img className="w-10 h-10 rounded-full" src={fromImage} alt="news creator image"/>
                         <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
                             <div>{from}</div>
-                            <div className="text-sm text-gray-500">{formatDate(date)}</div>
                         </div>
                     </div>
                 </div>

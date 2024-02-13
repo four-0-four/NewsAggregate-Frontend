@@ -31,6 +31,8 @@ import RegisterForm from './pages/auth/Register';
 import { fetchUserDetails, refreshAccessToken } from './lib/features/user/thunks';
 import isTokenValid from './util/token';
 import { useAppDispatch } from './lib/hooks';
+import FilterSources from './pages/profile/filterSources';
+import BlacklistSources from './pages/profile/BlacklistSources';
 
 const App = () => {
   const storeRef = useRef<AppStore | null>(null);
@@ -97,6 +99,8 @@ const App = () => {
             <Route path="/404" element={<NotFound />} />
             <Route path="/profile/account" element={<Account />} />
             <Route path="/profile/interests" element={<Interests />} />
+            <Route path="/profile/filterSources" element={<FilterSources />} />
+            <Route path="/profile/blacklistSources" element={<BlacklistSources />} />
             <Route path="/profile/security" element={<Security />} />
             <Route path="/policy/PrivacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/policy/TermsOfService" element={<TermsOfService />} />

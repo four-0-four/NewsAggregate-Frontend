@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { selectIsAuthenticated } from '../lib/features/user/slice';
 import { fetchOneNewsArticle } from '../lib/features/news/thunks';
@@ -21,6 +21,14 @@ const News: React.FC<NewsComponentProps> = ({}) => {
 
 
     const selectedArticle = useAppSelector(selectSelectedArticle);
+    const [imageSrc, setImageSrc] = useState<string>("");
+
+    useEffect(() => {
+        const img = new Image();
+        img.onload = () => setImageSrc(selectedArticle?.media[0] || "/breaking_news.png");
+        img.onerror = () => setImageSrc("/breaking_news.png"); // Fallback image on error
+        img.src = selectedArticle?.media[0] || "";
+    }, [selectedArticle?.media]);
 
     const formatDate = (dateString: string) => {
         // Assuming dateString is in UTC, parse it as such
@@ -46,10 +54,11 @@ const News: React.FC<NewsComponentProps> = ({}) => {
             </div>
         )
     }
+    
     return (
         <div className="flex flex-col lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6">
             <div className="relative rounded-[20px] max-h-[300px] overflow-hidden">
-                <img src={selectedArticle?.media[0]?selectedArticle?.media[0]:"/breaking_news.png"} alt="News" className="block object-cover object-top rounded-[20px] max-h-[300px] w-full" />
+                <img src={imageSrc} alt="News" className="block object-cover object-top rounded-[20px] max-h-[300px] w-full" />
                 <h2 className="hidden xs:block absolute bottom-0 left-0 right-0 block md:block text-lg sm:text-xl font-bold text-white p-4 pt-32"
                     style={{background: 'linear-gradient(to top, black, rgba(0,0,0,0) 100%)'}}>
                     {selectedArticle?.title}

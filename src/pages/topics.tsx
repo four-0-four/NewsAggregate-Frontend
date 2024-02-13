@@ -72,7 +72,7 @@ const Topics = (props: Props) => {
         </div>
       )}
       {categories.length > 0 && (
-        <div className="bg-white rounded-[20px] border-solid border border-gray-100 p-5 xl:p-7 mb-10">
+        <div className="bg-white rounded-[20px]  lg:max-w-[750px]  border-solid border border-gray-100 p-5 xl:p-7 mb-10">
           <h1 className="text-xl font-bold mb-4">
             Explore a range of subjects to find your interest
           </h1>

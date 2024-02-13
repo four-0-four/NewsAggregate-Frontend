@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import Header from '../components/Header&Navbar/Header';
-import { useLocation } from 'react-router-dom'; // Import useLocation instead of useRouter
+import { useLocation, useNavigate } from 'react-router-dom'; // Import useLocation instead of useRouter
 import Sidebar from '../components/Sidebar/Sidebar';
 import MobileSidebar from '../components/Sidebar/MobileSidebar';
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
@@ -15,9 +15,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const location = useLocation(); // Use useLocation to access the current route
   // Check if current route is /landing, /profile, or /contact
+  const navigate = useNavigate();
   const isLandingPage = location.pathname === '/landing';
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  
   
   useEffect(() => {
     dispatch(resetStatus());
