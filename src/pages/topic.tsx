@@ -8,6 +8,7 @@ import { addFollowing, removeFollowing } from '../lib/features/user/thunks';
 import NewsCard from '../components/NewsCard';
 import InternalError from '../components/InternalError';
 import Placeholder from '../components/Placeholders/NewsCardPlaceholder';
+import LoadMoreButton from '../components/Buttons/LoadMoreButton';
 
 const TopicPage: React.FC = ({}) => {
     // Function to format the date
@@ -112,11 +113,7 @@ const TopicPage: React.FC = ({}) => {
               </>
             )}
             {category && category.status === 'succeeded' && LoadMore && (
-                <div className="flex justify-center mt-5">
-                    <button onClick={HandleLoadMore} className="text-2xl text-primary flex items-center cursor-pointer hover:text-amber-400 px-4 py-1 border-2 border-primary rounded-[20px]">
-                        <h3>Load More</h3>
-                    </button>
-                </div>
+                <LoadMoreButton HandleLoadMore={HandleLoadMore} />
             )}
           </div>
       </div>

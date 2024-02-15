@@ -11,6 +11,7 @@ import InternalError from "../components/InternalError";
 import NewsCard from "../components/NewsCard";
 import Placeholder from "../components/Placeholders/NewsCardPlaceholder";
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
+import LoadMoreButton from '../components/Buttons/LoadMoreButton';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch(); // Use Redux's useDispatch
@@ -73,11 +74,7 @@ const Home: React.FC = () => {
         </>
       )}
       {userNews && userNews.status === 'succeeded' && LoadMore && (
-        <div className="flex justify-center mt-5">
-          <button onClick={HandleLoadMore} className="my-1 mb-3 bg-gray-100 rounded-full text-gray-300 px-14 py-2 hover:bg-gray-200 hover:text-gray-400">
-            <h3>Load More</h3>
-          </button>
-        </div>
+        <LoadMoreButton HandleLoadMore={HandleLoadMore} />
       )}
   </>
   )
