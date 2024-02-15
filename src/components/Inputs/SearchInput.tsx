@@ -1,6 +1,4 @@
 import React from 'react';
-import SearchResults from './SearchResults';
-import { newsSourceI } from '../../pages/profile/filterSources';
 
 type InputProps = {
     placeholder: string;

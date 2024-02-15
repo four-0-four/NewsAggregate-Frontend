@@ -2,18 +2,20 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './features/user/slice';
 import newsReducer from './features/news/slice';
+import newsSourceReducer from './features/newsSource/slice';
 
 export const makeStore = ()=> {
   return configureStore({
     reducer: {
       user: userReducer,
       news: newsReducer,
+      newsSource: newsSourceReducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
       }),
-  })
+    })
 };
 
 // Infer the type of makeStore

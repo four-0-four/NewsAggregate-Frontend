@@ -91,9 +91,8 @@ export const confirmResetToken = createAsyncThunk<string, { token: string }, { r
           },
           body: JSON.stringify({ token, newPassword, confirmPassword }),
         });
-        console.log(response)
+        
         if (!response.ok) {
-          console.log(response)
           throw new Error('Failed to change password');
         }
   
