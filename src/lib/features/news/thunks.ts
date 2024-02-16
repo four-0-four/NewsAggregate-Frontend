@@ -56,10 +56,6 @@ export const fetchNewsArticles = createAsyncThunk<
 export const fetchOneNewsArticle = createAsyncThunk<NewsArticle, string, { rejectValue: string }>(
     'news/fetchOneNewsArticle',
     async (newsID, thunkAPI) => {
-        const token = Cookies.get('access_token');
-        if (!token) {
-            return thunkAPI.rejectWithValue('No access token available');
-        }
 
         try {
             const searchParams = new URLSearchParams();
@@ -67,12 +63,8 @@ export const fetchOneNewsArticle = createAsyncThunk<NewsArticle, string, { rejec
 
             const url = new URL(BaseURL + '/news/getByID');
             url.search = searchParams.toString();
-
             const response = await fetch(url.toString(), {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                }
+                method: 'GET'
             });
 
             if (!response.ok) {

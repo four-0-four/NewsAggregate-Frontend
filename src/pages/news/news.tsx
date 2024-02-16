@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../lib/hooks';
-import { selectIsAuthenticated } from '../lib/features/user/slice';
-import { fetchOneNewsArticle } from '../lib/features/news/thunks';
-import { NewsArticle, selectNewsStatus, selectSelectedArticle } from '../lib/features/news/slice';
-import NewsPlaceholder from '../components/Placeholders/NewsPlaceholder';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { selectIsAuthenticated } from '../../lib/features/user/slice';
+import { fetchOneNewsArticle } from '../../lib/features/news/thunks';
+import { NewsArticle, selectNewsStatus, selectSelectedArticle } from '../../lib/features/news/slice';
+import NewsPlaceholder from '../../components/Placeholders/NewsPlaceholder';
 import { useParams } from 'react-router-dom';
 
 type NewsComponentProps = {};
@@ -14,10 +14,10 @@ const News: React.FC<NewsComponentProps> = ({}) => {
     const isAuthenticated = useAppSelector(selectIsAuthenticated); // Also using the typed selector hook
 
     useEffect(() => {
-        if (isAuthenticated && newsID) {
+        if (newsID) {
             dispatch(fetchOneNewsArticle(newsID)); // This should now be correctly typed
         }
-    }, [dispatch, isAuthenticated, newsID]);
+    }, [dispatch, newsID]);
 
 
     const selectedArticle = useAppSelector(selectSelectedArticle);
@@ -49,16 +49,16 @@ const News: React.FC<NewsComponentProps> = ({}) => {
     const newsStatus = useAppSelector(selectNewsStatus);
     if(newsStatus === 'loading' || !selectedArticle){
         return(
-            <div className='lg:max-w-[750px] w-full '>
+            <div className={`lg:max-w-[750px] w-full ${isAuthenticated?"":"mx-auto"}`}>
                 <NewsPlaceholder />
             </div>
         )
     }
     
     return (
-        <div className="flex flex-col lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6">
+        <div className={`flex flex-col lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6 ${isAuthenticated?"":"mx-auto"}`}>
             <div className="relative rounded-[20px] max-h-[300px] overflow-hidden">
-                <img src={imageSrc} alt="News" className="block object-cover object-top rounded-[20px] max-h-[300px] w-full" />
+                <img src={imageSrc} alt="News" className="block object-cover object-center rounded-[20px] max-h-[300px] w-full" />
                 <h2 className="hidden xs:block absolute bottom-0 left-0 right-0 block md:block text-lg sm:text-xl font-bold text-white p-4 pt-32"
                     style={{background: 'linear-gradient(to top, black, rgba(0,0,0,0) 100%)'}}>
                     {selectedArticle?.title}

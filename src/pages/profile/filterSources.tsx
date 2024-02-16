@@ -98,7 +98,7 @@ const FilterSources = (props: Props) => {
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
             <Box title="Which News Sources Do You Want to See?">
-                <p className='mb-5 text-sm sm:text-md'>Select the specific news sources you wish to include in your personalized feed. This will not affect the content on the Explore page or Topic page. If you wish to remove a news source entirely, including from the Explore page and Topic page, please visit the <a className='text-primary text-underline'>Blacklist News Source</a> Page</p>
+                <p className='mb-5 text-sm sm:text-md'>Select the specific news sources you wish to include in your personalized feed. This will not affect the content on the Explore page or Topic page. If you wish to remove a news source entirely, including from the Explore page and Topic page, please visit the <a className='text-primary text-underline' href="/profile/blacklistSources">Blacklist News Source</a> Page</p>
                 <SearchInput 
                     placeholder={'Search for News Sources'} 
                     name={'search'} 

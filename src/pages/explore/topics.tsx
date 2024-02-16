@@ -1,64 +1,69 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
-import { useAppDispatch, useAppSelector } from '../lib/hooks';
-import { selectIsAuthenticated, selectUserFollowings } from '../lib/features/user/slice';
-import { NewsArticle, selectCategoryArticles, selectNewsCategories, selectNewsStatus } from '../lib/features/news/slice';
-import { fetchCategories, fetchTopicNews } from '../lib/features/news/thunks';
-import { addFollowing, removeFollowing } from '../lib/features/user/thunks';
-import NewsCard from '../components/NewsCard';
-import InternalError from '../components/InternalError';
-import Placeholder from '../components/Placeholders/NewsCardPlaceholder';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks';
+import { selectIsAuthenticated, selectUserFollowings } from '../../lib/features/user/slice';
+import { NewsArticle, selectCategoryArticles, selectNewsCategories, selectNewsStatus } from '../../lib/features/news/slice';
+import { fetchCategories, fetchTopicNews } from '../../lib/features/news/thunks';
+import { addFollowing, removeFollowing } from '../../lib/features/user/thunks';
+import NewsCard from '../../components/NewsCard';
+import InternalError from '../../components/InternalError';
+import Placeholder from '../../components/Placeholders/NewsCardPlaceholder';
 
 
 type Props = {}
 
-const Topics = (props: Props) => {
+const Topics = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const categories = useAppSelector(selectNewsCategories);
   const categoryArticles = useAppSelector(selectCategoryArticles);
   const userFollowing = useAppSelector(selectUserFollowings);
-
-  const [following,setFollowing] = useState<string[]>([]);
-
-  useEffect(() => {
-    setFollowing(userFollowing)
-  },[userFollowing])
+  const [following, setFollowing] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // Added loading state
 
   useEffect(() => {
-    if(isAuthenticated){
-      categoryArticles.map(category => {
-        if(category.status === 'idle'){
+    setFollowing(userFollowing);
+  }, [userFollowing]);
+
+  useEffect(() => {
+    const fetchCategoriesData = async () => {
+      if (isAuthenticated) {
+        setIsLoading(true); // Start loading
+        await dispatch(fetchCategories({ parent_category_id: 0 }));
+        setIsLoading(false); // End loading after categories are fetched
+      }
+    };
+
+    fetchCategoriesData();
+  }, [dispatch, isAuthenticated]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      categoryArticles.forEach(category => {
+        if (category.status === 'idle') {
           dispatch(fetchTopicNews(category.name));
         }
       });
     }
-  }, [categoryArticles, isAuthenticated])
-
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchCategories({parent_category_id:0}))
-    }
-  }, [dispatch, isAuthenticated]);
+  }, [categoryArticles, isAuthenticated, dispatch]);
 
   const newsStatus = useAppSelector(selectNewsStatus);
-  if(newsStatus == 'failed'){
-    return(<InternalError />)
+  if (newsStatus === 'failed') {
+    return <InternalError />;
   }
 
   let handleClick = (topic: string) => {
-    if(following?.includes(topic)){
-      dispatch(removeFollowing({topic}));
-    }else{
-      dispatch(addFollowing({topic}));
+    if (following.includes(topic)) {
+      return;//it should only be removed from the profile page
+    } else {
+      dispatch(addFollowing({ topic }));
     }
-  }
+  };
   
   return (
     <div>
-      {categories.length == 0 && (
+      {!isLoading && categories.length == 0 && (
         <div>
           <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
             <h2 className="text-3xl font-bold inline-block">Explore Page</h2>
@@ -71,7 +76,7 @@ const Topics = (props: Props) => {
           </div>
         </div>
       )}
-      {categories.length > 0 && (
+      {!isLoading && categories.length > 0 && (
         <div className="bg-white rounded-[20px]  lg:max-w-[750px]  border-solid border border-gray-100 p-5 xl:p-7 mb-10">
           <h1 className="text-xl font-bold mb-4">
             Explore a range of subjects to find your interest
@@ -95,7 +100,7 @@ const Topics = (props: Props) => {
             {category.status != "idle" && (
               <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
                 <h2 className="text-3xl font-bold inline-block cursor-pointer" onClick={() => navigate('/topics/'+category.name)}>{category.name}</h2>
-                <button onClick={()=>handleClick(category.name)} className={`text-sm  ${following?.includes(category.name)?'text-primary border border-primary':'text-black bg-primary'} ml-4 rounded-[20px] p-1 px-3 ${following?.includes(category.name)?"hover:bg-primary hover:text-white":"hover:bg-amber-400"}`}>
+                <button onClick={()=>handleClick(category.name)} className={`text-sm  ${following?.includes(category.name)?'text-primary border border-primary cursor-default outline-0':'text-black bg-primary hover:bg-amber-400'} ml-4 rounded-[20px] p-1 px-3`}>
                   {following?.includes(category.name)?"Following":"+ Follow Topic"}
                 </button>
               </div>

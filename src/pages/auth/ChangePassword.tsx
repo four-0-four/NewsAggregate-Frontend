@@ -29,6 +29,7 @@ const ChangePasswordForm = () => {
     useEffect(() => {
         const tokenStr = typeof token === 'string' ? token : ""; // Ensure token is a string
         if (tokenStr) {
+            console.log("we are here")
             dispatch(confirmResetToken({ token: tokenStr })).unwrap()
                 .then(() => {
                     setIsConfirmed(true);
@@ -43,6 +44,7 @@ const ChangePasswordForm = () => {
         } else {
             // Handle the absence of a token, such as redirecting the user or showing an error
             setIsLoading(false);
+            navigate('/auth/Login');
             // navigate('/some-error-page'); // Uncomment and adjust as necessary
         }
     }, [token, dispatch]);

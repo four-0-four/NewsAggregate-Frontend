@@ -1,4 +1,4 @@
-import News from "@/src/pages/news";
+import News from "@/src/pages/news/news";
 import { createSlice } from "@reduxjs/toolkit";
 import { addNewsSourceBlacklist, addNewsSourcePreference, getAllNewsSources, getAllUserNewsSourcesBlacklist, getAllUserNewsSourcesPreferences, removeNewsSourceBlacklist, removeNewsSourcePreference } from "./thunks";
 

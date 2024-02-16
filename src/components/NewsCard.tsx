@@ -53,8 +53,8 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, descripti
     const navigate = useNavigate();
         
     return (
-        <div className="flex flex-col xs:flex-row lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-2 md:mb-4 cursor-pointer"
-        onClick={() => navigate('/news/' + id)}>
+        <a className="flex flex-col xs:flex-row lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-2 md:mb-4 cursor-pointer"
+        href={'/news/' + id}>
             <img src={image} alt="News" className="block w-full xs:min-w-[33%] xs:w-1/3 object-cover object-top rounded-[20px] max-h-44 min-h-100%" />
             <div className="flex flex-col justify-between items-between p-2 px-1 xs:px-4 w-full">
                 <div>
@@ -70,7 +70,7 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, descripti
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     );
 }
 

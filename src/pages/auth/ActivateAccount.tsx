@@ -38,6 +38,7 @@ const ActivateAccount = () => {
         } else {
             // Handle the absence of a token, such as redirecting the user or showing an error
             setIsLoading(false);
+            navigate('/auth/Login');
             // navigate('/some-error-page'); // Uncomment and adjust as necessary
         }
     }, [dispatch, token]);

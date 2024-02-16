@@ -4,7 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom'; // Import useLocati
 import Sidebar from '../components/Sidebar/Sidebar';
 import MobileSidebar from '../components/Sidebar/MobileSidebar';
 import { useAppDispatch, useAppSelector } from '../lib/hooks';
-import { resetStatus, selectIsAuthenticated } from '../lib/features/user/slice';
+import { resetStatus, selectIsAuthenticated, setAuthenticationState } from '../lib/features/user/slice';
+import Cookies from 'js-cookie';
+import isTokenValid from '../util/token';
+import { fetchUserDetails, refreshAccessToken } from '../lib/features/user/thunks';
 
 type LayoutProps = {
   children: ReactNode;
@@ -24,6 +27,42 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   useEffect(() => {
     dispatch(resetStatus());
   }, [location.pathname, dispatch]); 
+
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const checkAuth = async () => {
+      const accessToken = Cookies.get('access_token');
+      if (accessToken && isTokenValid(accessToken)) {
+        await dispatch(setAuthenticationState(true));
+        await dispatch(fetchUserDetails());
+      } else {
+        Cookies.remove('access_token');
+        await dispatch(setAuthenticationState(false));
+      }
+      setIsLoading(false);
+    };
+  
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>;
+    if (isAuthenticated) {
+      interval = setInterval(() => {
+        dispatch(refreshAccessToken());
+      }, 10 * 60 * 1000); // Refresh token every 15 minutes
+    }
+  
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [dispatch,isAuthenticated]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Or any loading component
+  }
 
   return (
     <>

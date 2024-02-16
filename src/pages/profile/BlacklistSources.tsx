@@ -100,7 +100,7 @@ const BlacklistSources = (props: Props) => {
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
             <Box title="Which news sources do you want to blacklist?">
-                <p className='mb-5 text-sm sm:text-md'>This feature allows users to hide news from specific sources they prefer not to see, not only in their feed but also on explore and topic pages. If you wish to change the sources appearing only on your feed page, please visit the <a className='text-primary'>"Filter News Source"</a> page</p>
+                <p className='mb-5 text-sm sm:text-md'>This feature allows users to hide news from specific sources they prefer not to see, not only in their feed but also on explore and topic pages. If you wish to change the sources appearing only on your feed page, please visit the <a className='text-primary' href="/profile/filterSources">"Filter News Source"</a> page</p>
                 <SearchInput 
                     placeholder={'Search for News Sources'} 
                     name={'search'} 
