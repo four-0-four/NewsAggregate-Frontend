@@ -31,7 +31,7 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36 px-2 sm:px-10">
+        <div className="w-full flex justify-center items-start h-screen mt-4 md:mt-16 px-2 sm:px-10">
             <Box title="Login" size="small">
                 <form onSubmit={handleSubmit}>
                     {error && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
@@ -44,7 +44,7 @@ const LoginForm = () => {
                         <a href="/auth/ForgetPassword" className='cursor-pointer'>forget password?</a>
                     </div>
 
-                    <div className="mt-5 flex flex-col md:flex-row justify-between items-center w-full">
+                    <div className="mt-5 flex flex-col sm:flex-row justify-between items-center w-full">
                         <p className="text-xs md:text-sm order-2 md:order-1">
                             Doesn&apos;t Have an Account?
                             <a href="/auth/Register" className="text-primary"> Register</a>

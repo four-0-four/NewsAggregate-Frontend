@@ -57,7 +57,7 @@ const TopicPage: React.FC = ({}) => {
     if(category && category.status !== 'loading' && category.news?.length === 0){
       return (
         <div>
-          <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
+          <div className='ml-3 my-1 mb-6 capitalize flex'>
             <h2 className="text-3xl font-bold inline-block">{topic}</h2>
             {category.status === 'succeeded'  && (
               <button onClick={()=>handleClick(topic)} className={`text-sm  ${following?.includes(topic)?'text-primary border border-primary cursor-default outline-0':'text-black bg-primary hover:bg-amber-400'} ml-4 rounded-[20px] p-1 px-3`}>
@@ -79,7 +79,7 @@ const TopicPage: React.FC = ({}) => {
     return (
         <div className='mb-5'>
           <div className="" key={topic}>
-            <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
+            <div className='ml-3 my-1 mb-6 capitalize flex'>
               <h2 className="text-3xl font-bold inline-block">{topic}</h2>
               {category && category.status === 'succeeded'  && (
                 <button onClick={()=>handleClick(topic)} className={`text-sm  ${following?.includes(topic)?'text-primary border border-primary outline-0 cursor-default':'text-black bg-primary hover:bg-amber-400'} ml-4 rounded-[20px] p-1 px-3`}>

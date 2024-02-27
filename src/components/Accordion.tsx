@@ -16,11 +16,11 @@ const Accordion: React.FC<AccordionProps> = ({ question, answer }) => {
     };
 
     return (
-        <div className="relative mb-3 w-full border border-white rounded-[10px] bg-white shadow-md xs:p-5 p-1">
+        <div className="relative w-full border border-white rounded-[10px] bg-white shadow-md md:p-5 p-2">
             <h6 className="mb-0">
                 <button
                     onClick={toggleAccordion}
-                    className="flex justify-between items-center w-full p-4 font-medium text-left transition-all ease-in cursor-pointer group text-md xs:text-lg md:text-xl text-gray-800"
+                    className="flex justify-between items-center w-full p-4 font-medium text-left transition-all ease-in cursor-pointer group text-md md:text-lg text-gray-800"
                 >
                     <span>{question}</span>
                     <FontAwesomeIcon 

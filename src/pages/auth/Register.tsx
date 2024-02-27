@@ -33,7 +33,7 @@ const RegisterForm = () => {
     };
 
     return (
-        <div className="flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36 px-2 sm:px-10">
+        <div className="flex w-full justify-center items-start h-screen mt-4 md:mt-16 px-2 sm:px-10">
             <Box title="Register">
                 <form onSubmit={handleSubmit}>
                     {registered && (
@@ -65,7 +65,7 @@ const RegisterForm = () => {
                                 <PasswordInput headerText="Confirm Password" placeholder="Confirm Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
                             </div>
 
-                            <div className="mt-10 flex flex-col md:flex-row justify-between items-center w-full">
+                            <div className="mt-10 flex flex-col sm:flex-row justify-between items-center w-full">
                                 <p className="text-xs md:text-sm order-2 md:order-1">
                                     Already have an account? 
                                     <a href="/auth/Login" className="text-primary"> Log In</a>

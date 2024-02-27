@@ -3,6 +3,7 @@ import { selectIsAuthenticated, selectUserDetails } from '../../lib/features/use
 import { useAppSelector } from '../../lib/hooks';
 import ProfileDropdown from '../ProfileDropdown';
 import { useNavigate } from 'react-router-dom';
+import PrimaryButton from '../Buttons/PrimaryButton';
 
 const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
   const today = new Date();
@@ -28,7 +29,7 @@ const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
               <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
-          <p className="block ml-3 lg:ml-0 bg-neutral-800 border border-neutral-600 py-2 px-3 sm:py-2 rounded-[20px] text-sm sm:text-md text-neutral-300">{shortFormattedDate}</p>
+          <p className="hidden sm:block ml-3 lg:ml-0 bg-neutral-800 border border-neutral-600 py-2 px-3 sm:py-2 rounded-[20px] text-sm sm:text-md text-neutral-300">{shortFormattedDate}</p>
         </div>
         <div className='cursor-pointer flex flex-row items-center' onClick={()=>navigate('/')}>
           <img src={'/logo_transparent.png'} alt="Farabix" className="w-12" />
@@ -41,9 +42,9 @@ const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
             <ProfileDropdown firstName={userDetails.first_name} lastName={userDetails.last_name} username={userDetails.username}/>
           </>
         ) : (
-          <button className="bg-primary text-black py-2 px-3 sm:px-8 rounded-[20px] uppercase text-sm sm:text-md" onClick={()=>navigate('/auth/Login')}>
+          <a href='/auth/Login' className='inline-block text-lg w-auto sm:mr-0 mr-0 px-12 py-1 text-black rounded-[8px] capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80'>
             Login
-          </button>
+          </a>
         )}
       </div>
     </header>

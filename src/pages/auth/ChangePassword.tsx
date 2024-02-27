@@ -98,13 +98,13 @@ const ChangePasswordForm = () => {
 
     if(token){
         return (
-            <div className="flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36">
+            <div className="flex w-full justify-center items-start h-screen mt-4 md:mt-16">
                 <Box title="Change Password" size='small'>
                     <form onSubmit={handleSubmit}>
                         <PasswordInput headerText="New Password" placeholder="New Password" name="newPassword" value={formData.newPassword} onChange={handleChange} />
                         <PasswordInput headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
 
-                        <div className="mt-6 flex flex-col md:flex-row justify-between items-center w-full">
+                        <div className="mt-6 flex flex-col sm:flex-row justify-between items-center w-full">
                             <p className="text-xs md:text-sm order-2 md:order-1">
                                 <a href="/auth/Login" className="text-primary">Cancel</a>
                             </p>

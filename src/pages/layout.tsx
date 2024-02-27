@@ -58,7 +58,22 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         clearInterval(interval);
       }
     };
-  }, [dispatch,isAuthenticated]);
+  }, [isAuthenticated]);
+
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible' && isAuthenticated) {
+        dispatch(refreshAccessToken());
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isAuthenticated]);
 
   if (isLoading) {
     return <div>Loading...</div>; // Or any loading component
@@ -82,7 +97,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <MobileSidebar />
         </div>
         {isAuthenticated && !isLandingPage && (<Sidebar />)}
-        <main className={`${isLandingPage ? '' : 'flex-1 p-2 px-1 sm:px-2 justify-start pt-5'}`}>
+        <main className={`${isLandingPage ? '' : 'flex-1 p-2 px-1 sm:px-2 justify-start pt-5'} ${isAuthenticated?'':'flex justify-center'}`}>
           {children}
         </main>
       </div>

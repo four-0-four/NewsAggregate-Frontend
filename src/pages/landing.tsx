@@ -1,7 +1,9 @@
 // pages/landing.tsx
 
 import Accordion from '../components/Accordion';
+import PrimaryButton from '../components/Buttons/PrimaryButton';
 import ContactUsForm from '../components/Forms/ContactUsForm';
+import NewsSourceIcon2 from '../components/NewsSourceIcon2';
 import { landingIllustration, LikeIcon, QuickIcon, InterestIcon } from '../util/illustrations';
 import React from 'react';
 
@@ -10,34 +12,43 @@ const LandingPage: React.FC = () => {
   return (
     <div>
         {/* Section 1 */}
-        <section className="flex flex-col sm:flex-row justify-between items-center py-8 max-w-[1200px] mx-auto px-4 xs:px-10 pt-24 md:pt-8">
-            <div className="w-full sm:w-3/5 md:w-3/5 mb-4  md:pt-10 lg:pt-0">
-                <h1 className="text-3xl xl:text-5xl font-bold mb-4 text-left lg:!leading-snug">Your Trusted Source for Aggregated and Independent News</h1>
-                <h3 className='lg:my-8 lg:mb-9 mb-4 text-sm md:text-md lg:text-lg xl:text-2xl xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
-                <button className="bg-primary text-black text-sm md:text-md lg:text-lg xl:text-xl py-2 px-6 lg:px-12 md:px-10 rounded-[20px] uppercase mt-4">
-                    Register <span className='xl:text-2xl'>&rarr;</span>
-                </button>
+        <section className="overflow-hidden flex flex-col sm:flex-row justify-between items-center pt-24 pb-14 md:py-20 max-w-[1200px] mx-auto px-4 xs:px-10">
+            <div className="w-full sm:w-3/5 md:w-3/5 md:mb-4  md:pt-10 lg:pt-0">
+                <h1 className="text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight">Your Trusted Source for Aggregated and Independent News</h1>
+                <h3 className='lg:mb-9 md:mb-4 mb-0 text-sm md:text-md lg:text-lg xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
+                <a href="/auth/Register" className={`hidden md:inline-block text-lg w-auto sm:mr-0 mr-0 px-12 py-2 text-black rounded-[8px] capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
+                    Register &rarr;
+                </a>
             </div>
-            <div className="sm:w-2/5 md:w-3/5">
-                {landingIllustration()}
+            <div className="sm:w-2/5 lg:w-3/5">
+            <img src={"/landing.png"} className='xs:w-full md:w-full m-auto max-w-[350px] lg:max-w-[100%]'/>
             </div>
         </section>
 
         {/* Section 2 */}
-        <section className="py-4  bg-neutral-100 mb-10 md:mb-20">
-            <div className="flex flex-wrap justify-center items-center gap-x-3 sm:gap-x-5 xl:gap-x-20 my-2 sm:my-6 md:my-12  max-w-[1200px] mx-auto">
-                <img src="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/website/reuters.png" alt="reuters" className="w-1/6 h-auto" />
-                <img src="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/website/bbc.png" alt="bbc" className="lg:h-8 sm:h-4 h-2 w-auto" />
-                <img src="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/website/espn.png" alt="espn" className="w-auto sm:h-4 h-2 lg:h-8" />
-                <img src="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/website/theguardian.png" alt="theguardian" className="max-w-[16%] lg:w-auto lg:h-10" />
-                <img src="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/website/aljazeera.png" alt="aljazeera" className="w-[14%] lg:w-1/6 h-auto" />
+        <section className="py-4  bg-neutral-100 mb-10 md:mb-20 text-center">
+            <div>
+                <h1 className='font-bold uppercase md:text-xl text-lg mt-3'>Some of Our Current News Sources</h1>
+            </div>
+            <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 lg:gap-10 my-6  max-w-[1200px] mx-auto px-4">
+                <NewsSourceIcon2 name="CBC" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/cbc.png" />
+                <NewsSourceIcon2 name="CTV" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/ctv.png" />
+                <NewsSourceIcon2 name="National Post" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/national%20post.png" />
+                <NewsSourceIcon2 name="Globe and Mail" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/the-globe-and-mail.png" />
+                <NewsSourceIcon2 name="Montreal Gazette" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/montreal-gazette.jpg" />
+                <NewsSourceIcon2 name="Toronto Sun" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/toronto%20sun.png" />
+            </div>
+            <div>
+                <p className='max-w-[200px] text-center m-auto'>
+                    +20 More News Sources
+                </p>
             </div>
         </section>
 
         <div className="grid lg:grid-cols-[50%,50%] md:grid-cols-1 gap-4 mb-16 md:mb-20 max-w-[1200px] mx-auto px-4 xs:px-10">
             <div className="order-1 md:order-1 xs:p-5">
                 <h3 className='xl:text-lg mb-2'>All in One Place</h3>
-                <h1 className='text-2xl md:text-3xl xl:text-4xl font-bold mb-4 text-left xl:!leading-normal md:!leading-snug'>
+                <h1 className='text-2xl md:text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight'>
                     Explore Global News From Top & Trusted Sources
                 </h1>
                 <div className='mt-10'>
@@ -91,10 +102,10 @@ const LandingPage: React.FC = () => {
         <div className='bg-neutral-100 text-center p-5 py-10 sm:py-16'>
             <div className='max-w-[1200px] mx-auto'>
                 <div>
-                    <h1 className='font-bold uppercase text-xl xs:text-2xl my-6 mt-3'>Frequently Asked Questions</h1>
+                    <h1 className='font-bold uppercase text-xl md:text-2xl my-6 mt-3'>Frequently Asked Questions</h1>
                     <h3 className='md:text-xl text-sm xs:text-md max-w-[500px] md:max-w-[700px] m-auto text-gray-400'>We are alway here to provide full support and clear any doubts that you might have</h3>
                 </div>
-                <div className='flex flex-col lg:flex-row gap-x-8 sm:mt-16 mt-10 items-start'>
+                <div className='flex flex-col lg:flex-row gap-y-4 gap-x-8 sm:mt-16 mt-10 items-start'>
                     <div className='grid grid-cols-1 gap-y-4 w-full lg:w-1/2'>
                         <Accordion question="How does this website ensure the reliability of news sources?" answer="We meticulously curate our news from reputable and established global sources, ensuring the information you receive is accurate and trustworthy."/>
                         <Accordion question="Can I access news from different countries? " answer="Yes, our platform offers news from around the world, giving you a global perspective on current events."/>

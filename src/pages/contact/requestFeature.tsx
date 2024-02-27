@@ -121,18 +121,17 @@ const RequestFeatureForm = () => {
 
                           <FileInput files={formData.files} headerText="[Optional] Related Screenshots to help us understand better" onFileChange={handleFileChange} clearFile={clearFile}/>
 
-                          <div className="mt-5 flex flex-col md:flex-row justify-end items-center w-full">
+                          <div className="mt-5 flex flex-col sm:flex-row justify-end items-center w-full">
                             <PrimaryButton type="submit" text="Submit" />
                           </div>
                       </>
                   )}
               </form>
             </Box>
-            <div className='mb-4'>
-              <Box title="Other ways to reach us">
-                <SocialMedia />
-              </Box>
-            </div>
+            <Box title="Other ways to reach us">
+              <SocialMedia />
+            </Box>
+            <div className='mb-4'></div>
         </div>
     );
 }

@@ -98,7 +98,7 @@ const Topics = () => {
         {categoryArticles.map(category => (
           <div className="mt-10 mb-16" key={category.name}>
             {category.status != "idle" && (
-              <div className='md:ml-0 ml-3 my-1 mb-6 capitalize flex'>
+              <div className='ml-3 my-1 mb-6 capitalize flex'>
                 <h2 className="text-3xl font-bold inline-block cursor-pointer" onClick={() => navigate('/topics/'+category.name)}>{category.name}</h2>
                 <button onClick={()=>handleClick(category.name)} className={`text-sm  ${following?.includes(category.name)?'text-primary border border-primary cursor-default outline-0':'text-black bg-primary hover:bg-amber-400'} ml-4 rounded-[20px] p-1 px-3`}>
                   {following?.includes(category.name)?"Following":"+ Follow Topic"}
@@ -128,8 +128,8 @@ const Topics = () => {
               </>
             )}
             {category.status == "succeeded" && (category.news?.length) > 3 && (
-              <div className="flex justify-start md:ml-0 ml-3">
-                <div className="text-2xl text-primary underline flex items-center cursor-pointer hover:text-amber-400"
+              <div className="flex justify-start ml-5 mt-5">
+                <div className="text-xl text-primary underline flex items-center cursor-pointer hover:text-amber-400"
                 onClick={() => navigate('/topics/'+category.name)}>
                   <h3>View all</h3>
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="ml-2 w-6 h-6">

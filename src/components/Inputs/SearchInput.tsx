@@ -16,7 +16,7 @@ const SearchInput: React.FC<InputProps> = ({ placeholder, name, value, onChange}
     return (
         <div className="max-w-[500px]">
             <div className="flex flex-col relative">
-                <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                <span className="absolute inset-y-0 left-0 hidden sm:flex items-center pl-3">
                     {/* Search Icon */}
                     <svg className="w-5 h-5 text-gray-500" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
                         <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -28,7 +28,7 @@ const SearchInput: React.FC<InputProps> = ({ placeholder, name, value, onChange}
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
-                    className="p-2 px-10 border border-gray rounded-[8px] focus:outline-none placeholder:text-xs sm:placeholder:text-sm"
+                    className="p-2 sm:px-10 border border-gray rounded-[8px] focus:outline-none placeholder:text-xs sm:placeholder:text-sm"
                 />
                 {value && (
                     <span className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" onClick={handleClearInput}>
