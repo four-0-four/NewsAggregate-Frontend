@@ -10,7 +10,7 @@ import React from 'react';
 
 const LandingPage: React.FC = () => {
   return (
-    <div>
+    <div className='w-full'>
         {/* Section 1 */}
         <section className="overflow-hidden flex flex-col sm:flex-row justify-between items-center pt-24 pb-14 md:py-20 max-w-[1200px] mx-auto px-4 xs:px-10">
             <div className="w-full sm:w-3/5 md:w-3/5 md:mb-4  md:pt-10 lg:pt-0">
