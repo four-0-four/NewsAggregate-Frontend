@@ -94,9 +94,9 @@ const Topics = () => {
           </div>
         </div>
       )}
-      <div className='mb-5'>
+      <div className=''>
         {categoryArticles.map(category => (
-          <div className="mt-10 mb-16" key={category.name}>
+          <div className="mt-10 mb-5" key={category.name}>
             {category.status != "idle" && (
               <div className='ml-3 my-1 mb-6 capitalize flex'>
                 <h2 className="text-3xl font-bold inline-block cursor-pointer" onClick={() => navigate('/topics/'+category.name)}>{category.name}</h2>

@@ -60,7 +60,7 @@ function ProfileDropdown({ firstName, lastName, username }: ProfileDropdownProps
             </button>
 
             {isDropdownOpen && (
-                <div id="dropdownAvatarName" className=" mt-6 z-10 absolute right-0 bg-black text-white divide-y divide-gray-600 rounded-[20px] min-w-[200px] overflow-hidden">
+                <div id="dropdownAvatarName" className=" mt-6 z-10 absolute right-0 bg-black text-white divide-y divide-gray-600 rounded-[20px] min-w-[100px] overflow-hidden">
                     <div className="px-4 py-3 text-sm">
                         <div className="font-medium text-lg mb-2 capitalize">{firstName} {lastName}</div>
                         <div className="truncate">

@@ -10,10 +10,10 @@ const Interests: React.FC<Props> = ({interests}) => {
     
     return (
         <div>
-            <h1 className='text-xl font-bold my-2 mt-1 mb-4'>Your Interests</h1>
+            <h1 className='text-lg font-bold my-2 mt-0 px-2'>Your Interests</h1>
             {interests.length > 0 && (
             <>
-                <div className={`flex flex-wrap gap-1 xl:gap-2 overflow-y-auto max-h-[240px] snap-y pr-3`}>
+                <div className={`flex flex-wrap gap-1 xl:gap-2 overflow-y-auto max-h-[240px] snap-y px-3 xl:px-4`}>
                     {interests.map(interest => (
                         <div onClick={() => navigate('/topics/'+interest)} key={interest} className="snap-start bg-neutral-100 text-neutral-400 p-1 px-3 rounded-[20px] text-sm xl:text-md hover:bg-black cursor-pointer hover:text-neutral-100">
                             {interest}
