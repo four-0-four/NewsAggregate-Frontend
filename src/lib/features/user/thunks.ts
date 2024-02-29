@@ -2,8 +2,18 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
 import { UserDetails, followingReturnI } from './slice';
 
-const BaseURL = "http://127.0.0.1:8080"
-const ProductionBaseURL = "https://api.farabix.com/mainframe2"
+let BaseURL: string | undefined;
+
+if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+  BaseURL = process.env.REACT_APP_LOCAL_URL;
+} else if (process.env.NODE_ENV === 'production') {
+  BaseURL = process.env.REACT_APP_PROD_URL;
+} else if (process.env.NODE_ENV === 'staging') {
+  BaseURL = process.env.REACT_APP_STAGE_URL;
+}
+
+console.log('env', process.env.NODE_ENV);
+console.log('BaseURL', BaseURL);
 
 
 export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(

@@ -6,7 +6,7 @@ type Props = {}
 const ProfileSidebar = (props: Props) => {
     return (
         <>
-            <h1 className='text-xl font-bold my-2 mt-8 px-2'>Profile Setting</h1>
+            <h1 className='text-lg font-bold my-2 mt-8 px-2'>Profile Setting</h1>
             <nav className='mb-4'>
                 <ul>
                     <SidebarElement href="/profile/account" icon={<AccountIcon />}>
@@ -15,6 +15,11 @@ const ProfileSidebar = (props: Props) => {
                     <SidebarElement href="/profile/security" icon={<SecurityIcon />}>
                         Sign in & Security
                     </SidebarElement>
+                </ul>
+            </nav>
+            <h1 className='text-lg font-bold my-2 mt-8 px-2'>News Setting</h1>
+            <nav className='mb-4'>
+                <ul>
                     <SidebarElement href="/profile/interests" icon={<InterestIcon />}>
                         Manage Interest
                     </SidebarElement>

@@ -55,7 +55,6 @@ const FilterSources = (props: Props) => {
         
         if (!sourceExists) {
             // Optionally, handle the case where the source doesn't exist, e.g., log an error or display a message
-            console.log(`Source with id ${id} not found in interested sources.`);
             return;
         }
     
@@ -94,7 +93,6 @@ const FilterSources = (props: Props) => {
       };
 
     const MIN_INTERESTED_SOURCES = 3
-    console.log(statusState)
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
             <Box title="Which News Sources Do You Want to See?">

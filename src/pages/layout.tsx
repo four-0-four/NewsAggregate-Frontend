@@ -85,7 +85,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {isSidebarOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden" onClick={toggleSidebar}></div>
       )}
-      <div className={`${isLandingPage ? '' : 'flex max-w-[1450px] mx-auto pt-[60px] '}`}>
+      <div className={`${isLandingPage ? '' : 'flex max-w-[1200px] mx-auto px-0 xs:px-6  pt-[60px] '}`}>
         <div className={`fixed lg:hidden inset-y-0 left-0 z-30 w-64 transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transition-transform ease-in-out duration-300 lg:translate-x-0 lg:static lg:z-auto bg-white shadow-lg`}>
           {/* Close button for sidebar */}
           <button onClick={toggleSidebar} className="absolute top-0 right-0 p-4 lg:hidden">

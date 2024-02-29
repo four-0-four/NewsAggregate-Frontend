@@ -21,7 +21,7 @@ const MainSidebar = () => {
 
 
     return (
-        <div className='px-3 xl:px-4'>
+        <div className=''>
                 <Interests interests={userFollowings} />
         </div>
     );

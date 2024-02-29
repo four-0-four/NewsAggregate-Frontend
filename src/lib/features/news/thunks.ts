@@ -3,8 +3,15 @@ import Cookies from 'js-cookie';
 import { NewsArticle } from './slice';
 import { RootState } from '../../store';
 
-const BaseURL = "http://127.0.0.1:8080"
-const ProductionBaseURL = "https://api.farabix.com/mainframe2"
+let BaseURL: string | undefined;
+
+if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
+  BaseURL = process.env.REACT_APP_LOCAL_URL;
+} else if (process.env.NODE_ENV === 'production') {
+  BaseURL = process.env.REACT_APP_PROD_URL;
+} else if (process.env.NODE_ENV === 'staging') {
+  BaseURL = process.env.REACT_APP_STAGE_URL;
+}
 
 export const fetchNewsArticles = createAsyncThunk<
     {articles: NewsArticle[], last_news_time: string, load_more: boolean}, 

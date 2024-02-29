@@ -34,7 +34,7 @@ const MobileSidebar: React.FC<SidebarProps> = () => {
     return (
         <aside className="flex lg:flex-col w-full bg-white py-5 h-full px-5 pt-8">
             <div>
-                <h1 className='text-xl font-bold mb-2 px-3 xl:px-4'>
+                <h1 className='text-lg font-bold my-2 mt-0 px-2'>
                     Main Menu
                 </h1>
                 <nav className='mb-4'>

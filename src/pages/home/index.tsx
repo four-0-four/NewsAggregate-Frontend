@@ -47,7 +47,6 @@ const Home: React.FC = () => {
   }, [dispatch, isAuthenticated, userFollowings]);
 
   useEffect(() => {
-    console.log(userFollowings.length, userNews.status, IsLoading, getStarted)
     if ((IsLoading === false && userFollowings.length === 0 && userNews.status !== 'loading' && userNews.status !== 'idle')) {
       setGetStarted(true);
     }

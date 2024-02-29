@@ -8,7 +8,7 @@ const ContactSidebar = (props: Props) => {
 
     return (
         <>
-            <h1 className='text-xl font-bold my-2 mt-8 px-2'>Contact Us</h1>
+            <h1 className='text-lg font-bold my-2 mt-8 px-2'>Contact Us</h1>
             <nav className='mb-4'>
                 <ul>
                     <SidebarElement href="/contact/contactUs" icon={<GeneralInquiryIcon />}>

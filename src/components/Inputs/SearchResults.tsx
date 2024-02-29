@@ -13,7 +13,6 @@ type Props = {
 };
 
 const SearchResults: React.FC<Props> = ({ allNewsSources, selectedSources, excludingSources, button, buttonText, value, action }) => {
-    console.log(selectedSources, excludingSources)
     // Combine selectedSources and excludingSources into one list for exclusion
     const combinedExclusionSet = new Set([...selectedSources, ...excludingSources].map(source => source.name.toLowerCase()));
 
