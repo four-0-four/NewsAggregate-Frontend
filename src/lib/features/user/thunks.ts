@@ -12,6 +12,9 @@ if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
   BaseURL = process.env.REACT_APP_STAGE_URL;
 }
 
+console.log('env', process.env.NODE_ENV);
+console.log('BaseURL', BaseURL);
+
 
 export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
   'user/logout',

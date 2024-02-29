@@ -29,7 +29,6 @@ const ChangePasswordForm = () => {
     useEffect(() => {
         const tokenStr = typeof token === 'string' ? token : ""; // Ensure token is a string
         if (tokenStr) {
-            console.log("we are here")
             dispatch(confirmResetToken({ token: tokenStr })).unwrap()
                 .then(() => {
                     setIsConfirmed(true);

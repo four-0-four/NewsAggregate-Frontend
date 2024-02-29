@@ -57,7 +57,6 @@ const BlacklistSources = (props: Props) => {
         
         if (!sourceExists) {
             // Optionally, handle the case where the source doesn't exist, e.g., log an error or display a message
-            console.log(`Source with id ${id} not found in interested sources.`);
             return;
         }
     
