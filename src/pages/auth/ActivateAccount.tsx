@@ -75,7 +75,7 @@ const ActivateAccount = () => {
 
     if (!isLoading) {
         return (
-            <div className="flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36">
+            <div className="w-full flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36">
                 <Box title="Your Account is Activated" size='small'>
                     <form onSubmit={handleSubmit}>
                         {status === 'failed' && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
