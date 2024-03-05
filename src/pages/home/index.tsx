@@ -30,46 +30,46 @@ const Home: React.FC = () => {
   const [IsLoading, setIsLoading] = React.useState(true);
   const [getStarted, setGetStarted] = React.useState(false);
 
-  useEffect(() => {
-    dispatch(fetchCategories({parent_category_id:0}))
-    dispatch(fetchUserFollowings());
-}, [isAuthenticated]);
-
-  useEffect(() => {
-    if (isAuthenticated && userFollowings.length > 0) {
-      Promise.all([
-        dispatch(fetchNewsArticles())
-      ]).then(() => setIsLoading(false))
-      .catch(() => setIsLoading(false));
-    }else{
-      setIsLoading(false);
+  const start = () => {
+    setGetStarted(false);
+    if (isAuthenticated) {
+      setIsLoading(true); // Set loading at the beginning
+      dispatch(fetchCategories({parent_category_id:0}))
+      console.log("about to get followers")
+      dispatch(fetchUserFollowings()).unwrap().then((res) => {
+        if (res.length >= 3) {
+          console.log("following is more than 3")
+          setGetStarted(false);
+          dispatch(fetchNewsArticles()).finally(() => setIsLoading(false));
+        } else {
+          console.log("following is less than 3")
+          setGetStarted(true);
+          setIsLoading(false);
+        }
+      });
     }
-  }, [dispatch, isAuthenticated, userFollowings]);
-
+  }
   useEffect(() => {
-    if ((IsLoading === false && userFollowings.length === 0 && userNews.status !== 'loading' && userNews.status !== 'idle')) {
-      setGetStarted(true);
-    }
-
-  }, [IsLoading, userFollowings.length, userNews.status, getStarted]);
-
+    start()
+  }, [dispatch, isAuthenticated]);
 
   let HandleLoadMore = async () => {
     dispatch(fetchNewsArticles())
   }
   
-  
-  if(getStarted){
-    return <HomeInterests userFollowings={userFollowings} categories={categories} firstName={userDetails?.first_name} setGetStarted={setGetStarted}/>
+  //this is for the fact that it shows the homeinterests for fraction of seconds before the news loads
+  //userNews.status !== 'loading'
+  if(getStarted && !IsLoading && userNews.status !== 'loading'){
+    return <HomeInterests userFollowings={userFollowings} categories={categories} firstName={userDetails?.first_name} start={start}/>
   }
   
   if(!getStarted){
     return (
       <>
-        {!IsLoading && userNews.status == 'failed' && (
+        {(!IsLoading && userNews.status == 'failed') && (
           <InternalError />
         )}
-        {!IsLoading && userNews.status !== 'failed' && userNews.news.length > 0 && (
+        {(!IsLoading && userNews.status !== 'failed' && userNews.status !== 'loading') && (
           <>
             { userNews.news.length > 0 ? (
                 userNews.news.map((newsCard: {id:number , media: string[]; title: string; content: string; from: string; fromImage: string; publishedDate: string ; keywords: string[]; }) => (
@@ -85,11 +85,12 @@ const Home: React.FC = () => {
                   />
                 ))
               ) : (
-                <div className="flex flex-col items-center mt-40">
+                <div className="flex flex-col items-center mt-10 xl:mt-20">
                   <div className="p-5 pt-0 sm:p-0 sm:max-w-[400px]">
-                    <p className="text-lg md:text-xl mt-4">
-                      Oops! There seems to be no news for you at this moment. Have you followed any topics so far?
-                      <a href="/topics" className="text-primary underline"> go to explore</a>
+                    <img src="/empty.png" className='max-w-full md:max-w-[250px] w-full md:w-2/3 mx-auto'/>
+                    <p className="text-lg mt-0">
+                      Oops! There seems to be no news for you at this moment. Please Consider adding more interests! &nbsp;
+                      <a href="/topics" className="text-primary underline">go to explore</a>
                     </p>
                   </div>
                 </div>
@@ -97,15 +98,17 @@ const Home: React.FC = () => {
             }
           </>
         )}
-        {userNews.status === 'loading' && (
+        {(IsLoading || userNews.status === 'loading') && ( //when user sign up, they add interests. we add the interest bulk in the backend. so for couple of seconds we need to load. thus, we have userFollowings.length < 3
           <>
+            <Placeholder />
+            <Placeholder />
             <Placeholder />
             <Placeholder />
             <Placeholder />
             <Placeholder />
           </>
         )}
-        {!IsLoading && userNews && userNews.status === 'succeeded' && LoadMore && (
+        {(!IsLoading && userNews && userNews.status === 'succeeded' && LoadMore) && (
           <LoadMoreButton HandleLoadMore={HandleLoadMore} />
         )}
     </>

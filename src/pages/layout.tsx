@@ -22,8 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isLandingPage = location.pathname === '/landing';
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-  
-  
+
   useEffect(() => {
     dispatch(resetStatus());
   }, [location.pathname, dispatch]); 
