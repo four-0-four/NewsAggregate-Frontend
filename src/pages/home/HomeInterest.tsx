@@ -21,7 +21,7 @@ type HomeInterestsProps = {
     let interestDesign = "text-sm sm:text-md inline-block mr-3 mb-3 px-4 py-2 capitalize bg-primary border border-primary rounded-[20px] transition-colors duration-300 hover:bg-opacity-80";
 
     const [userFollowings, setUserFollowings] = useState<string[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         // Load user followings from cookies
