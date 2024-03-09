@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of
 import { selectIsAuthenticated, selectUserDetails, selectUserFollowings } from "../../lib/features/user/slice";
 import { fetchCategories, fetchNewsArticles } from "../../lib/features/news/thunks";
 import {
+  NewsArticle,
   selectLoadMore,
   selectNewsArticles,
   selectNewsCategories,
@@ -72,16 +73,17 @@ const Home: React.FC = () => {
         {(!IsLoading && userNews.status !== 'failed' && userNews.status !== 'loading') && (
           <>
             { userNews.news.length > 0 ? (
-                userNews.news.map((newsCard: {id:number , media: string[]; title: string; content: string; from: string; fromImage: string; publishedDate: string ; keywords: string[]; }) => (
+                userNews.news.map((newsCard: NewsArticle) => (
                   <NewsCard 
                     id={newsCard.id}
                     imageSrc={newsCard.media[0]} 
                     title={newsCard.title} 
-                    description={newsCard.content}  
+                    shortSummary={newsCard.shortSummary}  
                     from={newsCard.from}
                     fromImage={newsCard.fromImage}
                     date={newsCard.publishedDate}
                     tags={newsCard.keywords}
+                    isBookmarked={newsCard.isBookmarked}
                   />
                 ))
               ) : (

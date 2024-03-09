@@ -95,11 +95,12 @@ const TopicPage: React.FC = ({}) => {
                 id={newsCard.id}
                 imageSrc={newsCard.media[0]}
                 title={newsCard.title}
-                description={newsCard.content}
+                shortSummary={newsCard.shortSummary}
                 from={newsCard.from}
                 fromImage={newsCard.fromImage}
                 date={newsCard.publishedDate}
                 tags={newsCard.keywords}
+                isBookmarked={newsCard.isBookmarked}
               />
             ))}
             {category && category.status == 'loading' && (

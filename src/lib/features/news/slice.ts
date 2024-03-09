@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchCategories, fetchNewsArticles, fetchOneNewsArticle, fetchTopicNews } from './thunks';
+import { fetchCategories, fetchNewsArticles, fetchOneNewsArticle, fetchOneNewsArticleAuthenticated, fetchTopicNews, getAllBookmarksForUser } from './thunks';
 
 function formatDateToString(date: Date) {
   const pad = (number: number) => (number < 10 ? `0${number}` : number);
@@ -17,12 +17,14 @@ function formatDateToString(date: Date) {
 export interface NewsArticle {
     id: number;
     title: string;
-    description: string;
+    shortSummary: string;
+    longSummary: string;
     content: string;
     publishedDate: string; // Or Date, if you prefer
     language_id: number;
     isInternal: boolean;
-    isPublished: boolean;
+    ProcessedForIdentity: boolean;
+    summarized: boolean;
     createdAt: string; // Or Date
     updatedAt: string; // Or Date
     categories: string[];
@@ -30,6 +32,8 @@ export interface NewsArticle {
     media: string[];
     from: string;
     fromImage: string;
+    externalLink?: string;
+    isBookmarked?: boolean | null;
 }
 
 export interface CategoryState {
@@ -41,12 +45,19 @@ export interface CategoryState {
 }
 
 
+export interface BookmarkState {
+  'news': NewsArticle[];
+  'status': 'idle' | 'loading' | 'succeeded' | 'failed' | 'done';
+}
+
+
 export interface NewsState {
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null | undefined;
     load_more: boolean;
     articles: CategoryState; // this is for home page
     selectedArticle?: NewsArticle | null;
+    bookmarks: BookmarkState;
     categoryArticles: CategoryState[];
   }
   
@@ -61,6 +72,10 @@ export interface NewsState {
       number_of_articles_to_fetch: 10
     },
     selectedArticle: null,
+    bookmarks: {
+      news: [],
+      status: 'idle', 
+    },
     categoryArticles: [],
   }; 
   
@@ -68,6 +83,73 @@ export interface NewsState {
     name: 'news',
     initialState,
     reducers: {
+      addBookmark(state, action: PayloadAction<number>) {
+        // Find the article in all places it can exist and mark it as bookmarked
+        const markAsBookmarked = (article: NewsArticle) => {
+          if (!article.isBookmarked) {
+            article.isBookmarked = true;
+            if (!state.bookmarks.news.find(b => b.id === article.id)) {
+              state.bookmarks.news.push(article);
+            }
+          }
+        };
+
+        // add it to selected articles
+        if(state.selectedArticle?.id === action.payload){
+          state.selectedArticle.isBookmarked = true;
+          markAsBookmarked(state.selectedArticle);
+        }
+    
+        // Look for the article in the general articles list and mark it
+        state.articles.news.forEach(article => {
+          if (article.id === action.payload) {
+            article.isBookmarked = true;
+            markAsBookmarked(article);
+          }
+        });
+    
+        // Look for the article in each category and mark it
+        state.categoryArticles.forEach(category => {
+          category.news.forEach(article => {
+            if (article.id === action.payload) {
+              article.isBookmarked = true;
+              markAsBookmarked(article);
+            }
+          });
+        });
+      },
+      removeBookmark(state, action: PayloadAction<number>) {
+        // Function to unmark an article as bookmarked
+        const unmarkAsBookmarked = (article: NewsArticle) => {
+            if (article.isBookmarked) {
+                article.isBookmarked = false;
+            }
+        };
+    
+        // Unmark the selected article if it is the one being unbookmarked
+        if (state.selectedArticle?.id === action.payload) {
+            state.selectedArticle.isBookmarked = false;
+        }
+    
+        // Iterate over the general articles list and unmark the article
+        state.articles.news.forEach(article => {
+            if (article.id === action.payload) {
+                unmarkAsBookmarked(article);
+            }
+        });
+    
+        // Iterate over each category and unmark the article
+        state.categoryArticles.forEach(category => {
+            category.news.forEach(article => {
+                if (article.id === action.payload) {
+                    unmarkAsBookmarked(article);
+                }
+            });
+        });
+    
+        // Remove the article from the bookmarks list
+        state.bookmarks.news = state.bookmarks.news.filter(article => article.id !== action.payload);
+      },
     },
     extraReducers: (builder) => {
       builder
@@ -112,6 +194,19 @@ export interface NewsState {
           state.error = null;
         })
         .addCase(fetchOneNewsArticle.rejected, (state, action) => {
+          state.status = 'failed';
+          state.error = action.payload;
+        })
+        .addCase(fetchOneNewsArticleAuthenticated.pending, (state) => {
+          state.status = 'loading';
+          state.error = null;
+        })
+        .addCase(fetchOneNewsArticleAuthenticated.fulfilled, (state, action: PayloadAction<NewsArticle>) => {
+          state.status = 'succeeded';
+          state.selectedArticle = action.payload;
+          state.error = null;
+        })
+        .addCase(fetchOneNewsArticleAuthenticated.rejected, (state, action) => {
           state.status = 'failed';
           state.error = action.payload;
         })
@@ -218,6 +313,18 @@ export interface NewsState {
           }
           state.error = null;
         })
+        .addCase(getAllBookmarksForUser.pending, (state) => {
+          state.bookmarks.status = 'loading';
+        })
+        .addCase(getAllBookmarksForUser.fulfilled, (state, action) => {
+          state.bookmarks.status = 'succeeded';
+          // Assuming the API response directly contains an array of bookmarked news articles
+          state.bookmarks.news = action.payload.bookmarks;
+        })
+        .addCase(getAllBookmarksForUser.rejected, (state, action) => {
+          state.bookmarks.status = 'failed';
+          state.error = action.payload;
+        })
     },
   });
 
@@ -230,6 +337,8 @@ export interface NewsState {
   export const selectNewsStatus = (state: { news: NewsState }) => state.news.status;
   export const selectNewsError = (state: { news: NewsState }) => state.news.error;
   export const selectLoadMore = (state: { news: NewsState }) => state.news.load_more;
+  export const selectBookmarks = (state: { news: NewsState }) => state.news.bookmarks;
+  export const { addBookmark, removeBookmark } = newsSlice.actions;
   
   // New selector to get categories
   export const selectCategoryArticles = (state: { news: NewsState }) => state.news.categoryArticles;

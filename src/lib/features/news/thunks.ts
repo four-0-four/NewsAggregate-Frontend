@@ -91,6 +91,43 @@ export const fetchOneNewsArticle = createAsyncThunk<NewsArticle, string, { rejec
 );
 
 
+export const fetchOneNewsArticleAuthenticated = createAsyncThunk<NewsArticle, string, { rejectValue: string }>(
+    'news/fetchOneNewsArticleAuthenticated',
+    async (newsID, thunkAPI) => {
+        const token = Cookies.get('access_token');
+        if (!token) {
+            return thunkAPI.rejectWithValue('No access token available');
+        }
+
+        try {
+            const searchParams = new URLSearchParams();
+            searchParams.append('news_id', newsID?.toString()); // Convert newsID to string if it's not undefined
+
+            const url = new URL(BaseURL + '/news/getByIDAuthenticated');
+            url.search = searchParams.toString();
+            const response = await fetch(url.toString(), {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch news articles');
+            }
+
+            const article = await response.json() as NewsArticle;
+            return article;
+        } catch (error) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            return thunkAPI.rejectWithValue('Failed to fetch news articles');
+        }
+    }
+);
+
+
 export const fetchCategories = createAsyncThunk<string[], { parent_category_id: number }, { rejectValue: string }>(
     'news/fetchCategories',
     async ({ parent_category_id }, thunkAPI) => {
@@ -172,6 +209,128 @@ export const fetchTopicNews = createAsyncThunk<
                 return thunkAPI.rejectWithValue(error.message);
             }
             return thunkAPI.rejectWithValue('Failed to fetch news for different categories');
+        }
+    }
+);
+
+
+export const addNewsToBookmark = createAsyncThunk<
+    { message: string },
+    number,
+    { state: RootState, rejectValue: string }
+>(
+    'bookmarks/addNewsToBookmark',
+    async (newsId, thunkAPI) => {
+        const token = Cookies.get('access_token');
+        if (!token) {
+            return thunkAPI.rejectWithValue('No access token available');
+        }
+
+        try {
+            const searchParams = new URLSearchParams();
+            searchParams.append('news_id', newsId.toString());
+
+            const url = new URL(BaseURL + '/news/addNewsToBookmark');
+            url.search = searchParams.toString();
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add news to bookmarks');
+            }
+
+            const data = await response.json();
+            return { message: data.message };
+        } catch (error) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            return thunkAPI.rejectWithValue('Failed to add news to bookmarks');
+        }
+    }
+);
+
+
+export const removeNewsFromBookmark = createAsyncThunk<
+    { message: string },
+    number,
+    { state: RootState, rejectValue: string }
+>(
+    'bookmarks/removeNewsFromBookmark',
+    async (newsId, thunkAPI) => {
+        const token = Cookies.get('access_token');
+        if (!token) {
+            return thunkAPI.rejectWithValue('No access token available');
+        }
+
+        try {
+            const searchParams = new URLSearchParams();
+            searchParams.append('news_id', newsId.toString());
+
+            const url = new URL(BaseURL + '/news/removeNewsFromBookmark');
+            url.search = searchParams.toString();
+
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to remove news from bookmarks');
+            }
+
+            const data = await response.json();
+            return { message: data.message };
+        } catch (error) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            return thunkAPI.rejectWithValue('Failed to remove news from bookmarks');
+        }
+    }
+);
+
+
+export const getAllBookmarksForUser = createAsyncThunk<
+    { bookmarks: any[] },
+    void,
+    { state: RootState, rejectValue: string }
+>(
+    'bookmarks/getAllBookmarksForUser',
+    async (_, thunkAPI) => {
+        const token = Cookies.get('access_token');
+        if (!token) {
+            return thunkAPI.rejectWithValue('No access token available');
+        }
+
+        try {
+            const response = await fetch(`${BaseURL}/news/getAllBookmarksForUser/`, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch bookmarks');
+            }
+
+            const data = await response.json();
+            return {bookmarks: data};
+        } catch (error) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            return thunkAPI.rejectWithValue('Failed to fetch bookmarks');
         }
     }
 );

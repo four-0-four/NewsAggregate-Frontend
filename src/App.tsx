@@ -15,6 +15,7 @@ import NotFound from './pages/404';
 import Account from './pages/profile/account';
 import Interests from './pages/profile/interests';
 import Security from './pages/profile/security';
+import BookmarkPage from './pages/bookmark/bookmark';
 import PrivacyPolicy from './pages/policy/PrivacyPolicy';
 import TermsOfService from './pages/policy/TermsOfService';
 import ContactUs from './pages/contact/contactUs';
@@ -45,6 +46,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/topics" element={<Topics />} />
               <Route path="/topics/:topic" element={<Topic />} />
+              <Route path="/bookmark" element={<BookmarkPage />} />
               <Route path="/profile" element={<Navigate to="/profile/account" replace />} />
               <Route path="/profile/account" element={<Account />} />
               <Route path="/profile/interests" element={<Interests />} />
