@@ -1,10 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { addFollowing, changePassword, confirmRegistrationToken, contactUs, fetchUserDetails, fetchUserFollowings, forgetPassword, loginUser, logoutUser, refreshAccessToken, registerUser, removeFollowing, reportBug, requestFeature, updateProfile } from './thunks';
+import { addFollowing, addFollowings, changePassword, confirmRegistrationToken, contactUs, fetchUserDetails, fetchUserFollowings, forgetPassword, loginUser, logoutUser, refreshAccessToken, registerUser, removeFollowing, reportBug, requestFeature, updateProfile } from './thunks';
 
 
 export interface followingReturnI {
   message: string;
   topic: string;
+}
+
+export interface FollowingsReturnI {
+  message: string;
+  added_topics: string[];
+  not_found_topics: string[];
 }
 
 export interface UserDetails {
@@ -47,6 +53,12 @@ const userSlice = createSlice({
     resetStatus: (state) => {
       state.status = 'idle';
       state.error = null;
+    },
+    addFollowingsStatus: (state, action: PayloadAction<string[]>) => {
+      for (let topic of action.payload) {
+        if(state.followings.includes(topic)) continue;
+        state.followings.push(topic);
+      }
     },
     addFollowingStatus: (state, action: PayloadAction<string>) => {
       if(state.followings.includes(action.payload)) return;
@@ -232,6 +244,22 @@ const userSlice = createSlice({
       state.status = 'failed';
       state.error = action.payload;
     })
+    .addCase(addFollowings.pending, (state) => {
+      state.status = 'loading';
+      state.error = null;
+    })
+    .addCase(addFollowings.fulfilled, (state, action: PayloadAction<FollowingsReturnI>) => {
+      state.status = 'succeeded';
+      state.error = null;
+      for (let topic of action.payload.added_topics) {
+        if(state.followings.includes(topic)) continue;
+        state.followings.push(topic);
+      }
+    })
+    .addCase(addFollowings.rejected, (state, action) => {
+      state.status = 'failed';
+      state.error = action.payload;
+    })
     .addCase(removeFollowing.pending, (state) => {
       state.status = 'loading';
       state.error = null;
@@ -249,7 +277,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUserAuthentication, setAuthenticationState, resetStatus, addFollowingStatus, removeFollowingStatus } = userSlice.actions;
+export const { setUserAuthentication, setAuthenticationState, resetStatus, addFollowingStatus, addFollowingsStatus, removeFollowingStatus } = userSlice.actions;
 export const selectUserStatus = (state: { user: UserState }) => state.user.status;
 export const selectUserError = (state: { user: UserState }) => state.user.error;
 export const selectUserDetails = (state: { user: UserState }) => state.user.userDetails;

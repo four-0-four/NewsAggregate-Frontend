@@ -15,6 +15,7 @@ import NotFound from './pages/404';
 import Account from './pages/profile/account';
 import Interests from './pages/profile/interests';
 import Security from './pages/profile/security';
+import BookmarkPage from './pages/bookmark/bookmark';
 import PrivacyPolicy from './pages/policy/PrivacyPolicy';
 import TermsOfService from './pages/policy/TermsOfService';
 import ContactUs from './pages/contact/contactUs';
@@ -28,9 +29,14 @@ import RegisterForm from './pages/auth/Register';
 import FilterSources from './pages/profile/filterSources';
 import BlacklistSources from './pages/profile/BlacklistSources';
 import ProtectedLayout from './pages/ProtectedLayout';
+import Hotjar from '@hotjar/browser';
 
 const App = () => {
   const storeRef = useRef<AppStore | null>(null);
+  const siteId = 3902439;
+  const hotjarVersion = 6;
+
+  Hotjar.init(siteId, hotjarVersion);
 
   if (!storeRef.current) {
     storeRef.current = makeStore();
@@ -45,6 +51,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/topics" element={<Topics />} />
               <Route path="/topics/:topic" element={<Topic />} />
+              <Route path="/bookmark" element={<BookmarkPage />} />
               <Route path="/profile" element={<Navigate to="/profile/account" replace />} />
               <Route path="/profile/account" element={<Account />} />
               <Route path="/profile/interests" element={<Interests />} />

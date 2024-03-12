@@ -25,7 +25,7 @@ const FilterSources = (props: Props) => {
     const [allNewsSrc, setAllNewsSrc] = useState(allNewsSourcesState)
     const [InterestedNewsSrc, setInterestedNewsSrc] = useState(InterestedNewsSourcesState)
     const [BlacklistedNewsSrc, setBlacklistedNewsSrc] = useState(BlacklistedNewsSourcesState)
-    const [isLoading, setIsLoading] = useState(true);
+    const [is, setIs] = useState(true);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -33,10 +33,10 @@ const FilterSources = (props: Props) => {
                 dispatch(getAllNewsSources()),
                 dispatch(getAllUserNewsSourcesPreferences()),
                 dispatch(getAllUserNewsSourcesBlacklist())
-            ]).then(() => setIsLoading(false)) // Set loading to false once both promises resolve
-            .catch(() => setIsLoading(false)); 
+            ]).then(() => setIs(false)) // Set  to false once both promises resolve
+            .catch(() => setIs(false)); 
         } else {
-            setIsLoading(false); // Set loading to false if not authenticated
+            setIs(false); // Set  to false if not authenticated
         }
     }, []);
 
@@ -118,7 +118,7 @@ const FilterSources = (props: Props) => {
             </Box>
             <Box title="Interested News Sources">
                 <p className='text-sm text-gray-300 mt-[-15px]'>(Min 3 news sources)</p>
-                {isLoading ? (
+                {is ? (
                     <div className='flex flex-row flex-wrap gap-5 mt-6'>
                         <NewsSourceIconPlaceholder />
                         <NewsSourceIconPlaceholder />

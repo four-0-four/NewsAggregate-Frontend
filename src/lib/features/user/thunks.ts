@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
-import { UserDetails, followingReturnI } from './slice';
+import { FollowingsReturnI, UserDetails, followingReturnI } from './slice';
 
 let BaseURL: string | undefined;
 
@@ -241,7 +241,8 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         });
   
         if (!registerResponse.ok) {
-          throw new Error('Registration failed');
+          const response = await registerResponse.json();
+          throw new Error(response.detail);
         }
   
         // Fetch user details after successful registration
@@ -312,6 +313,7 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         }
   
         const userFollowings: string[] = await response.json();
+        Cookies.set("userFollowings", JSON.stringify(userFollowings), { expires: 1 });
         return userFollowings;
       } catch (error) {
         if (error instanceof Error) {
@@ -461,6 +463,45 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to add following');
+      }
+
+      const result = await response.json();
+      return result;
+    } catch (error) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
+      }
+      return thunkAPI.rejectWithValue('Failed to add following');
+    }
+  }
+);
+
+export const addFollowings = createAsyncThunk<
+  FollowingsReturnI,
+  { topics: string[] }, // Adjusted to accept an array of topics
+  { rejectValue: string }
+>(
+  'user/addFollowings',
+  async ({ topics }, thunkAPI) => {
+    const token = Cookies.get('access_token');
+    if (!token) {
+      return thunkAPI.rejectWithValue('No access token available');
+    }
+    try {
+      // Adjusted to send topics as a JSON payload instead of URL search params
+      const url = new URL(BaseURL + '/user/add-followings');
+
+      const response = await fetch(url.toString(), {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json', // Changed to indicate JSON content type
+        },
+        body: JSON.stringify({ topics }), // Sending topics as an array in the request body
       });
 
       if (!response.ok) {
