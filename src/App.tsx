@@ -33,7 +33,7 @@ import Hotjar from '@hotjar/browser';
 
 const App = () => {
   const storeRef = useRef<AppStore | null>(null);
-  const siteId = 3902439;
+  const siteId = 3902638;
   const hotjarVersion = 6;
 
   Hotjar.init(siteId, hotjarVersion);
