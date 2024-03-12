@@ -29,9 +29,14 @@ import RegisterForm from './pages/auth/Register';
 import FilterSources from './pages/profile/filterSources';
 import BlacklistSources from './pages/profile/BlacklistSources';
 import ProtectedLayout from './pages/ProtectedLayout';
+import Hotjar from '@hotjar/browser';
 
 const App = () => {
   const storeRef = useRef<AppStore | null>(null);
+  const siteId = 3902439;
+  const hotjarVersion = 6;
+
+  Hotjar.init(siteId, hotjarVersion);
 
   if (!storeRef.current) {
     storeRef.current = makeStore();
