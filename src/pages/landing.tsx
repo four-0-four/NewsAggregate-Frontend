@@ -12,31 +12,37 @@ const LandingPage: React.FC = () => {
   return (
     <div className='w-full'>
         {/* Section 1 */}
-        <section className="overflow-hidden flex flex-col sm:flex-row justify-between items-center pt-24 pb-14 md:py-20 max-w-[1200px] mx-auto px-4 xs:px-10">
-            <div className="w-full sm:w-3/5 md:w-3/5 md:mb-4  md:pt-10 lg:pt-0">
-                <h1 className="text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight">Your Trusted Source for Aggregated and Independent News</h1>
-                <h3 className='lg:mb-9 md:mb-4 mb-0 text-sm md:text-md lg:text-lg xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
-                <a href="/auth/Register" className={`hidden md:inline-block text-lg w-auto sm:mr-0 mr-0 px-12 py-2 text-black rounded-[8px] capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
-                    Register &rarr;
-                </a>
-            </div>
-            <div className="sm:w-2/5 lg:w-3/5">
-            <img src={"/landing.png"} className='xs:w-full md:w-full m-auto max-w-[350px] lg:max-w-[100%]'/>
+        <section className="bg-white">
+            <div className='overflow-hidden flex flex-col sm:flex-row justify-between items-center pt-24 pb-14 md:py-20 mx-auto  px-4 xs:px-10  max-w-[1200px] '>
+                <div className="w-full sm:w-3/5 md:w-3/5 md:mb-4  md:pt-10 lg:pt-0">
+                    <h1 className="text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight">Your Trusted Source for Aggregated and Independent News</h1>
+                    <h3 className='lg:mb-9 md:mb-4 mb-0 text-sm md:text-md lg:text-lg xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
+                    <a href="/auth/Register" className={`hidden md:inline-block text-lg w-auto sm:mr-0 mr-0 px-12 py-2 text-black rounded-[8px] capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
+                        Register &rarr;
+                    </a>
+                </div>
+                <div className="sm:w-2/5 lg:w-3/5">
+                    <img src={"/landing.png"} className='xs:w-full md:w-full m-auto max-w-[350px] lg:max-w-[100%]'/>
+                </div>
             </div>
         </section>
 
         {/* Section 2 */}
-        <section className="py-4  bg-neutral-100 mb-10 md:mb-20 text-center">
+        <section className="py-4  bg-neutral-100 text-center">
             <div>
                 <h1 className='font-bold uppercase md:text-xl text-lg mt-3'>Some of Our Current News Sources</h1>
             </div>
-            <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 lg:gap-10 my-6  max-w-[1200px] mx-auto px-4">
+            <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 lg:gap-10 my-6 max-w-[600px] xl:max-w-[1500px] mx-auto px-4">
                 <NewsSourceIcon2 name="CBC" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/cbc.png" />
                 <NewsSourceIcon2 name="CTV" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/ctv.png" />
                 <NewsSourceIcon2 name="National Post" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/national%20post.png" />
                 <NewsSourceIcon2 name="Globe and Mail" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/the-globe-and-mail.png" />
-                <NewsSourceIcon2 name="Montreal Gazette" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/montreal-gazette.jpg" />
-                <NewsSourceIcon2 name="Toronto Sun" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/toronto%20sun.png" />
+                <NewsSourceIcon2 name="AlJazeera" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/aljazeera.png" />
+                <NewsSourceIcon2 name="9News" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/9news.png" />
+                <NewsSourceIcon2 name="The Guardian" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/guardian.png" />
+                <NewsSourceIcon2 name="Daily Mail" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/daily%20mail.png" />
+                <NewsSourceIcon2 name="The Independent" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/the%20independent.png" />
+                <NewsSourceIcon2 name="New York Times" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/new%20york%20times.jpg" />
             </div>
             <div>
                 <p className='max-w-[200px] text-center m-auto'>
@@ -45,55 +51,44 @@ const LandingPage: React.FC = () => {
             </div>
         </section>
 
-        <div className="grid lg:grid-cols-[50%,50%] md:grid-cols-1 gap-4 mb-16 md:mb-20 max-w-[1200px] mx-auto px-4 xs:px-10">
-            <div className="order-1 md:order-1 xs:p-5">
-                <h3 className='xl:text-lg mb-2'>All in One Place</h3>
-                <h1 className='text-2xl md:text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight'>
-                    Explore Global News From Top & Trusted Sources
-                </h1>
-                <div className='mt-10'>
-                    <div className="flex items-start gap-2 xs:w-fit w-full mb-10">
-                        <div className="w-9 h-9 rounded-[10px] bg-primary flex items-center justify-center mr-3">
-                            {QuickIcon()}
-                        </div>
-                        <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                            <h3 className='text-lg font-bold mb-2'>
-                                Quick and Convenient
-                            </h3>
-                            <div className="text-sm text-gray-500">
-                                Effortlessly stay updated with real-time news feeds tailored to fit your busy lifestyle, and always just a click away    
+        <div className='bg-white'>
+            <div className="grid lg:grid-cols-[50%,50%] md:grid-cols-1 gap-4 pt-14 max-w-[1200px] mx-auto px-4 xs:px-10">
+                <div className="order-1 md:order-1 xs:p-5">
+                    <h3 className='xl:text-lg mb-2'>All in One Place</h3>
+                    <h1 className='text-2xl md:text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight'>
+                        Explore Global News From Top & Trusted Sources
+                    </h1>
+                    <div className='mt-10'>
+                        <div className="flex items-start gap-2 xs:w-fit w-full mb-10">
+                            <div className="w-9 h-9 rounded-[10px] bg-primary flex items-center justify-center mr-3">
+                                {QuickIcon()}
+                            </div>
+                            <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
+                                <h3 className='text-lg font-bold mb-2'>
+                                    Pick Your Favorite News Sources
+                                </h3>
+                                <div className="text-sm text-gray-500">
+                                    Tailor your news feed by selecting trusted sources and filtering out the ones you prefer to avoid, for a personalized and credible news experience  
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="flex items-start gap-2 xs:w-fit w-full">
-                        <div className="w-9 h-9 rounded-[10px] bg-primary flex items-center justify-center mr-3">
-                            {InterestIcon()}
-                        </div>
-                        <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                            <h3 className='text-lg font-bold mb-2'>
-                                Choose Your Own Interest
-                            </h3>
-                            <div className="text-sm text-gray-500">
-                                Personalize your news feed by selecting topics you care about, from politics to technology, for a more relevant reading experience    
+                        <div className="flex items-start gap-2 xs:w-fit w-full">
+                            <div className="w-9 h-9 rounded-[10px] bg-primary flex items-center justify-center mr-3">
+                                {InterestIcon()}
+                            </div>
+                            <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
+                                <h3 className='text-lg font-bold mb-2'>
+                                    Choose Your Own Interests
+                                </h3>
+                                <div className="text-sm text-gray-500">
+                                    Personalize your news feed by selecting topics you care about, from politics to technology, for a more relevant reading experience    
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>                
-            </div>
-            <div className="order-2 md:order-2 flex items-center justify-center relative mt-10">
-                <div className='rounded-[15px] bg-yellow-100 absolute right-[15%] top-[0%] w-[300px] h-[300px] z-0 blur-3xl'></div>
-                <div className='max-w-[400px] shadow-xl rounded-[15px] p-2 z-0 bg-white'>
-                    <img src={"/election_landing.png"} alt="Election Landing" className='w-full'/> 
-                    <div className='flex justify-between my-3 text-lg px-2'>
-                        <h3 className='font-bold'>Decisive Victory</h3>
-                        {LikeIcon()}
-                    </div>
-                    <p className='px-2 text-sm text-gray-400 leading-4'>
-                        Elections 2024: Read the latest Elections news and updates on The Economic Times. Get updates on General Elections, Lok Sabha elections, assembly elections...
-                    </p>
-                    <p className='px-2 mt-4 text-sm text-gray-500 mb-3'>
-                        1 day ago | by Robbin joseph
-                    </p>
+                    </div>                
+                </div>
+                <div className="order-2 md:order-2 flex items-center justify-center relative">
+                    <img src={"/select.png"} className='xs:w-full md:w-full m-auto max-w-[350px] lg:max-w-[100%]'/>
                 </div>
             </div>
         </div>
@@ -114,16 +109,18 @@ const LandingPage: React.FC = () => {
                     </div>
                     <div className='grid grid-cols-1 gap-y-4 w-full lg:w-1/2'>
                         <Accordion question="How are the news stories tailored to my specific interests on the website?" answer="Our platform empowers you to create a personalized news feed. By adding topics you're interested in, we ensure that only these subjects are highlighted in your news overview, aligning perfectly with your preferences."/>
-                        <Accordion question="Are there any costs involved in signing up for this news service?" answer="Currently, all features of our basic news aggregation service are available for free, giving you access to a wide range of trusted news sources. For content from premium and paid news sources, a small monthly fee is required to unlock these additional, high-quality resources."/>
+                        <Accordion question="Are there any costs involved in signing up for this news service?" answer="Most features of our news aggregation services are available for free, granting access to 25+ of the most popular news sources. Our premium tier enhances user experience with additional features and expands your access to 60+ news sources"/>
                         <Accordion question="How frequently is the news content updated on the website?" answer="Our news feed is updated continuously, 24/7, ensuring that you always have access to the latest news as it happens."/>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div className='sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl m-auto my-10 md:px-10 px-4'>
-            <h1 className='uppercase font-bold text-2xl py-4 border-b text-center'>Contact us</h1>
-            <ContactUsForm />
+        <div className='bg-white'>
+            <div className='sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl m-auto py-10 md:px-10 px-4'>
+                <h1 className='uppercase font-bold text-2xl py-4 border-b text-center'>Contact us</h1>
+                <ContactUsForm />
+            </div>
         </div>
 
         <footer className="bg-black p-5 py-3">
