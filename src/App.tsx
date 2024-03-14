@@ -33,13 +33,11 @@ import Hotjar from '@hotjar/browser';
 
 const App = () => {
   const storeRef = useRef<AppStore | null>(null);
-  
-  React.useEffect(() => {
-    var _mtm = window._mtm = window._mtm || [];
-    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.async=true; g.src='https://cdn.matomo.cloud/farabix.matomo.cloud/container_i2aL6wfO.js'; s.parentNode.insertBefore(g,s);
-  }, [])
+
+  const siteId = 3906456;
+  const hotjarVersion = 6;
+
+  Hotjar.init(siteId, hotjarVersion);
 
   if (!storeRef.current) {
     storeRef.current = makeStore();
