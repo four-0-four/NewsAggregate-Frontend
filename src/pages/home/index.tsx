@@ -70,7 +70,7 @@ const Home: React.FC = () => {
         {(!IsLoading && userNews.status == 'failed') && (
           <InternalError />
         )}
-        {(!IsLoading && userNews.status !== 'failed' && userNews.status !== 'loading') && (
+        {((!IsLoading && userNews.status !== 'failed' && userNews.status !== 'loading')||userNews.news.length > 0) && (
           <>
             { userNews.news.length > 0 ? (
                 userNews.news.map((newsCard: NewsArticle) => (

@@ -37,6 +37,7 @@ const Interests = (props: Props) => {
         dispatch(addFollowing({topic}));
     }
 
+    let MIN_INTEREST_NEWS = 1
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
             <Box title="What are you interested in?">
@@ -47,20 +48,42 @@ const Interests = (props: Props) => {
                 ))}
             </Box>
             <Box title="Selected Interests">
-                <div className='flex mt-3'>
-                    {userFollowings.map((following, index) => (
-                        <div className='relative'>
-                            <p className={`${interestDesign}`}>
-                                {following ? CategoryIcons(following) : ""}{following}
-                            </p>
-                            <button onClick={()=>handleRemoveInterest(following)} className='absolute top-[-0.5rem] right-1 text-sm rounded-full bg-black text-white h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center'>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-3 h-3 sm:w-4 sm:h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                <p className='text-sm text-gray-300 mt-[-15px]'>(Min {MIN_INTEREST_NEWS} Interest)</p>
+                    {userFollowings.length > 0 ? (
+                        <>
+                            <div className='flex mt-6'>
+                                {userFollowings.map((following, index) => (
+                                    <div className='relative'>
+                                        <p className={`${interestDesign}`}>
+                                            {following ? CategoryIcons(following) : ""}{following}
+                                        </p>
+                                        <button onClick={()=>handleRemoveInterest(following)} className={`absolute top-[-0.5rem] right-1 text-sm rounded-full bg-black text-white h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center ${(userFollowings.length == MIN_INTEREST_NEWS)?"hidden":""}`}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-3 h-3 sm:w-4 sm:h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                            {userFollowings.length == MIN_INTEREST_NEWS && (
+                                <div className="text-red-500 text-sm leading-4 flex flex-col sm:flex-row items-center mt-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-10 h-10 inline-block mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                                    </svg>
+                                    To remove an interest, you must first add a new one, since you are already at the minimum number of required interests
+                                </div>
+                            )}
+                        </>
+                    ):(
+                        <>
+                            <div className="text-sm mx-auto flex flex-col items-center mt-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6 block mb-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
                                 </svg>
-                            </button>
-                        </div>
-                    ))}
-                </div>
+                                Looks like you haven’t selected any interests yet. Start exploring to personalize your experience!
+                            </div>
+                        </>
+                    )}
             </Box>
 
         </div>

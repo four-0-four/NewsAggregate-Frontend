@@ -126,7 +126,7 @@ const News: React.FC<NewsComponentProps> = ({}) => {
             </div>
             <div className="flex justify-end mr-5 mt-5">
                 <a className="text-md text-gray-600 flex items-center cursor-pointer hover:text-gray-600 hover:bg-amber-200 bg-gray-100 rounded-[10px] pl-3 pr-1 py-1"
-                href={selectedArticle?.externalLink}>
+                href={selectedArticle?.externalLink} target="_blank" rel="noopener noreferrer">
                     <h3>Read More</h3>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-1 w-6 h-6 p-1 rounded-full">
                         <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
