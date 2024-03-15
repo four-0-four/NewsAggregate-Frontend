@@ -37,7 +37,7 @@ const Interests = (props: Props) => {
         dispatch(addFollowing({topic}));
     }
 
-    let MIN_INTEREST_NEWS = 1
+    let MIN_INTEREST_NEWS = 2
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
             <Box title="What are you interested in?">
