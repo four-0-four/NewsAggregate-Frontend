@@ -27,7 +27,6 @@ import PasswordEmailForm from './pages/auth/ForgetPassword';
 import LoginForm from './pages/auth/Login';
 import RegisterForm from './pages/auth/Register';
 import FilterSources from './pages/profile/filterSources';
-import BlacklistSources from './pages/profile/BlacklistSources';
 import ProtectedLayout from './pages/ProtectedLayout';
 import Hotjar from '@hotjar/browser';
 
@@ -43,6 +42,7 @@ const App = () => {
     storeRef.current = makeStore();
   }
 
+  //<Route path="/profile/blacklistSources" element={<BlacklistSources />} />
   return (
     <Provider store={storeRef.current}>
       <Router>
@@ -57,7 +57,6 @@ const App = () => {
               <Route path="/profile/account" element={<Account />} />
               <Route path="/profile/interests" element={<Interests />} />
               <Route path="/profile/filterSources" element={<FilterSources />} />
-              <Route path="/profile/blacklistSources" element={<BlacklistSources />} />
               <Route path="/profile/security" element={<Security />} />
               <Route path="/contact/reportBug" element={<ReportBugForm />} />
               <Route path="/contact/requestFeature" element={<RequestFeatureForm />} />

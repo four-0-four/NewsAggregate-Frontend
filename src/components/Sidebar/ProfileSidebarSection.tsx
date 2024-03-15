@@ -26,9 +26,6 @@ const ProfileSidebar = (props: Props) => {
                     <SidebarElement href="/profile/filterSources" icon={<NewsSourceIcon />}>
                         Filter News Sources
                     </SidebarElement>
-                    <SidebarElement href="/profile/blackListSources" icon={<BlackListIcon />}>
-                        BlackList News
-                    </SidebarElement>
                 </ul>
             </nav>
         </>

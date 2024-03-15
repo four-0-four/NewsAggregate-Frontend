@@ -38,12 +38,12 @@ const Home: React.FC = () => {
       dispatch(fetchCategories({parent_category_id:0}))
       console.log("about to get followers")
       dispatch(fetchUserFollowings()).unwrap().then((res) => {
-        if (res.length >= 3) {
-          console.log("following is more than 3")
+        if (res.length >= 2) {
+          console.log("following is more than 2")
           setGetStarted(false);
           dispatch(fetchNewsArticles()).finally(() => setIsLoading(false));
         } else {
-          console.log("following is less than 3")
+          console.log("following is less than 2")
           setGetStarted(true);
           setIsLoading(false);
         }
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
         {(!IsLoading && userNews.status == 'failed') && (
           <InternalError />
         )}
-        {(!IsLoading && userNews.status !== 'failed' && userNews.status !== 'loading') && (
+        {((!IsLoading && userNews.status !== 'failed' && userNews.status !== 'loading')||userNews.news.length > 0) && (
           <>
             { userNews.news.length > 0 ? (
                 userNews.news.map((newsCard: NewsArticle) => (

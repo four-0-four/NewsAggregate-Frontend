@@ -96,7 +96,7 @@ const FilterSources = (props: Props) => {
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
             <Box title="Which News Sources Do You Want to See?">
-                <p className='mb-5 text-sm sm:text-md'>Select the specific news sources you wish to include in your personalized feed. This will not affect the content on the Explore page or Topic page. If you wish to remove a news source entirely, including from the Explore page and Topic page, please visit the <a className='text-primary text-underline' href="/profile/blacklistSources">Blacklist News Source</a> Page</p>
+                <p className='mb-5 text-sm sm:text-md'>Please choose the news sources you want to add to your personalized feed. Note that these selections will only affect your feed and will not change the content displayed on the Explore or Topic pages</p>
                 <SearchInput 
                     placeholder={'Search for News Sources'} 
                     name={'search'} 
@@ -114,7 +114,7 @@ const FilterSources = (props: Props) => {
                         action={addSource}
                     />
                 )}
-                <p className='text-xs mt-5 text-gray-400'>Note: We are continuously adding new sources. Some will be added shortly, while others may take longer due to geolocation constraints. We will notify you as soon as they are included.</p>
+                <p className='text-xs mt-5 text-gray-400'>Please note: Our collection of news sources is constantly expanding. Some sources will be integrated soon, whereas others might take longer owing to geolocation constraints. Rest assured, we will inform you as soon as new sources become available.</p>
             </Box>
             <Box title="Interested News Sources">
                 <p className='text-sm text-gray-300 mt-[-15px]'>(Min 3 news sources)</p>
@@ -137,7 +137,7 @@ const FilterSources = (props: Props) => {
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-10 h-10 inline-block mr-2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
                                 </svg>
-                                You need to add a new interest before you can remove an existing one, as you're at the minimum number of interests required!
+                                To remove a current news source, you must first add a new one, since you are already at the minimum number of required news sources
                             </div>
                         )}
                     </>

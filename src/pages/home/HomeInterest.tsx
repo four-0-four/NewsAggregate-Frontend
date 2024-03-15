@@ -51,7 +51,7 @@ type HomeInterestsProps = {
 
     let handleSubmit = () => {
         setLoading(true);
-        if (userFollowings.length < 3) return;
+        if (userFollowings.length < 2) return;
         dispatch(addFollowingsStatus(userFollowings));
         dispatch(addFollowings({ topics: userFollowings })).unwrap().then(() => {
             start();
@@ -69,13 +69,13 @@ type HomeInterestsProps = {
                             <p className='text-primary text-lg mt-1'>Getting Started...</p>
                         </div>
                     )}
-                    <p className='mb-5 text-sm sm:text-md'>To tailor your Farabix experience, please select the interests from below. Choose a minimum of 3!</p>
+                    <p className='mb-5 text-sm sm:text-md'>To tailor your Farabix experience, please select the interests from below. Choose a minimum of 2!</p>
                     <h1 className='text-lg sm:text-xl font-bold text-left capitalize pb-4 font-semibold flex items-center mb-1'>Add Interests</h1>
                     {categories.map((category, index) => (
                         <button onClick={()=>category?handleAddInterest(category):""} className={tagDesign}>{category?CategoryIcons(category):""}{category}</button>
                     ))}
                     <div className='flex justify-end mt-5'>
-                        <PrimaryButton text="Get Started" onClick={handleSubmit} disabled={userFollowings.length<3}/>
+                        <PrimaryButton text="Get Started" onClick={handleSubmit} disabled={userFollowings.length<2}/>
                     </div>
                 </div>
             </Box>
