@@ -70,7 +70,6 @@ const News: React.FC<NewsComponentProps> = ({}) => {
 
 
     const newsStatus = useAppSelector(selectNewsStatus);
-    console.log(newsStatus)
     if(newsStatus === 'loading' || !selectedArticle){
         return(
             <div className={`mx-auto lg:ml-0 lg:mr-auto md:max-w-2xl lg:max-w-2xl xl:max-w-3xl w-full  ${isAuthenticated?"":"mx-auto"}`}>
