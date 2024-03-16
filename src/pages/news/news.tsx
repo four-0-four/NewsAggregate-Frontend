@@ -80,7 +80,7 @@ const News: React.FC<NewsComponentProps> = ({}) => {
     }
     
     return (
-        <div className={`flex flex-col mx-auto lg:ml-0 lg:mr-auto md:max-w-2xl lg:max-w-2xl xl:max-w-3xl w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6 ${isAuthenticated?"":"mx-auto"}`}>
+        <div className={`flex flex-col md:max-w-2xl lg:max-w-2xl xl:max-w-3xl w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6 ${isAuthenticated?"lg:ml-0 lg:mr-auto":"mx-auto"} `}>
             <div className="relative rounded-[20px] max-h-[300px] overflow-hidden">
                 <img src={imageSrc} alt="News" className="block object-cover object-center rounded-[20px] max-h-[300px] w-full" />
                 <h2 className="hidden xs:block absolute bottom-0 left-0 right-0 block md:block text-lg sm:text-xl font-bold text-white p-4 pt-32"
@@ -114,6 +114,9 @@ const News: React.FC<NewsComponentProps> = ({}) => {
                 )}
             </div>
             <div className="px-1 sm:px-2 flex flex-col justify-start p-2 md:px-4">
+                {selectedArticle?.longSummary && (
+                    <p className="text-sm sm:text-md whitespace-pre-wrap text-gray-400 mb-1">(Summarized by Farabix)</p>
+                )}
                 <p className="text-sm sm:text-md whitespace-pre-wrap">{selectedArticle?.longSummary}</p>
                 {selectedArticle?.keywords && selectedArticle?.keywords.length > 0 && (
                     <div className='flex gap-2 flex-wrap my-5'>
