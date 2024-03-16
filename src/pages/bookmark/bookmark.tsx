@@ -22,8 +22,8 @@ const BookmarkPage: React.FC = ({}) => {
       }
     }, [dispatch, isAuthenticated]);
 
-    console.log("***********************************")
-    console.log(bookmarks)
+    
+    
     if(bookmarks.status !== 'loading' && bookmarks.status !== 'failed' && bookmarks.news?.length === 0){  
       return (
         <div>

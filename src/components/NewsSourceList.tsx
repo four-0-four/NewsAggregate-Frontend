@@ -8,7 +8,7 @@ type Props = {
 
 const NewsSourceList: React.FC<Props> = ({newsSources}) => {
     const navigate = useNavigate();
-    console.log(newsSources)
+    
     return (
         <div>
             <div className='flex flex-row justify-between items-center mt-6'>

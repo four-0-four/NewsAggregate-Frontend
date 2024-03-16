@@ -55,7 +55,6 @@ export const fetchNewsArticles = createAsyncThunk<
             const searchParams = new URLSearchParams();
             searchParams.append('last_news_time', (userArticles?.last_news_time ?? '').toString());
             searchParams.append('number_of_articles_to_fetch', (userArticles?.number_of_articles_to_fetch ?? '').toString())
-            console.log(userArticles?.last_news_time, userArticles?.number_of_articles_to_fetch)
             const url = new URL(BaseURL + '/news/user/get');
             url.search = searchParams.toString();
 
@@ -71,7 +70,6 @@ export const fetchNewsArticles = createAsyncThunk<
             }
 
             const data = await response.json();
-            console.log(data.news)
             return { articles: data.news as NewsArticle[], last_news_time: data.last_news_time, load_more: data.load_more };
         } catch (error) {
             if (error instanceof Error) {

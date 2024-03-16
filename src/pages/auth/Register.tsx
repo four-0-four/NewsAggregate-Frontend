@@ -48,19 +48,19 @@ const RegisterForm = () => {
                             </p>
                         </div>
                     )}
-                    {status === 'failed' && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
+                    {status === 'failed' && <p className="text-left text-red-500 text-sm mb-2">* {(error && error.includes("[object Object]"))?"Something went wrong":error}</p>}
 
 
                     {!registered && (
                         <div className='relative'>
-                            {loading && (
+                            {loading && status !== 'failed' && (
                                 <div className="z-10 w-full h-full absolute top-0 left-0 flex flex-col items-center justify-center bg-gray-100 bg-opacity-70">
                                     <img src="/loading.gif" className='w-[50px]'/>
                                     <p className='text-primary text-lg mt-1'>Loading...</p>
                                 </div>
                             )}
                             <div className="grid sm:grid-cols-2 grid-cols-1 sm:gap-4">
-                                <Input headerText="First Name" placeholder="First Name" name="first_name" value={formData.first_name} onChange={handleChange} />
+                                <Input headerText="First Name" placeholder="First Name" name="first_name" value={formData.first_name} onChange={handleChange} min={2}/>
                                 <Input headerText="Last Name" placeholder="Last Name" name="last_name" value={formData.last_name} onChange={handleChange} />
                             </div>
 
