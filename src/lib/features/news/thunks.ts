@@ -13,6 +13,28 @@ if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
   BaseURL = process.env.REACT_APP_STAGE_URL;
 }
 
+
+export const healthCheck = createAsyncThunk<
+    void, 
+    void, 
+    { state: RootState, rejectValue: string } 
+>(
+    'healthCheck',
+    async (_, thunkAPI) => {
+
+        try {
+            const response = await fetch(BaseURL + '/health', {
+                method: 'GET',
+            });
+        } catch (error) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            return thunkAPI.rejectWithValue('Failed to do the health check');
+        }
+    }
+);
+
 export const fetchNewsArticles = createAsyncThunk<
     {articles: NewsArticle[], last_news_time: string, load_more: boolean}, 
     void, 

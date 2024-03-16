@@ -8,6 +8,7 @@ import { resetStatus, selectIsAuthenticated, selectUserFollowings, setAuthentica
 import Cookies from 'js-cookie';
 import isTokenValid from '../util/token';
 import { fetchUserDetails, refreshAccessToken } from '../lib/features/user/thunks';
+import { healthCheck } from '../lib/features/news/thunks';
 
 type LayoutProps = {
   children: ReactNode;
@@ -56,6 +57,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
 
   useEffect(() => {
+    dispatch(healthCheck())
     checkAuth();
   }, []);
 
@@ -64,7 +66,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     if (isAuthenticated) {
       interval = setInterval(() => {
         dispatch(refreshAccessToken());
-      }, 1 * 60 * 1000); // Refresh token every 15 minutes
+      }, 10 * 60 * 1000); // Refresh token every 15 minutes
     }
   
     return () => {

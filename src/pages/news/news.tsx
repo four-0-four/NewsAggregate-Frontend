@@ -114,6 +114,9 @@ const News: React.FC<NewsComponentProps> = ({}) => {
                 )}
             </div>
             <div className="px-1 sm:px-2 flex flex-col justify-start p-2 md:px-4">
+                {selectedArticle?.longSummary && (
+                    <p className="text-sm sm:text-md whitespace-pre-wrap text-gray-400 mb-1">(Summarized by Farabix)</p>
+                )}
                 <p className="text-sm sm:text-md whitespace-pre-wrap">{selectedArticle?.longSummary}</p>
                 {selectedArticle?.keywords && selectedArticle?.keywords.length > 0 && (
                     <div className='flex gap-2 flex-wrap my-5'>
