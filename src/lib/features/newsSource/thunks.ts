@@ -97,7 +97,9 @@ export const getAllUserNewsSourcesPreferences = createAsyncThunk<
 >(
   'newsSource/get-users-preference',
   async (_, thunkAPI) => {
-    return await newsSourceGetterAPICaller(thunkAPI, '/newsSource/get-users-preference');
+    let newsSourcePreferences =  await newsSourceGetterAPICaller(thunkAPI, '/newsSource/get-users-preference');
+    Cookies.set("newsSourcePreferences", JSON.stringify(newsSourcePreferences), { expires: 1 });
+    return newsSourcePreferences;
   }
 );
 
