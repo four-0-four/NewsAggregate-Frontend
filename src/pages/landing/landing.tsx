@@ -1,10 +1,10 @@
 // pages/landing.tsx
 
-import Accordion from '../components/Accordion';
-import PrimaryButton from '../components/Buttons/PrimaryButton';
-import ContactUsForm from '../components/Forms/ContactUsForm';
-import NewsSourceIcon2 from '../components/NewsSourceIcon2';
-import { landingIllustration, LikeIcon, QuickIcon, InterestIcon } from '../util/illustrations';
+import Accordion from '../../components/Accordion';
+import PrimaryButton from '../../components/Buttons/PrimaryButton';
+import ContactUsForm from '../../components/Forms/ContactUsForm';
+import NewsSourceIcon2 from '../../components/NewsSourceIcon2';
+import { landingIllustration, LikeIcon, QuickIcon, InterestIcon } from '../../util/illustrations';
 import React from 'react';
 
 
@@ -113,13 +113,6 @@ const LandingPage: React.FC = () => {
                         <Accordion question="How frequently is the news content updated on the website?" answer="Our news feed is updated continuously, 24/7, ensuring that you always have access to the latest news as it happens."/>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div className='bg-white'>
-            <div className='sm:w-full md:max-w-2xl lg:max-w-2xl xl:max-w-3xl m-auto py-10 md:px-10 px-4'>
-                <h1 className='uppercase font-bold text-2xl py-4 border-b text-center'>Contact us</h1>
-                <ContactUsForm />
             </div>
         </div>
 

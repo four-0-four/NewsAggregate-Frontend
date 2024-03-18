@@ -9,7 +9,7 @@ import Layout from './pages/layout'; // Adjust the import path as necessary
 import Topics from './pages/explore/topics';
 import Topic from './pages/category/topic'; // Adjust the path as per your file structure
 import News from './pages/news/news'; // Adjust the path
-import LandingPage from './pages/landing';
+import LandingPage from './pages/landing/landing';
 import Home from './pages/home/index';
 import NotFound from './pages/404';
 import Account from './pages/profile/account';
@@ -28,15 +28,11 @@ import LoginForm from './pages/auth/Login';
 import RegisterForm from './pages/auth/Register';
 import FilterSources from './pages/profile/filterSources';
 import ProtectedLayout from './pages/ProtectedLayout';
-import Hotjar from '@hotjar/browser';
+import ContactUsLanding from './pages/landing/contactUs';
+import NewsSources from './pages/landing/newsSources';
 
 const App = () => {
   const storeRef = useRef<AppStore | null>(null);
-
-  const siteId = 3906456;
-  const hotjarVersion = 6;
-
-  Hotjar.init(siteId, hotjarVersion);
 
   if (!storeRef.current) {
     storeRef.current = makeStore();
@@ -60,14 +56,16 @@ const App = () => {
               <Route path="/profile/security" element={<Security />} />
               <Route path="/contact/reportBug" element={<ReportBugForm />} />
               <Route path="/contact/requestFeature" element={<RequestFeatureForm />} />
+              <Route path="/contact/contactUs" element={<ContactUs />} />
             </Route>
             <Route path="/landing" element={<LandingPage />} />
+            <Route path="/landing/contactUs" element={<ContactUsLanding />} />
+            <Route path="/landing/newsSources" element={<NewsSources />} />
             <Route path="/news/:newsID" element={<News />} />
             <Route path="/404" element={<NotFound />} />
             <Route path="/policy/PrivacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/policy/TermsOfService" element={<TermsOfService />} />
-            <Route path="/contact" element={<Navigate to="/contact" replace />} />
-            <Route path="/contact/contactUs" element={<ContactUs />} />
+            <Route path="/contact" element={<Navigate to="/landing/contactUs" replace />} />
             <Route path="/auth/ActivateAccount" element={<ActivateAccount />} />
             <Route path="/auth/ChangePassword" element={<ChangePasswordForm />} />
             <Route path="/auth/ForgetPassword" element={<PasswordEmailForm />} />

@@ -89,6 +89,39 @@ export const getAllNewsSources = createAsyncThunk<
   }
 );
 
+export const getAllNewsSourcesLanding = createAsyncThunk<
+    NewsSourceState[],
+    void,
+    { rejectValue: string }
+>(
+  'newsSource/getallLanding',
+  async (_, thunkAPI) => {
+    //return await newsSourceGetterAPICaller(thunkAPI, '/newsSource/landing');
+    let api = '/newsSource/landing';
+    try {
+      const searchParams = new URLSearchParams();
+      const url = new URL(BaseURL + api);
+      url.search = searchParams.toString();
+
+      const response = await fetch(url.toString(), {
+          method: 'GET'
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        return thunkAPI.rejectWithValue(errorData.detail || 'Failed to add news source preference');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return thunkAPI.rejectWithValue(error.message);
+      }
+      return thunkAPI.rejectWithValue('An unexpected error occurred');
+    }
+  }
+);
+
 
 export const getAllUserNewsSourcesPreferences = createAsyncThunk<
     NewsSourceState[],
