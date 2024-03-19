@@ -117,7 +117,7 @@ const News: React.FC<NewsComponentProps> = ({}) => {
     
     const url = "https://www.farabix.com/news/" + newsID;
     return (
-        <div className={`flex flex-col md:max-w-2xl lg:max-w-2xl xl:max-w-3xl w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6 ${isAuthenticated?"lg:ml-0 lg:mr-auto":"mx-auto"} `}>
+        <div className={`flex flex-col md:max-w-2xl lg:max-w-2xl xl:max-w-3xl w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6 ${isAuthenticated?"lg:ml-0 lg:mr-auto":"mx-auto"} mb-3 mx-auto lg:lg:ml-0 lg:mr-auto`}>
             <div className="relative rounded-[20px] max-h-[300px] overflow-hidden">
                 <img src={imageSrc} alt="News" className="block object-cover object-center rounded-[20px] max-h-[300px] w-full" />
                 <h2 className="hidden xs:block absolute bottom-0 left-0 right-0 block md:block text-lg sm:text-xl font-bold text-white p-4 pt-32"
@@ -128,7 +128,7 @@ const News: React.FC<NewsComponentProps> = ({}) => {
             <h2 className="block xs:hidden text-lg font-bold text-black pt-2 pb-2 px-1 sm:px-2 leading-snug sm:leading-normal mb-1">
                 {selectedArticle?.title}
             </h2>
-            <div className='flex flex-row items-center justify-between mt-1 mb-4 sm:mb-4 xs:mt-4 md:pr-5 sm:pr-0 w-full px-1 sm:px-2'>
+            <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between mt-1 mb-4 sm:mb-4 xs:mt-4 md:pr-5 sm:pr-0 w-full px-1 sm:px-2'>
                 <div className="flex items-center gap-2">
                     <img className="w-10 h-10 sm:w-12 sm:h-12 rounded-full" src={selectedArticle?.fromImage} alt="news creator image"/>
                     <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start">
@@ -136,7 +136,7 @@ const News: React.FC<NewsComponentProps> = ({}) => {
                         <p className="text-sm text-gray-500">{formatDate(selectedArticle?.publishedDate)}</p>
                     </div>
                 </div>
-                <div className='flex flex-row gap-2'>
+                <div className='flex flex-row gap-2 mt-5 sm:mt-0'>
                     <div className='relative inline-block'>
                         <a className="text-md text-gray-600 flex items-center cursor-pointer hover:text-gray-600 hover:bg-amber-200 bg-gray-100 rounded-full p-2 px-3 cursor-pointer"
                         onClick={toggleShareDropdown} rel="noopener noreferrer">
