@@ -32,7 +32,7 @@ const NewsSources = () => {
         <div className=' px-2 sm:px-6 flex flex-col w-full justify-center items-start min-h-screen mx-auto pt-[100px] max-w-2xl lg:max-w-4xl xl:max-w-6xl mb-6'>
             {allNewsSourcesState.length > 0 && (
                 <>
-                    <h2 className="text-2xl md:text-3xl font-bold inline-block self-start mb-6 ml-2">Our Available News Sources</h2>
+                    <h2 className="text-2xl font-bold inline-block self-start mb-6 ml-2">Our Available News Sources</h2>
                     <div className="flex flex-col justify-center items-center gap-y-4 w-full">
                         {Object.entries(newsSourcesByCountry).map(([country, sources]) => (
                             <Box key={country} title={country} size="large">

@@ -55,6 +55,7 @@ export const fetchNewsArticles = createAsyncThunk<
             const searchParams = new URLSearchParams();
             searchParams.append('last_news_time', (userArticles?.last_news_time ?? '').toString());
             searchParams.append('number_of_articles_to_fetch', (userArticles?.number_of_articles_to_fetch ?? '').toString())
+
             const url = new URL(BaseURL + '/news/user/get');
             url.search = searchParams.toString();
 

@@ -59,18 +59,18 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, shortSumm
     const navigate = useNavigate();
         
     return (
-        <a className="flex flex-col xs:flex-row lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 mb-2 md:mb-4 cursor-pointer"
+        <a className="flex flex-col xs:flex-row lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden mb-2 md:mb-4 cursor-pointer"
         href={'/news/' + id}>
-            <img src={image} alt="News" className="block w-full xs:min-w-[33%] xs:w-1/3 object-cover object-top rounded-[20px] max-h-44 min-h-100%" />
-            <div className="flex flex-col justify-between items-between p-2 px-1 xs:px-4 w-full">
+            <img src={image} alt="News" className="block w-full xs:min-w-[33%] xs:w-1/3 object-cover object-top rounded-l-[20px] max-h-44 min-h-100%" />
+            <div className="flex flex-col justify-between items-between p-2 py-3 px-1 xs:px-4 w-full">
                 <div>
-                    <h2 className="block text-lg sm:text-xl mb-2 !leading-7">{title}</h2>
+                    <h2 className="block text-lg mb-1 !leading-6">{title}</h2>
                     <div className="text-sm md:text-md text-gray-400 mb-3">{formatDate(date)}</div>
                     <div className='text-md mb-3'>{shortSummary}</div>
                 </div>
                 <div className='flex flex-row items-center justify-between mt-1'>
                     <div className="flex items-center gap-2 xs:w-fit w-full">
-                        <img className="w-10 h-10 rounded-full" src={fromImage} alt="news creator image"/>
+                        <img className="w-8 h-8 rounded-full" src={fromImage} alt="news creator image"/>
                         <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
                             <div>{from}</div>
                         </div>

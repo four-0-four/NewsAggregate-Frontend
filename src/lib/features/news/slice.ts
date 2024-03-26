@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Cookies from 'js-cookie';
 import { fetchCategories, fetchNewsArticles, fetchOneNewsArticle, fetchOneNewsArticleAuthenticated, fetchTopicNews, getAllBookmarksForUser } from './thunks';
 
 function formatDateToString(date: Date) {
@@ -171,6 +172,7 @@ export interface NewsState {
                 ...newUniqueArticles
               ];
           }
+          
           state.articles.last_news_time = action.payload.last_news_time;
           state.articles.number_of_articles_to_fetch = 10;
           state.articles.status = 'succeeded';

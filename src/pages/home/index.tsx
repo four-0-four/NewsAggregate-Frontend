@@ -61,6 +61,7 @@ const Home: React.FC = () => {
     return <HomeInterests userFollowings={userFollowings} categories={categories} firstName={userDetails?.first_name} start={start}/>
   }
   
+  
   if(!getStarted){
     return (
       <>

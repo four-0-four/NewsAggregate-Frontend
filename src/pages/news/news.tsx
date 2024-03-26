@@ -117,77 +117,59 @@ const News: React.FC<NewsComponentProps> = ({}) => {
     
     const url = "https://www.farabix.com/news/" + newsID;
     return (
-        <div className={`flex flex-col md:max-w-2xl lg:max-w-2xl xl:max-w-3xl w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden p-2 pb-6 ${isAuthenticated?"lg:ml-0 lg:mr-auto":"mx-auto"} mb-3 mx-auto lg:lg:ml-0 lg:mr-auto`}>
-            <div className="relative rounded-[20px] max-h-[300px] overflow-hidden">
-                <img src={imageSrc} alt="News" className="block object-cover object-center rounded-[20px] max-h-[300px] w-full" />
-                <h2 className="hidden xs:block absolute bottom-0 left-0 right-0 block md:block text-lg sm:text-xl font-bold text-white p-4 pt-32"
-                    style={{background: 'linear-gradient(to top, black, rgba(0,0,0,0) 100%)'}}>
-                    {selectedArticle?.title}
-                </h2>
-            </div>
-            <h2 className="block xs:hidden text-lg font-bold text-black pt-2 pb-2 px-1 sm:px-2 leading-snug sm:leading-normal mb-1">
-                {selectedArticle?.title}
-            </h2>
-            <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between mt-1 mb-4 sm:mb-4 xs:mt-4 md:pr-5 sm:pr-0 w-full px-1 sm:px-2'>
-                <div className="flex items-center gap-2">
-                    <img className="w-10 h-10 sm:w-12 sm:h-12 rounded-full" src={selectedArticle?.fromImage} alt="news creator image"/>
-                    <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start">
-                        <p>{selectedArticle?.from}</p>
-                        <p className="text-sm text-gray-500">{formatDate(selectedArticle?.publishedDate)}</p>
-                    </div>
-                </div>
-                <div className='flex flex-row gap-2 mt-5 sm:mt-0'>
-                    <div className='relative inline-block'>
-                        <a className="text-md text-gray-600 flex items-center cursor-pointer hover:text-gray-600 hover:bg-amber-200 bg-gray-100 rounded-full p-2 px-3 cursor-pointer"
-                        onClick={toggleShareDropdown} rel="noopener noreferrer">
-                            <h3>Share</h3>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-1 w-6 h-6 p-1 rounded-full">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
-                            </svg>
-                        </a>
-                        {showShareDropdown && (
-                            <div ref={shareButtonRef}  className="absolute z-50 right-0 mt-2 w-[250px] bg-white rounded-[20px] overflow-hidden shadow-xl border border-gray-100 px-3">
-                                <div className='flex flex-row justify-between p-2 py-3 border-b border-gray-100'>
-                                    <h1 className='font-bold'>Share This News</h1>
-                                    <button className='text-gray-400' onClick={toggleShareDropdown}>
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <ul className='grid grid-cols-3 gap-4 py-4'>
-                                    <FacebookShareButton url={url} className='flex flex-col items-center items-center'>
-                                        <FacebookIcon size={32} round={true} className='mb-1'/>
-                                        <p className='text-xs text-gray-400'>Facebook</p>
-                                    </FacebookShareButton>
-                                    <TelegramShareButton url={url} className='flex flex-col items-center items-center'>
-                                        <TelegramIcon size={32} round={true} className='mb-1'/>
-                                        <p className='text-xs text-gray-400'>Telegram</p>
-                                    </TelegramShareButton>
-                                    <TwitterShareButton url={url} className='flex flex-col items-center items-center'>
-                                        <TwitterIcon size={32} round={true} className='mb-1'/>
-                                        <p className='text-xs text-gray-400'>Twitter</p>
-                                    </TwitterShareButton>
-                                    <WhatsappShareButton url={url} className='flex flex-col items-center items-center'>
-                                        <WhatsappIcon size={32} round={true} className='mb-1'/>
-                                        <p className='text-xs text-gray-400'>Whatsapp</p>
-                                    </WhatsappShareButton>
-                                    <RedditShareButton url={url} className='flex flex-col items-center items-center'>
-                                        <RedditIcon size={32} round={true} className='mb-1'/>
-                                        <p className='text-xs text-gray-400'>Reddit</p>
-                                    </RedditShareButton>
-                                </ul>
+        <div className={`flex flex-col md:max-w-2xl lg:max-w-2xl xl:max-w-3xl w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden pb-6 ${isAuthenticated?"lg:ml-0 lg:mr-auto":"mx-auto"} mb-3 mx-auto lg:lg:ml-0 lg:mr-auto`}>
+            <div className="relative rounded-t-[20px] max-h-[300px]">
+                <img src={imageSrc} alt="News" className="block object-cover object-center rounded-t-[20px] max-h-[250px] w-full" />
+                <div className='flex flex-row gap-2 mt-5 sm:mt-0 absolute top-0 md:top-5 right-5'>
+                    <a className="text-md text-gray-600 flex items-center cursor-pointer hover:text-gray-600 hover:bg-amber-200 bg-gray-100 rounded-full p-2 px-3 cursor-pointer border border-gray-200"
+                    onClick={toggleShareDropdown} rel="noopener noreferrer">
+                        <h3>Share</h3>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-1 w-6 h-6 p-1 rounded-full">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+                        </svg>
+                    </a>
+                    {showShareDropdown && (
+                        <div ref={shareButtonRef}  className="absolute z-50 right-0 top-10 mt-2 w-[250px] bg-white rounded-[20px] overflow-hidden shadow-xl border border-gray-100 px-3">
+                            <div className='flex flex-row justify-between p-2 py-3 border-b border-gray-100'>
+                                <h1 className='font-bold'>Share This News</h1>
+                                <button className='text-gray-400' onClick={toggleShareDropdown}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
                             </div>
-                        )}
-                    </div>
+                            <ul className='grid grid-cols-3 gap-4 py-4'>
+                                <FacebookShareButton url={url} className='flex flex-col items-center items-center'>
+                                    <FacebookIcon size={32} round={true} className='mb-1'/>
+                                    <p className='text-xs text-gray-400'>Facebook</p>
+                                </FacebookShareButton>
+                                <TelegramShareButton url={url} className='flex flex-col items-center items-center'>
+                                    <TelegramIcon size={32} round={true} className='mb-1'/>
+                                    <p className='text-xs text-gray-400'>Telegram</p>
+                                </TelegramShareButton>
+                                <TwitterShareButton url={url} className='flex flex-col items-center items-center'>
+                                    <TwitterIcon size={32} round={true} className='mb-1'/>
+                                    <p className='text-xs text-gray-400'>Twitter</p>
+                                </TwitterShareButton>
+                                <WhatsappShareButton url={url} className='flex flex-col items-center items-center'>
+                                    <WhatsappIcon size={32} round={true} className='mb-1'/>
+                                    <p className='text-xs text-gray-400'>Whatsapp</p>
+                                </WhatsappShareButton>
+                                <RedditShareButton url={url} className='flex flex-col items-center items-center'>
+                                    <RedditIcon size={32} round={true} className='mb-1'/>
+                                    <p className='text-xs text-gray-400'>Reddit</p>
+                                </RedditShareButton>
+                            </ul>
+                        </div>
+                    )}
                     {selectedArticle?.isBookmarked != null && (
                         <>
                         {selectedArticle?.isBookmarked ?
-                            <button className='border border-white rounded-full bg-gray-100 hover:bg-amber-200 flex items-center justify-center p-2' title="unbookmark news" onClick={(event) => unbookmarkNews(event)}>
+                            <button className='rounded-full bg-gray-100 hover:bg-amber-200 flex items-center justify-center p-2 border border-gray-200' title="unbookmark news" onClick={(event) => unbookmarkNews(event)}>
                                 <UnBookmarkedIcon />
                             </button>
                             :
-                            <button className='border border-white rounded-full bg-gray-100 hover:bg-amber-200 flex items-center justify-center p-2' title="bookmark news" onClick={(event) => bookmarkNews(event)}>
+                            <button className='rounded-full bg-gray-100 hover:bg-amber-200 flex items-center justify-center p-2 border border-gray-200' title="bookmark news" onClick={(event) => bookmarkNews(event)}>
                                 <BookmarkedIcon />
                             </button>
                         }
@@ -195,7 +177,19 @@ const News: React.FC<NewsComponentProps> = ({}) => {
                     )}
                 </div>
             </div>
-            <div className="px-1 sm:px-2 flex flex-col justify-start p-2 md:px-4">
+            <h2 className="block text-xl sm:text-2xl font-bold text-black pt-4 px-3 sm:px-6 leading-snug mb-1">
+                {selectedArticle?.title}
+            </h2>
+            <div className='flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 mt-4 md:pr-5 sm:pr-0 w-full px-3 sm:px-6'>
+                <div className="flex items-center gap-2">
+                    <img className="w-10 h-10 rounded-full" src={selectedArticle?.fromImage} alt="news creator image"/>
+                    <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start">
+                        <p>{selectedArticle?.from}</p>
+                        <p className="text-sm text-gray-500">{formatDate(selectedArticle?.publishedDate)}</p>
+                    </div>
+                </div>
+            </div>
+            <div className="px-1 sm:px-2 flex flex-col justify-start px-3 sm:px-6">
                 {selectedArticle?.longSummary && (
                     <p className="text-sm sm:text-md whitespace-pre-wrap text-gray-400 mb-1">(Summarized by Farabix)</p>
                 )}
@@ -209,7 +203,7 @@ const News: React.FC<NewsComponentProps> = ({}) => {
                     </div>
                 )}
             </div>
-            <div className="flex justify-end mr-5 mt-5">
+            <div className="flex justify-end mr-5 mt-3 sm:mt-1">
                 <a className="text-md text-gray-600 flex items-center cursor-pointer hover:text-gray-600 hover:bg-amber-200 bg-gray-100 rounded-[10px] pl-3 pr-1 py-1"
                 href={selectedArticle?.externalLink} target="_blank" rel="noopener noreferrer">
                     <h3>Read More</h3>
