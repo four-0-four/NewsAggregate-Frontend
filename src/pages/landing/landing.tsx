@@ -6,95 +6,214 @@ import ContactUsForm from '../../components/Forms/ContactUsForm';
 import NewsSourceIcon2 from '../../components/NewsSourceIcon2';
 import { landingIllustration, LikeIcon, QuickIcon, InterestIcon } from '../../util/illustrations';
 import React from 'react';
+import styles from './CustomStyles.module.scss';
 
+const point =()=>(<svg width="27" height="46" viewBox="0 0 27 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.41171 45.8484L0.365068 45.9292C0.365068 45.9292 0.36501 45.911 0.365124 45.8756C0.334525 45.8934 0.318732 45.9025 0.318732 45.9025L0.365374 45.8217C0.373448 44.4737 0.578297 30.8067 5.54786 24.9306C7.26315 22.9024 9.88188 19.984 12.7123 16.8297C17.9636 10.9775 23.9434 4.31339 26.2338 1.01623L26.7797 0.0707746C26.6716 0.258032 26.5569 0.474986 26.4361 0.719287C26.5874 0.492591 26.7179 0.284784 26.826 0.0975266L26.2802 1.04298C24.5699 4.6751 21.7885 13.1859 19.346 20.6597C18.0295 24.6881 16.8115 28.4152 15.9127 30.9147C13.3086 38.1565 1.57508 45.1674 0.41171 45.8484Z" fill="#F9CF45"/>
+</svg>)
 
 const LandingPage: React.FC = () => {
   return (
     <div className='w-full'>
         {/* Section 1 */}
-        <section className="bg-white">
-            <div className='overflow-hidden flex flex-col sm:flex-row justify-between items-center pt-24 pb-14 md:py-20 mx-auto  px-4 xs:px-10  max-w-[1200px] '>
-                <div className="w-full sm:w-3/5 md:w-3/5 md:mb-4  md:pt-10 lg:pt-0">
-                    <h1 className="text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight">Your Trusted Source for Aggregated and Independent News</h1>
-                    <h3 className='lg:mb-9 md:mb-4 mb-0 text-sm md:text-md lg:text-lg xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
-                    <a href="/auth/Register" className={`hidden md:inline-block text-lg w-auto sm:mr-0 mr-0 px-12 py-2 text-black rounded-[8px] capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
-                        Register &rarr;
+        <section className="bg-gray-100">
+            <div className='overflow-hidden flex flex-col sm:flex-row justify-between items-end sm:items-center mx-auto  md:px-10  max-w-[1200px] '>
+                <div className="w-full sm:w-3/5 md:w-[500px] pt-24 px-4 md:px-0">
+                    <h1 className="text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight">Your <span className={styles.underlined}>Trusted</span> Source for Aggregated and Independent News</h1>
+                    <h3 className='my-7 lg:mb-6 lg:mb-2 text-sm md:text-md lg:text-lg xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
+                    <a href="/auth/Register" className={`md:inline-block text-md lg:text-lg w-auto sm:mr-0 mr-0 px-6 pr-4 py-2 text-black rounded-full capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
+                        Register now &rarr;
                     </a>
                 </div>
-                <div className="sm:w-2/5 lg:w-3/5">
-                    <img src={"/landing.png"} className='xs:w-full md:w-full m-auto max-w-[350px] lg:max-w-[100%]'/>
+                <div className="hidden sm:block sm:w-2/5 lg:w-3/5 bg-primary min-h-[550px] h-min" style={{ clipPath: "polygon(2% 0, 30% 0, 100% 100%, 29% 100%)" }}>
+                </div>
+                <div className="block sm:hidden w-3/5 bg-primary min-h-[200px] h-min" style={{ clipPath: "polygon(100% 0, 100% 54%, 66% 100%, 0% 100%)" }}>
                 </div>
             </div>
         </section>
 
         {/* Section 2 */}
-        <section className="py-4  bg-neutral-100 text-center">
-            <div>
-                <h1 className='font-bold uppercase md:text-xl text-lg mt-3'>Some of Our Current News Sources</h1>
-            </div>
-            <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 lg:gap-10 my-6 max-w-[600px] xl:max-w-[1500px] mx-auto px-4">
-                <NewsSourceIcon2 name="CBC" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/cbc.png" />
-                <NewsSourceIcon2 name="CTV" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/ctv.png" />
-                <NewsSourceIcon2 name="National Post" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/national%20post.png" />
-                <NewsSourceIcon2 name="Globe and Mail" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/the-globe-and-mail.png" />
-                <NewsSourceIcon2 name="AlJazeera" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/aljazeera.png" />
-                <NewsSourceIcon2 name="9News" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/9news.png" />
-                <NewsSourceIcon2 name="The Guardian" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/guardian.png" />
-                <NewsSourceIcon2 name="Daily Mail" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/daily%20mail.png" />
-                <NewsSourceIcon2 name="The Independent" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/the%20independent.png" />
-                <NewsSourceIcon2 name="New York Times" logo="https://farabix-resources.nyc3.cdn.digitaloceanspaces.com/newsSources/new%20york%20times.jpg" />
-            </div>
-            <div>
-                <p className='max-w-[200px] text-center m-auto'>
-                    +20 More News Sources
-                </p>
-            </div>
-        </section>
+        <div className={`${styles.chevron} hidden sm:block`}>
+            <img src="./newsSources.png" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[1700px] z-10"/>
+        </div>
+        <div className={`${styles.chevronMobile} block sm:hidden bg-gray-100`}>
+            <img src="./newsSources.png" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[1000px] z-10 overflow-hidden"/>
+        </div>
 
-        <div className='bg-white'>
-            <div className="grid lg:grid-cols-[50%,50%] md:grid-cols-1 gap-4 pt-14 max-w-[1200px] mx-auto px-4 xs:px-10">
-                <div className="order-1 md:order-1 xs:p-5">
-                    <h3 className='xl:text-lg mb-2'>All in One Place</h3>
-                    <h1 className='text-2xl md:text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight'>
-                        Explore Global News From Top & Trusted Sources
+        {/* Section 3 */}
+        <div className='bg-gray-100 pb-14 md:pb-7 lg:pb-14'>
+            <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 pt-14 max-w-[1200px] mx-auto px-4 xs:px-10">
+                <div className="order-2 md:order-1 xs:p-5 max-w-[500px] mx-auto">
+                    <h1 className='text-3xl md:text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight'>
+                        <span className={styles.underlined}>+20</span> News Sources! All in One Place
                     </h1>
-                    <div className='mt-10'>
-                        <div className="flex items-start gap-2 xs:w-fit w-full mb-10">
-                            <div className="w-9 h-9 rounded-[10px] bg-primary flex items-center justify-center mr-3">
-                                {QuickIcon()}
+                    <h3 className='text-sm md:text-md xl:text-lg mt-3 md:mt-6'>Explore Global News From Top & Trusted Sources</h3>
+                    <div className='mt-6'>
+                        <div className="flex items-start gap-2 xs:w-fit w-full mb-6">
+                            <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
+                                {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
                                 <h3 className='text-lg font-bold mb-2'>
-                                    Pick Your Favorite News Sources
+                                    Access to Popular and Trusted News Sources
                                 </h3>
-                                <div className="text-sm text-gray-500">
-                                    Tailor your news feed by selecting trusted sources and filtering out the ones you prefer to avoid, for a personalized and credible news experience  
+                                <div className="text-sm text-gray-700">
+                                    Gain access to a curated selection of over 20 of the most popular and trusted news sources, all conveniently located in one place
                                 </div>
                             </div>
                         </div>
                         <div className="flex items-start gap-2 xs:w-fit w-full">
-                            <div className="w-9 h-9 rounded-[10px] bg-primary flex items-center justify-center mr-3">
-                                {InterestIcon()}
+                            <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
+                                {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
                                 <h3 className='text-lg font-bold mb-2'>
-                                    Choose Your Own Interests
+                                    Global News Coverage
                                 </h3>
-                                <div className="text-sm text-gray-500">
-                                    Personalize your news feed by selecting topics you care about, from politics to technology, for a more relevant reading experience    
+                                <div className="text-sm text-gray-700">
+                                    Our platform offers comprehensive global news coverage, currently including trusted sources from Canada, the UK, the USA, Australia, and New Zealand
                                 </div>
                             </div>
                         </div>
                     </div>                
                 </div>
-                <div className="order-2 md:order-2 flex items-center justify-center relative">
-                    <img src={"/select.png"} className='xs:w-full md:w-full m-auto max-w-[350px] lg:max-w-[100%]'/>
+                <div className="order-1 md:order-2 flex items-center justify-center relative">
+                    <img src={"/landing.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[90%] md:max-w-[100%] lg:max-w-[80%]'/>
                 </div>
             </div>
         </div>
 
 
-        <div className='bg-neutral-100 text-center p-5 py-10 sm:py-16'>
+        {/* Section 4 */}
+        <div className='bg-gray-100 pb-14 md:pb-7 lg:pb-14'>
+            <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1200px] mx-auto px-4 xs:px-10">
+                <div className="order-2 md:order-2 xs:p-5 max-w-[500px] mx-auto">
+                    <h1 className='text-3xl md:text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight'>
+                        Pick Your Favorite News Sources
+                    </h1>
+                    <h3 className='text-sm md:text-md xl:text-lg mt-3 md:mt-6'>Customize Your News Feed with Selected News Sources</h3>
+                    <div className='mt-6'>
+                        <div className="flex items-start gap-2 xs:w-fit w-full mb-6">
+                            <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
+                                {point()}
+                            </div>
+                            <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
+                                <h3 className='text-lg font-bold mb-2'>
+                                    Select Your Preferred News Sources
+                                </h3>
+                                <div className="text-sm text-gray-700">
+                                    Choose which news sources you trust and prefer to receive your news from, tailoring your feed to match your preferences.
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-2 xs:w-fit w-full">
+                            <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
+                                {point()}
+                            </div>
+                            <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
+                                <h3 className='text-lg font-bold mb-2'>
+                                    Streamline Your News Consumption
+                                </h3>
+                                <div className="text-sm text-gray-700">
+                                    Consolidate your news intake by gathering all your favorite sources in one location, saving you time and effort.    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+                <div className="order-1 md:order-1 flex items-center justify-center relative">
+                    <img src={"/select.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[90%] md:max-w-[100%] lg:max-w-[80%]'/>
+                </div>
+            </div>
+        </div>
+
+        {/* Section 5 */}
+        <div className='bg-gray-100 pb-14 md:pb-7 lg:pb-14'>
+            <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1200px] mx-auto px-4 xs:px-10">
+                <div className="order-2 md:order-1 xs:p-5 max-w-[500px] mx-auto">
+                    <h1 className='text-3xl md:text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight'>
+                        Pick Your Interests
+                    </h1>
+                    <h3 className='text-sm md:text-md xl:text-lg mt-3 md:mt-6'>Discover News on Topics That Interest You</h3>
+                    <div className='mt-6'>
+                        <div className="flex items-start gap-2 xs:w-fit w-full mb-6">
+                            <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
+                                {point()}
+                            </div>
+                            <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
+                                <h3 className='text-lg font-bold mb-2'>
+                                    Customize Your Feed by Topic
+                                </h3>
+                                <div className="text-sm text-gray-700">
+                                    Tailor your news feed by selecting the topics that interest you the most, ensuring your news is always relevant and engaging.
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-2 xs:w-fit w-full">
+                            <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
+                                {point()}
+                            </div>
+                            <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
+                                <h3 className='text-lg font-bold mb-2'>
+                                    Cut Through The Noise
+                                </h3>
+                                <div className="text-sm text-gray-700">
+                                    By choosing your interersts, you eliminate distractions from topics of no interest. This targeted approach ensures you spend time only on news that's relevant to you, enhancing both efficiency and enjoyment. 
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+                <div className="order-1 md:order-2 flex items-center justify-center relative">
+                    <img src={"/interest.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[90%] md:max-w-[100%] lg:max-w-[90%]'/>
+                </div>
+            </div>
+        </div>
+
+        {/* Section 6 */}
+        <div className='bg-gray-100 pb-14 md:pb-7 lg:pb-14'>
+            <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1200px] mx-auto px-4 xs:px-10">
+                <div className="order-2 md:order-2 xs:p-5 max-w-[500px] mx-auto">
+                    <h1 className='text-3xl md:text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight'>
+                        And of course... Secure and Safe
+                    </h1>
+                    <h3 className='text-sm md:text-md xl:text-lg mt-3 md:mt-6'>Ensuring Your Peace of Mind</h3>
+                    <div className='mt-6'>
+                        <div className="flex items-start gap-2 xs:w-fit w-full mb-6">
+                            <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
+                                {point()}
+                            </div>
+                            <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
+                                <h3 className='text-lg font-bold mb-2'>
+                                    Robust Privacy Protection
+                                </h3>
+                                <div className="text-sm text-gray-700">
+                                    We use advanced security measures to keep your personal information safe, ensuring your privacy is always respected.
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-start gap-2 xs:w-fit w-full">
+                            <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
+                                {point()}
+                            </div>
+                            <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
+                                <h3 className='text-lg font-bold mb-2'>
+                                    Safe Browsing Experience
+                                </h3>
+                                <div className="text-sm text-gray-700">
+                                    Our platform is fortified against malware and phishing, ensuring your news exploration is secure and worry-free.    
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+                <div className="order-1 md:order-1 flex items-center justify-center relative">
+                    <img src={"/secure.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[85%] md:max-w-[95%] lg:max-w-[75%]'/>
+                </div>
+            </div>
+        </div>
+
+        <div className='bg-gray-100 text-center p-5 py-10 sm:py-16'>
             <div className='max-w-[1200px] mx-auto'>
                 <div>
                     <h1 className='font-bold uppercase text-xl md:text-2xl my-6 mt-3'>Frequently Asked Questions</h1>

@@ -3,7 +3,7 @@ import { selectIsAuthenticated, selectUserDetails } from '../../lib/features/use
 import { useAppSelector } from '../../lib/hooks';
 import ProfileDropdown from '../ProfileDropdown';
 import { useLocation, useNavigate } from 'react-router-dom';
-import PrimaryButton from '../Buttons/PrimaryButton';
+import styles from './CustomStyles.module.scss';
 
 const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
   const today = new Date();
@@ -12,6 +12,7 @@ const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
   const areWeOnLandingPage = location.pathname.includes('/landing');
   const isLandingPage = location.pathname === '/landing';
   const isContactRoute = location.pathname.includes('/landing/contactUs');
+  const isNewsSourcesRoute = location.pathname.includes('/landing/newsSources');
   // Long format for large screens
   const longFormattedDate = today.toLocaleDateString('en-US', {
     year: 'numeric',
@@ -29,7 +30,7 @@ const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
   const userDetails = useAppSelector(selectUserDetails)
 
   return (
-    <header className="bg-black text-white p-2 px-4 fixed top-0 left-0 right-0 z-10 mb-10">
+    <header className="bg-black text-white p-2 px-4 fixed top-0 left-0 right-0 z-30 mb-10">
       <div className="max-w-[1200px] mx-auto px-0 xs:px-6 flex items-center justify-between">
         {/* Burger Icon and Date - Always on the left */}
         <div className="flex items-center">
@@ -40,21 +41,21 @@ const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
           </button>
           <div className='flex md:justify-center items-center flex-grow md:flex-grow-0 cursor-pointer ml-3' onClick={()=>navigate('/')}>
             <img src={'/logo_transparent.png'} alt="Farabix" className="w-12" />
-            <p className="hidden xs:flex text-xl xs:text-2xl md:text-3xl text-primary">Farabix</p>
+            <p className="hidden xs:flex text-xl xs:text-2xl text-primary uppercase">Farabix</p>
           </div>
         </div>
   
         {/* Logo - Center on large screens, left on smaller screens */}
         {areWeOnLandingPage && (
-          <div className=' hidden lg:flex flex-row md:gap-4 lg:gap-6 xl:gap-8'>
+          <div className=' hidden lg:flex flex-row md:gap-4 lg:gap-4 xl:gap-6'>
             {isAuthenticated && (
               <a href="/">
                 Home
               </a>  
             )}
-            <a href="/landing" className={`${isLandingPage?'text-primary border-b border-primary':''}`}>Landing</a>
-            <a href="/landing/contactUs" className={`${isContactRoute?'text-primary border-b border-primary':''}`}>Contact Us</a>
-            <a href="/landing/newsSources">News Sources</a>
+            <a href="/landing" className={`${isLandingPage?styles.headerunderlined:''}`}>Landing</a>
+            <a href="/landing/contactUs" className={`${isContactRoute?styles.headerunderlined:''}`}>Contact Us</a>
+            <a href="/landing/newsSources" className={`${isNewsSourcesRoute?styles.headerunderlined:''}`}>News Sources</a>
           </div>
         )}
   
@@ -63,7 +64,7 @@ const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
           {isAuthenticated && userDetails ? (
             <ProfileDropdown firstName={userDetails.first_name} lastName={userDetails.last_name} username={userDetails.username}/>
           ) : (
-            <a href='/auth/Login' className='text-md md:text-lg px-6 md:px-12 py-1 text-black rounded-[8px] capitalize bg-primary hover:bg-opacity-80'>
+            <a href='/auth/Login' className='text-md md:text-lg px-6 md:px-12 py-1 text-black rounded-full capitalize bg-primary hover:bg-opacity-80'>
               Login
             </a>
           )}

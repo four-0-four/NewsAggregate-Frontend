@@ -1,0 +1,17 @@
+.headerunderlined {
+    position: relative;
+    color:#F9CF45;
+    display: inline-block !important;
+
+    &::before {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        height: 7px;
+        width: 100% !important;
+        border: solid 2px #F9CF45;
+        border-color: #F9CF45 transparent transparent transparent;
+        border-radius: 50%;
+    }
+}
