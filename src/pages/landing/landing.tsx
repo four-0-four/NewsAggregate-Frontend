@@ -18,10 +18,10 @@ const LandingPage: React.FC = () => {
         {/* Section 1 */}
         <section className="bg-gray-100">
             <div className='overflow-hidden flex flex-col sm:flex-row justify-between items-end sm:items-center mx-auto  md:px-10  max-w-[1200px] '>
-                <div className="w-full sm:w-3/5 md:w-[500px] pt-24 px-4 md:px-0">
-                    <h1 className="text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight">Your <span className={styles.underlined}>Trusted</span> Source for Aggregated and Independent News</h1>
-                    <h3 className='my-7 lg:mb-6 lg:mb-2 text-sm md:text-md lg:text-lg xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
-                    <a href="/auth/Register" className={`md:inline-block text-md lg:text-lg w-auto sm:mr-0 mr-0 px-6 pr-4 py-2 text-black rounded-full capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
+                <div className="w-full sm:w-4/5 md:w-3/5 md:w-[500px] md:px-0 px-8 md:px-4 md:pb-20 pt-24 sm:pt-0 md:pt-24">
+                    <h1 className="text-3xl sm:text-4xl xl:text-5xl font-bold sm:mb-2 text-left lg:!leading-tight">Your <span className={styles.underlined}>Trusted</span> Source for Aggregated and Independent News</h1>
+                    <h3 className='mb-6 mt-4 sm:my-7 lg:mb-6 lg:mb-2 text-sm md:text-md lg:text-lg xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
+                    <a href="/auth/Register" className={`font-bold md:inline-block text-md lg:text-lg w-auto sm:mr-0 mr-0 px-6 pr-4 py-3 sm:py-2 text-black rounded-full capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
                         Register now &rarr;
                     </a>
                 </div>
@@ -33,31 +33,32 @@ const LandingPage: React.FC = () => {
         </section>
 
         {/* Section 2 */}
-        <div className={`${styles.chevron} hidden sm:block`}>
-            <img src="./newsSources.png" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[1700px] z-10"/>
-        </div>
-        <div className={`${styles.chevronMobile} block sm:hidden bg-gray-100`}>
-            <img src="./newsSources.png" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[1000px] z-10 overflow-hidden"/>
+        <div className={`block bg-gray-100 mt-[-40px]`}>
+            <div className="bg-white min-h-[30px] h-min mx-auto mb-[-1px] w-full" style={{ clipPath: "polygon(75% 0, 0% 100%, 100% 100%)" }}></div>
+            <div className='bg-white w-full min-h-[40px] sm:min-h-[70px] relative overflow-hidden'>
+                <img src="./newsSources.png" className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[1000px] sm:max-w-[1700px] z-10"/>
+            </div>
+            <div className="bg-white min-h-[30px] h-min mx-auto mb-[-1px] w-full" style={{ clipPath: "polygon(100% 0, 100% 100%, 75% 6%, 0 100%, 0% 0%)" }}></div>
         </div>
 
         {/* Section 3 */}
-        <div className='bg-gray-100 pb-14 md:pb-7 lg:pb-14'>
-            <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 pt-14 max-w-[1200px] mx-auto px-4 xs:px-10">
-                <div className="order-2 md:order-1 xs:p-5 max-w-[500px] mx-auto">
-                    <h1 className='text-3xl md:text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight'>
+        <div className='bg-gray-100 pb-12 lg:pb-20'>
+            <div className="grid md:grid-cols-[60%,40%] lg:grid-cols-[50%,50%] grid-cols-1 gap-4 pt-6 sm:pt-14 max-w-[1200px] mx-auto px-4 xs:px-10">
+                <div className="order-2 md:order-1 xs:p-5 px-3 xs:px-8 sm:px-5 max-w-[500px] mx-auto">
+                    <h1 className='text-2xl md:text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight'>
                         <span className={styles.underlined}>+20</span> News Sources! All in One Place
                     </h1>
                     <h3 className='text-sm md:text-md xl:text-lg mt-3 md:mt-6'>Explore Global News From Top & Trusted Sources</h3>
-                    <div className='mt-6'>
+                    <div className='mt-4'>
                         <div className="flex items-start gap-2 xs:w-fit w-full mb-6">
                             <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
                                 {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                                <h3 className='text-lg font-bold mb-2'>
+                                <h3 className='text-md lg:text-lg font-bold mb-1'>
                                     Access to Popular and Trusted News Sources
                                 </h3>
-                                <div className="text-sm text-gray-700">
+                                <div className="text-xs sm:text-sm text-gray-700">
                                     Gain access to a curated selection of over 20 of the most popular and trusted news sources, all conveniently located in one place
                                 </div>
                             </div>
@@ -67,10 +68,10 @@ const LandingPage: React.FC = () => {
                                 {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                                <h3 className='text-lg font-bold mb-2'>
+                                <h3 className='text-md lg:text-lg font-bold mb-1'>
                                     Global News Coverage
                                 </h3>
-                                <div className="text-sm text-gray-700">
+                                <div className="text-xs sm:text-sm text-gray-700">
                                     Our platform offers comprehensive global news coverage, currently including trusted sources from Canada, the UK, the USA, Australia, and New Zealand
                                 </div>
                             </div>
@@ -78,30 +79,30 @@ const LandingPage: React.FC = () => {
                     </div>                
                 </div>
                 <div className="order-1 md:order-2 flex items-center justify-center relative">
-                    <img src={"/landing.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[90%] md:max-w-[100%] lg:max-w-[80%]'/>
+                    <img src={"/landing.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[90%] xs:max-w-[80%] sm:max-w-[60%] md:max-w-[90%] lg:max-w-[80%]'/>
                 </div>
             </div>
         </div>
 
 
         {/* Section 4 */}
-        <div className='bg-gray-100 pb-14 md:pb-7 lg:pb-14'>
-            <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1200px] mx-auto px-4 xs:px-10">
-                <div className="order-2 md:order-2 xs:p-5 max-w-[500px] mx-auto">
-                    <h1 className='text-3xl md:text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight'>
+        <div className='bg-gray-100 pb-12 lg:pb-20'>
+            <div className="grid md:grid-cols-[40%,60%] lg:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1200px] mx-auto px-4 xs:px-10">
+                <div className="order-2 md:order-2 xs:p-5 px-3 xs:px-8 sm:px-5 max-w-[500px] mx-auto">
+                    <h1 className='text-2xl md:text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight'>
                         Pick Your Favorite News Sources
                     </h1>
                     <h3 className='text-sm md:text-md xl:text-lg mt-3 md:mt-6'>Customize Your News Feed with Selected News Sources</h3>
-                    <div className='mt-6'>
+                    <div className='mt-4'>
                         <div className="flex items-start gap-2 xs:w-fit w-full mb-6">
                             <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
                                 {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                                <h3 className='text-lg font-bold mb-2'>
+                                <h3 className='text-md lg:text-lg font-bold mb-1'>
                                     Select Your Preferred News Sources
                                 </h3>
-                                <div className="text-sm text-gray-700">
+                                <div className="text-xs sm:text-sm text-gray-700">
                                     Choose which news sources you trust and prefer to receive your news from, tailoring your feed to match your preferences.
                                 </div>
                             </div>
@@ -111,10 +112,10 @@ const LandingPage: React.FC = () => {
                                 {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                                <h3 className='text-lg font-bold mb-2'>
+                                <h3 className='text-md lg:text-lg font-bold mb-1'>
                                     Streamline Your News Consumption
                                 </h3>
-                                <div className="text-sm text-gray-700">
+                                <div className="text-xs sm:text-sm text-gray-700">
                                     Consolidate your news intake by gathering all your favorite sources in one location, saving you time and effort.    
                                 </div>
                             </div>
@@ -122,29 +123,29 @@ const LandingPage: React.FC = () => {
                     </div>                
                 </div>
                 <div className="order-1 md:order-1 flex items-center justify-center relative">
-                    <img src={"/select.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[90%] md:max-w-[100%] lg:max-w-[80%]'/>
+                    <img src={"/select.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[85%] xs:max-w-[75%] sm:max-w-[55%] md:max-w-[90%] lg:max-w-[80%]'/>
                 </div>
             </div>
         </div>
 
         {/* Section 5 */}
-        <div className='bg-gray-100 pb-14 md:pb-7 lg:pb-14'>
-            <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1200px] mx-auto px-4 xs:px-10">
-                <div className="order-2 md:order-1 xs:p-5 max-w-[500px] mx-auto">
-                    <h1 className='text-3xl md:text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight'>
+        <div className='bg-gray-100 pb-12 lg:pb-20'>
+            <div className="grid md:grid-cols-[60%,40%] lg:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1200px] mx-auto px-4 xs:px-10">
+                <div className="order-2 md:order-1 xs:p-5 px-3 xs:px-8 sm:px-5 max-w-[500px] mx-auto">
+                    <h1 className='text-2xl md:text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight'>
                         Pick Your Interests
                     </h1>
                     <h3 className='text-sm md:text-md xl:text-lg mt-3 md:mt-6'>Discover News on Topics That Interest You</h3>
-                    <div className='mt-6'>
+                    <div className='mt-4'>
                         <div className="flex items-start gap-2 xs:w-fit w-full mb-6">
                             <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
                                 {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                                <h3 className='text-lg font-bold mb-2'>
+                                <h3 className='text-md lg:text-lg font-bold mb-1'>
                                     Customize Your Feed by Topic
                                 </h3>
-                                <div className="text-sm text-gray-700">
+                                <div className="text-xs sm:text-sm text-gray-700">
                                     Tailor your news feed by selecting the topics that interest you the most, ensuring your news is always relevant and engaging.
                                 </div>
                             </div>
@@ -154,10 +155,10 @@ const LandingPage: React.FC = () => {
                                 {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                                <h3 className='text-lg font-bold mb-2'>
+                                <h3 className='text-md lg:text-lg font-bold mb-1'>
                                     Cut Through The Noise
                                 </h3>
-                                <div className="text-sm text-gray-700">
+                                <div className="text-xs sm:text-sm text-gray-700">
                                     By choosing your interersts, you eliminate distractions from topics of no interest. This targeted approach ensures you spend time only on news that's relevant to you, enhancing both efficiency and enjoyment. 
                                 </div>
                             </div>
@@ -165,29 +166,29 @@ const LandingPage: React.FC = () => {
                     </div>                
                 </div>
                 <div className="order-1 md:order-2 flex items-center justify-center relative">
-                    <img src={"/interest.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[90%] md:max-w-[100%] lg:max-w-[90%]'/>
+                    <img src={"/interest.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[100%] xs:max-w-[90%] sm:max-w-[60%] md:max-w-[100%] lg:max-w-[90%]'/>
                 </div>
             </div>
         </div>
 
         {/* Section 6 */}
-        <div className='bg-gray-100 pb-14 md:pb-7 lg:pb-14'>
-            <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1200px] mx-auto px-4 xs:px-10">
-                <div className="order-2 md:order-2 xs:p-5 max-w-[500px] mx-auto">
-                    <h1 className='text-3xl md:text-4xl xl:text-5xl font-bold mb-2 text-left lg:!leading-tight'>
+        <div className='bg-gray-100 pb-12 lg:pb-20'>
+            <div className="grid md:grid-cols-[40%,60%] lg:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1200px] mx-auto px-4 xs:px-10">
+                <div className="order-2 md:order-2 xs:p-5 px-3 xs:px-8 sm:px-5 max-w-[500px] mx-auto">
+                    <h1 className='text-2xl md:text-3xl xl:text-4xl font-bold mb-2 text-left lg:!leading-tight'>
                         And of course... Secure and Safe
                     </h1>
                     <h3 className='text-sm md:text-md xl:text-lg mt-3 md:mt-6'>Ensuring Your Peace of Mind</h3>
-                    <div className='mt-6'>
+                    <div className='mt-4'>
                         <div className="flex items-start gap-2 xs:w-fit w-full mb-6">
                             <div className="w-5 h-5 lg:w-9 lg:h-9 rounded-[10px] flex items-center justify-center mt-3 mr-1">
                                 {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                                <h3 className='text-lg font-bold mb-2'>
+                                <h3 className='text-md lg:text-lg font-bold mb-1'>
                                     Robust Privacy Protection
                                 </h3>
-                                <div className="text-sm text-gray-700">
+                                <div className="text-xs sm:text-sm text-gray-700">
                                     We use advanced security measures to keep your personal information safe, ensuring your privacy is always respected.
                                 </div>
                             </div>
@@ -197,10 +198,10 @@ const LandingPage: React.FC = () => {
                                 {point()}
                             </div>
                             <div className="flex-1 font-medium leading-5 flex flex-col justify-start items-start ">
-                                <h3 className='text-lg font-bold mb-2'>
+                                <h3 className='text-md lg:text-lg font-bold mb-1'>
                                     Safe Browsing Experience
                                 </h3>
-                                <div className="text-sm text-gray-700">
+                                <div className="text-xs sm:text-sm text-gray-700">
                                     Our platform is fortified against malware and phishing, ensuring your news exploration is secure and worry-free.    
                                 </div>
                             </div>
@@ -208,11 +209,29 @@ const LandingPage: React.FC = () => {
                     </div>                
                 </div>
                 <div className="order-1 md:order-1 flex items-center justify-center relative">
-                    <img src={"/secure.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[85%] md:max-w-[95%] lg:max-w-[75%]'/>
+                    <img src={"/secure.png"} className='xs:w-full md:w-full m-auto max-w-[400px] max-w-[85%] xs:max-w-[75%] sm:max-w-[50%] md:max-w-[85%] lg:max-w-[75%]'/>
                 </div>
             </div>
         </div>
 
+        {/* stay informed */}
+        <div className='bg-gray-100 relative'>
+            <div className='min-h-[200px] w-full absolute top-[60%] z-0'>
+                <div className='bg-white min-h-[150px] w-full'></div>
+                <div className="bg-white min-h-[30px] w-full" style={{ clipPath: "polygon(100% 0, 100% 100%, 28% 31%, 0 100%, 0% 0%)" }}></div>
+            </div>
+            <div className='z-20 relative mx-3 xs:mx-6'>
+                <div className="bg-black min-h-[30px] h-min mx-auto max-w-[570px] md:max-w-[770px] xl:max-w-[970px] mb-[-1px] w-[92%] xs:w-[94%] sm:w-[95%]" style={{ clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }}>
+                </div>
+                <div className='mx-auto max-w-[600px] md:max-w-[800px] xl:max-w-[1000px] bg-black rounded-[20px] px-3 py-5 xs:p-6'>
+                    <div className='max-w-[400px] mx-auto text-center'>
+                        <h1 className='text-yellow-300 text-2xl xs:text-3xl lg:text-4xl font-bold mb-3 xs:mb-5'>Stay informed about what interests you</h1>
+                        <p className='text-white text-sm lg:texl-lg'>Dive into a world where news is personalized just for you, from the sources you trust to the topics you love</p>
+                        <button className='bg-yellow-300 text-black px-6 py-2 rounded-full mt-4 hover:bg-opacity-80 font-bold text-sm xs:text-md'>Get Started Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div className='bg-gray-100 text-center p-5 py-10 sm:py-16'>
             <div className='max-w-[1200px] mx-auto'>
                 <div>
