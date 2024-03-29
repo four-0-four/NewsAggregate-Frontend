@@ -203,7 +203,7 @@ const News: React.FC<NewsComponentProps> = ({}) => {
                     </div>
                 )}
             </div>
-            <div className="flex justify-end mr-5 mt-3 sm:mt-1">
+            <div className="flex justify-end mr-5 mt-3 sm:mt-6">
                 <a className="text-md text-gray-600 flex items-center cursor-pointer hover:text-gray-600 hover:bg-amber-200 bg-gray-100 rounded-[10px] pl-3 pr-1 py-1"
                 href={selectedArticle?.externalLink} target="_blank" rel="noopener noreferrer">
                     <h3>Read More</h3>
