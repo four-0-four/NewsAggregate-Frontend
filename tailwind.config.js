@@ -25,6 +25,16 @@ module.exports = {
         'xl': '1400px', // custom xl breakpoint
         '2xl': '1600px', // custom 2xl breakpoint
       },
+      fontWeight: {
+        thin: '100',
+        hairline: '100',
+        extralight: '200',
+        light: '300',
+        normal: '400',
+        medium: '500',
+        semibold: '600',
+        bold: '700',
+      }
     },
   },
   plugins: [],

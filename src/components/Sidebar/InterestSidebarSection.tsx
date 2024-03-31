@@ -18,7 +18,8 @@ const MainSidebar = () => {
     const [is, setIs] = useState(true);
     let userFollowings = useSelector((state: RootState) => state.user.followings);
     let InterestedNewsSourcesState:NewsSourceState[] = useAppSelector(InterestedNewsSources) ?? []
-    if (!userFollowings){
+
+    if (!userFollowings || userFollowings.length === 0) {
         const userFollowingsFromCookies = Cookies.get("userFollowings");
     
         // Parse the JSON string from cookies. If it's not present or parsing fails, default to an empty array
@@ -26,6 +27,15 @@ const MainSidebar = () => {
             userFollowings = userFollowingsFromCookies ? JSON.parse(userFollowingsFromCookies) : [];
         } catch (error) {
             userFollowings = [];
+        }
+    }
+
+    if(!InterestedNewsSourcesState || InterestedNewsSourcesState.length === 0){
+        const InterestedNewsSourcesFromCookies = Cookies.get("newsSourcePreferences");
+        try {
+            InterestedNewsSourcesState = InterestedNewsSourcesFromCookies ? JSON.parse(InterestedNewsSourcesFromCookies) : [];
+        } catch (error) {
+            InterestedNewsSourcesState = [];
         }
     }
 

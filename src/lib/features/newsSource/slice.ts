@@ -1,6 +1,6 @@
 import News from "@/src/pages/news/news";
 import { createSlice } from "@reduxjs/toolkit";
-import { addNewsSourceBlacklist, addNewsSourcePreference, getAllNewsSources, getAllUserNewsSourcesBlacklist, getAllUserNewsSourcesPreferences, removeNewsSourceBlacklist, removeNewsSourcePreference } from "./thunks";
+import { addNewsSourceBlacklist, addNewsSourcePreference, getAllNewsSources, getAllNewsSourcesLanding, getAllUserNewsSourcesBlacklist, getAllUserNewsSourcesPreferences, removeNewsSourceBlacklist, removeNewsSourcePreference } from "./thunks";
 
 export interface NewsSourceState {
     id: number,
@@ -71,6 +71,18 @@ const newsSourceSlice = createSlice({
         state.error = "";
       })
       .addCase(getAllNewsSources.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
+      .addCase(getAllNewsSourcesLanding.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.allNewsSources = action.payload;
+      })
+      .addCase(getAllNewsSourcesLanding.pending, (state) => {
+        state.status = 'loading';
+        state.error = "";
+      })
+      .addCase(getAllNewsSourcesLanding.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
       })

@@ -36,14 +36,11 @@ const Home: React.FC = () => {
     if (isAuthenticated) {
       setIsLoading(true); // Set loading at the beginning
       dispatch(fetchCategories({parent_category_id:0}))
-      console.log("about to get followers")
       dispatch(fetchUserFollowings()).unwrap().then((res) => {
         if (res.length >= 2) {
-          console.log("following is more than 2")
           setGetStarted(false);
           dispatch(fetchNewsArticles()).finally(() => setIsLoading(false));
         } else {
-          console.log("following is less than 2")
           setGetStarted(true);
           setIsLoading(false);
         }
@@ -63,6 +60,7 @@ const Home: React.FC = () => {
   if(getStarted && !IsLoading && userNews.status !== 'loading'){
     return <HomeInterests userFollowings={userFollowings} categories={categories} firstName={userDetails?.first_name} start={start}/>
   }
+  
   
   if(!getStarted){
     return (

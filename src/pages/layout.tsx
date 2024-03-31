@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import isTokenValid from '../util/token';
 import { fetchUserDetails, refreshAccessToken } from '../lib/features/user/thunks';
 import { healthCheck } from '../lib/features/news/thunks';
+import MobileSidebarLanding from '../components/Sidebar/MobileSidebarLanding';
 
 type LayoutProps = {
   children: ReactNode;
@@ -21,7 +22,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation(); // Use useLocation to access the current route
   // Check if current route is /landing, /profile, or /contact
   const navigate = useNavigate();
-  const isLandingPage = location.pathname === '/landing';
+  const isLandingPage = location.pathname.includes('/landing');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
@@ -116,6 +117,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </svg>
             </button>
             <MobileSidebar />
+          </div>
+        )}
+        {isLandingPage && (
+          <div className={`fixed lg:hidden inset-y-0 left-0 z-30 w-64 transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} transition-transform ease-in-out duration-300 lg:translate-x-0 lg:static lg:z-auto bg-white shadow-lg`}>
+            {/* Close button for sidebar */}
+            <button onClick={toggleSidebar} className="absolute top-0 right-0 p-4 lg:hidden">
+              {/* SVG for cross icon */}
+              <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <MobileSidebarLanding />
           </div>
         )}
         {isAuthenticated && !isLandingPage && (<Sidebar />)}
