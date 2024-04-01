@@ -58,12 +58,12 @@ const Footer = () => {
                         <div>
                             <h2 className='text-gray-200'>Legal</h2>
                             <div className='flex flex-col gap-2 mt-2'>
-                                <a href="/landing" className='text-sm text-gray-400 hover:text-primary'>Privacy Policy</a>
-                                <a href="/landing/contactUs" className='text-sm text-gray-400 hover:text-primary'>Cookies Policy</a>
+                                <a href="/policy/PrivacyPolicy" className='text-sm text-gray-400 hover:text-primary'>Privacy Policy</a>
+                                <a href="/policy/TermsOfService" className='text-sm text-gray-400 hover:text-primary'>Terms of Service</a>
                             </div>
                         </div>
                         <div className='flex flex-col gap-2 md:mr-5 mt-5 sm:mt-0'>
-                            <a href='/auth/Login' className='text-md px-2 md:px-2 py-1 text-black rounded-full capitalize bg-primary text-center border-2 border-primary'>
+                            <a href="/auth/Register" className='text-md px-2 md:px-2 py-1 text-black rounded-full capitalize bg-primary text-center border-2 border-primary'>
                                 Sign up
                             </a>
                             <a href='/auth/Login' className='text-md px-2 md:px-2 py-1 text-primary border-2 border-primary rounded-full capitalize bg-black hover:bg-opacity-80 text-center'>

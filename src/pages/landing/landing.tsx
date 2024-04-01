@@ -18,7 +18,7 @@ const LandingPage: React.FC = () => {
                 <div className="w-full sm:w-4/5 md:w-3/5 md:w-[500px] md:px-0 px-8 md:px-4 md:pb-20 pt-24 sm:pt-0 md:pt-24">
                     <h1 className="text-3xl sm:text-4xl xl:text-5xl font-bold sm:mb-2 text-left lg:!leading-tight">Your <span className={styles.underlined}>Trusted</span> Source for Aggregated and Independent News</h1>
                     <h3 className='mb-6 mt-4 sm:my-7 lg:mb-6 lg:mb-2 text-sm md:text-md lg:text-lg xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
-                    <a href="/auth/Register" className={`font-bold md:inline-block text-md lg:text-lg w-auto sm:mr-0 mr-0 px-6 pr-4 py-3 sm:py-2 text-black rounded-full capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
+                    <a href="/auth/Register" className={`md:inline-block text-md lg:text-lg w-auto sm:mr-0 mr-0 px-6 pr-4 py-3 sm:py-2 text-black rounded-full capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
                         Register now &rarr;
                     </a>
                 </div>
@@ -224,7 +224,7 @@ const LandingPage: React.FC = () => {
                     <div className='max-w-[400px] mx-auto text-center'>
                         <h1 className='text-yellow-300 text-2xl xs:text-3xl lg:text-4xl font-bold mb-3 xs:mb-5'>Stay informed about what interests you</h1>
                         <p className='text-white text-sm lg:texl-lg'>Dive into a world where news is personalized just for you, from the sources you trust to the topics you love</p>
-                        <button className='bg-yellow-300 text-black px-6 py-2 rounded-full mt-4 hover:bg-opacity-80 font-bold text-sm xs:text-md'>Get Started Now</button>
+                        <a href="/auth/Register" className='w-fit block mt-5 bg-yellow-300 text-black px-6 py-2 rounded-full mt-4 hover:bg-opacity-80 font-bold text-sm xs:text-md mx-auto'>Get Started Now</a>
                     </div>
                 </div>
             </div>

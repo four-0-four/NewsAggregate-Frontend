@@ -50,7 +50,7 @@ export const fetchNewsArticles = createAsyncThunk<
 
         const state = thunkAPI.getState();
         const userArticles = state.news.articles
-
+        
         try {
             const searchParams = new URLSearchParams();
             searchParams.append('last_news_time', (userArticles?.last_news_time ?? '').toString());
@@ -71,6 +71,7 @@ export const fetchNewsArticles = createAsyncThunk<
             }
 
             const data = await response.json();
+            Cookies.set('feed', JSON.stringify(data.news), { expires: 1 }); 
             return { articles: data.news as NewsArticle[], last_news_time: data.last_news_time, load_more: data.load_more };
         } catch (error) {
             if (error instanceof Error) {
@@ -346,6 +347,7 @@ export const getAllBookmarksForUser = createAsyncThunk<
             }
 
             const data = await response.json();
+            localStorage.setItem("bookmarks", JSON.stringify(data));
             return {bookmarks: data};
         } catch (error) {
             if (error instanceof Error) {

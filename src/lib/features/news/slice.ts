@@ -85,6 +85,7 @@ export interface NewsState {
     initialState,
     reducers: {
       addBookmark(state, action: PayloadAction<number>) {
+        localStorage.removeItem("bookmarks");
         // Find the article in all places it can exist and mark it as bookmarked
         const markAsBookmarked = (article: NewsArticle) => {
           if (!article.isBookmarked) {
@@ -120,6 +121,7 @@ export interface NewsState {
         });
       },
       removeBookmark(state, action: PayloadAction<number>) {
+        localStorage.removeItem("bookmarks");
         // Function to unmark an article as bookmarked
         const unmarkAsBookmarked = (article: NewsArticle) => {
             if (article.isBookmarked) {
