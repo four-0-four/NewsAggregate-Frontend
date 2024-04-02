@@ -21,6 +21,7 @@ export const logoutUser = createAsyncThunk<void, void, { rejectValue: string }>(
   (_, thunkAPI) => {
     try {
       // Delete the access token cookie
+      localStorage.clear();
       Cookies.remove('access_token');
       Cookies.remove('refresh_token');
 

@@ -25,7 +25,7 @@ const BookmarkPage: React.FC = ({}) => {
     }
 
     useEffect(() => {
-      if (isAuthenticated) {
+      if (isAuthenticated && bookmarks.news.length === 0) {
           dispatch(getAllBookmarksForUser());
       }
     }, [dispatch, isAuthenticated]);

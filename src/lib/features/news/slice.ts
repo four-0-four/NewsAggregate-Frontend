@@ -43,6 +43,7 @@ export interface CategoryState {
   'last_news_time': string;
   'number_of_articles_to_fetch'?: number;
   'status': 'idle' | 'loading' | 'succeeded' | 'failed' | 'done';
+  'load_more'?: boolean;
 }
 
 
@@ -153,6 +154,13 @@ export interface NewsState {
         // Remove the article from the bookmarks list
         state.bookmarks.news = state.bookmarks.news.filter(article => article.id !== action.payload);
       },
+      addFeed(state, action: PayloadAction<CategoryState>) {
+        state.articles.news = action.payload.news;
+        state.articles.last_news_time = action.payload.last_news_time;
+        state.load_more = action.payload.load_more || false;
+        state.articles.number_of_articles_to_fetch = action.payload.number_of_articles_to_fetch;
+        state.articles.status = action.payload.status;
+      }
     },
     extraReducers: (builder) => {
       builder
@@ -179,6 +187,7 @@ export interface NewsState {
           state.articles.number_of_articles_to_fetch = 10;
           state.articles.status = 'succeeded';
           state.load_more = action.payload.load_more;
+          localStorage.setItem("feed", JSON.stringify({ articles: state.articles.news as NewsArticle[], last_news_time: state.articles.last_news_time, load_more: state.load_more }));
           state.error = null;
         })
         .addCase(fetchNewsArticles.rejected, (state, action) => {
@@ -342,7 +351,7 @@ export interface NewsState {
   export const selectNewsError = (state: { news: NewsState }) => state.news.error;
   export const selectLoadMore = (state: { news: NewsState }) => state.news.load_more;
   export const selectBookmarks = (state: { news: NewsState }) => state.news.bookmarks;
-  export const { addBookmark, removeBookmark } = newsSlice.actions;
+  export const { addBookmark, removeBookmark, addFeed } = newsSlice.actions;
   
   // New selector to get categories
   export const selectCategoryArticles = (state: { news: NewsState }) => state.news.categoryArticles;

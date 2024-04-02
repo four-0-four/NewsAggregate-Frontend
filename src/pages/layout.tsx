@@ -36,6 +36,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     Cookies.remove('access_token');
     await dispatch(setAuthenticationState(false));
     setIsLoading(false);
+    localStorage.clear();
   }
 
   const checkAuth = async () => {

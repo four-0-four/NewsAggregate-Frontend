@@ -71,7 +71,6 @@ export const fetchNewsArticles = createAsyncThunk<
             }
 
             const data = await response.json();
-            Cookies.set('feed', JSON.stringify(data.news), { expires: 1 }); 
             return { articles: data.news as NewsArticle[], last_news_time: data.last_news_time, load_more: data.load_more };
         } catch (error) {
             if (error instanceof Error) {

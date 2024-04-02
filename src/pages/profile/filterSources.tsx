@@ -63,6 +63,7 @@ const FilterSources = (props: Props) => {
         setInterestedNewsSrc(updatedInterestedNewsSrc);
     
         // Dispatch the action to remove the source preference
+        localStorage.removeItem("feed");
         dispatch(removeNewsSourcePreference({ news_source_id: id }));
     };
 
@@ -89,6 +90,7 @@ const FilterSources = (props: Props) => {
         setInterestedNewsSrc(updatedInterestedNewsSrc);
       
         // Dispatch the action to add the source preference
+        localStorage.removeItem("feed");
         dispatch(addNewsSourcePreference({ news_source_id: id }));
       };
 

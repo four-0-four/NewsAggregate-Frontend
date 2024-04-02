@@ -29,11 +29,13 @@ const Interests = (props: Props) => {
 
     let handleRemoveInterest = (topic: string) => {
         if (!userFollowings.includes(topic)) return;
+        localStorage.removeItem("feed");
         dispatch(removeFollowing({topic}));
     }
 
     let handleAddInterest = (topic: string) => {
         if (userFollowings.includes(topic)) return;
+        localStorage.removeItem("feed");
         dispatch(addFollowing({topic}));
     }
 

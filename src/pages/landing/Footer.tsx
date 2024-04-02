@@ -16,10 +16,10 @@ const Footer = () => {
             <footer className="bg-black p-5 py-3 mt-[-1px]">
                 <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1000px] mx-auto border-b border-gray-600">
                     <div>
-                        <div className='flex md:justify-start items-center flex-grow md:flex-grow-0 cursor-pointer sm:ml-1' onClick={()=>navigate('/')}>
+                        <a className='flex md:justify-start items-center flex-grow md:flex-grow-0 cursor-pointer sm:ml-1' href="/">
                             <img src={'/logo_transparent.png'} alt="Farabix" className="w-12" />
                             <p className="flex text-xl xs:text-2xl text-primary uppercase">Farabix</p>
-                        </div>
+                        </a>
                         <p className='text-gray-300 text-sm sm:px-2 py-3 max-w-[350px]'>
                             Our goal is to customize your news experience: Stay informed, stay engaged, stay in control
                         </p>
