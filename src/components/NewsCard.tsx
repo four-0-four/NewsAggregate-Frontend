@@ -16,7 +16,7 @@ type NewsComponentProps = {
     isBookmarked?: boolean | null;
 };
 
-const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, shortSummary, from, fromImage, date, tags, isBookmarked=false }) => {
+const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, shortSummary, from, fromImage, date, isBookmarked=false }) => {
     const dispatch = useAppDispatch();
     const formatDate = (dateString: string) => {
         // Assuming dateString is in UTC, parse it as such

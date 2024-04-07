@@ -18,9 +18,20 @@ const Topics = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const categories = useAppSelector(selectNewsCategories);
   const categoryArticles = useAppSelector(selectCategoryArticles);
-  const userFollowing = useAppSelector(selectUserFollowings);
+  let userFollowing = useAppSelector(selectUserFollowings);
   const [following, setFollowing] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true); // Added loading state
+
+  if (!userFollowing || userFollowing.length === 0) {
+    const userFollowingsFromStorage = localStorage.getItem("userFollowings");
+
+    // Parse the JSON string from cookies. If it's not present or parsing fails, default to an empty array
+    try {
+        userFollowing = userFollowingsFromStorage ? JSON.parse(userFollowingsFromStorage) : [];
+    } catch (error) {
+        userFollowing = [];
+    }
+  }
 
   useEffect(() => {
     setFollowing(userFollowing);
@@ -52,6 +63,8 @@ const Topics = () => {
   if (newsStatus === 'failed') {
     return <InternalError />;
   }
+
+
 
   let handleClick = (topic: string) => {
     if (following.includes(topic)) {
@@ -109,7 +122,7 @@ const Topics = () => {
               <NewsCard
                 key={newsCard.id}
                 id={newsCard.id}
-                imageSrc={newsCard.media[0]}
+                imageSrc={newsCard.media}
                 title={newsCard.title}
                 shortSummary={newsCard.shortSummary}
                 from={newsCard.from}

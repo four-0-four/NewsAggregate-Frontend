@@ -33,9 +33,9 @@ const News: React.FC<NewsComponentProps> = ({}) => {
 
     useEffect(() => {
         const img = new Image();
-        img.onload = () => setImageSrc(selectedArticle?.media[0] || "/breaking_news.png");
+        img.onload = () => setImageSrc(selectedArticle?.media && selectedArticle?.media[0] || "/breaking_news.png");
         img.onerror = () => setImageSrc("/breaking_news.png"); // Fallback image on error
-        img.src = selectedArticle?.media[0] || "";
+        img.src = selectedArticle?.media && selectedArticle?.media[0] || "";
     }, [selectedArticle?.media]);
 
     useEffect(() => {

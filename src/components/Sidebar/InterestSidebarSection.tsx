@@ -20,18 +20,18 @@ const MainSidebar = () => {
     let InterestedNewsSourcesState:NewsSourceState[] = useAppSelector(InterestedNewsSources) ?? []
 
     if (!userFollowings || userFollowings.length === 0) {
-        const userFollowingsFromCookies = Cookies.get("userFollowings");
+        const userFollowingsFromStorage = localStorage.getItem("userFollowings");
     
         // Parse the JSON string from cookies. If it's not present or parsing fails, default to an empty array
         try {
-            userFollowings = userFollowingsFromCookies ? JSON.parse(userFollowingsFromCookies) : [];
+            userFollowings = userFollowingsFromStorage ? JSON.parse(userFollowingsFromStorage) : [];
         } catch (error) {
             userFollowings = [];
         }
     }
 
     if(!InterestedNewsSourcesState || InterestedNewsSourcesState.length === 0){
-        const InterestedNewsSourcesFromCookies = Cookies.get("newsSourcePreferences");
+        const InterestedNewsSourcesFromCookies = localStorage.getItem("newsSourcePreferences");
         try {
             InterestedNewsSourcesState = InterestedNewsSourcesFromCookies ? JSON.parse(InterestedNewsSourcesFromCookies) : [];
         } catch (error) {

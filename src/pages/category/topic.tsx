@@ -15,9 +15,20 @@ const TopicPage: React.FC = ({}) => {
     const { topic } = useParams();
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
-    const userFollowing = useAppSelector(selectUserFollowings);
+    let userFollowing = useAppSelector(selectUserFollowings);
     const categoryArticles = useAppSelector(selectCategoryArticles);
     const LoadMore = useAppSelector(selectLoadMore);
+
+    if (!userFollowing || userFollowing.length === 0) {
+      const userFollowingsFromStorage = localStorage.getItem("userFollowings");
+  
+      // Parse the JSON string from cookies. If it's not present or parsing fails, default to an empty array
+      try {
+          userFollowing = userFollowingsFromStorage ? JSON.parse(userFollowingsFromStorage) : [];
+      } catch (error) {
+          userFollowing = [];
+      }
+    }
 
     useEffect(() => {
       if (isAuthenticated && topic && (categoryArticles.find(cat => cat.name === topic)?.news.length === 0 || categoryArticles.length === 0)) {
@@ -93,7 +104,7 @@ const TopicPage: React.FC = ({}) => {
             {category && category.news.length > 0 && category.news.map(newsCard => (
               <NewsCard
                 id={newsCard.id}
-                imageSrc={newsCard.media[0]}
+                imageSrc={newsCard.media}
                 title={newsCard.title}
                 shortSummary={newsCard.shortSummary}
                 from={newsCard.from}

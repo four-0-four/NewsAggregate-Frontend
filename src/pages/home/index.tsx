@@ -22,7 +22,7 @@ const Home: React.FC = () => {
   const dispatch = useAppDispatch(); // Use Redux's useDispatch
   const navigate = useNavigate(); // Use useNavigate for navigation
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  const userFollowings = useAppSelector(selectUserFollowings);
+  let userFollowings = useAppSelector(selectUserFollowings);
   const categories = useAppSelector(selectNewsCategories);
   const LoadMore = useAppSelector(selectLoadMore);
   const userDetails = useAppSelector(selectUserDetails)
@@ -30,19 +30,35 @@ const Home: React.FC = () => {
   const [getStarted, setGetStarted] = React.useState(false);
   let userNews = useAppSelector(selectNewsArticles);
 
-  //parse the local feed from local storage
-  let localfeed = localStorage.getItem("feed")
-  if (isAuthenticated && userNews.news.length === 0 && localfeed !== null) {
-    let parsedFeed = JSON.parse(localfeed)
-    let loadedNewsFeed = {
-      news: parsedFeed.articles,
-      last_news_time: parsedFeed.last_news_time,
-      status: 'succeeded' as const,
-      number_of_articles_to_fetch: 10,
-      load_more: parsedFeed.load_more
+  const loadUserFollowingfromStorage = () => {
+    //parse the local userFollowings from local storage
+    if (!userFollowings || userFollowings.length === 0) {
+      const userFollowingsFromStorage = localStorage.getItem("userFollowings");
+
+      // Parse the JSON string from cookies. If it's not present or parsing fails, default to an empty array
+      try {
+          userFollowings = userFollowingsFromStorage ? JSON.parse(userFollowingsFromStorage) : [];
+      } catch (error) {
+          userFollowings = [];
+      }
     }
-    userNews = loadedNewsFeed
-    dispatch(addFeed(loadedNewsFeed))
+  }
+
+  const loadfeedfromstorage = () => {
+    //parse the local feed from local storage
+    let localfeed = localStorage.getItem("feed")
+    if (isAuthenticated && userNews.news.length === 0 && localfeed !== null) {
+      let parsedFeed = JSON.parse(localfeed)
+      let loadedNewsFeed = {
+        news: parsedFeed.articles,
+        last_news_time: parsedFeed.last_news_time,
+        status: 'succeeded' as const,
+        number_of_articles_to_fetch: 10,
+        load_more: parsedFeed.load_more
+      }
+      userNews = loadedNewsFeed
+      dispatch(addFeed(loadedNewsFeed))
+    }
   }
 
   //TODO: PRELOAD SOMEOF THE STUFF. LIKE GETTING BOOKMARKS, EXPLORE IN ADVANCE
@@ -87,6 +103,9 @@ const Home: React.FC = () => {
     if(userNews.news.length == 0){
       start()
     }
+    
+    loadfeedfromstorage()
+    loadUserFollowingfromStorage()
   }, [dispatch, isAuthenticated]);
 
   let HandleLoadMore = async () => {
@@ -99,7 +118,7 @@ const Home: React.FC = () => {
     return <HomeInterests userFollowings={userFollowings} categories={categories} firstName={userDetails?.first_name} start={start}/>
   }
   
-  console.log("state:", !IsLoading, userNews)
+
   if(!getStarted){
     return (
       <>
@@ -112,7 +131,7 @@ const Home: React.FC = () => {
                 userNews.news.map((newsCard: NewsArticle) => (
                   <NewsCard 
                     id={newsCard.id}
-                    imageSrc={newsCard.media[0]} 
+                    imageSrc={newsCard.media} 
                     title={newsCard.title} 
                     shortSummary={newsCard.shortSummary}  
                     from={newsCard.from}

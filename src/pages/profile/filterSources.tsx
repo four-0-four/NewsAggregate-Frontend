@@ -27,8 +27,48 @@ const FilterSources = (props: Props) => {
     const [BlacklistedNewsSrc, setBlacklistedNewsSrc] = useState(BlacklistedNewsSourcesState)
     const [is, setIs] = useState(true);
 
+
+    const preLoadNewsSources = () => {
+        //preload news sources from local storage
+        if (!allNewsSrc || allNewsSrc.length === 0) {
+            const allNewsSourcesFromStorage = localStorage.getItem("newsSources");
+            try {
+                setAllNewsSrc(allNewsSourcesFromStorage ? JSON.parse(allNewsSourcesFromStorage) : [])
+            } catch (error) {
+                setAllNewsSrc([]);
+            }
+        }
+    }
+
+    const preLoadNewsSourcePreference = () => {
+        //preload news source preferences from local storage
+        if (!allNewsSrc || allNewsSrc.length === 0) {
+            const allNewsSourcesFromStorage = localStorage.getItem("newsSourcePreferences");
+            try {
+                setInterestedNewsSrc(allNewsSourcesFromStorage ? JSON.parse(allNewsSourcesFromStorage) : [])
+            } catch (error) {
+                setInterestedNewsSrc([]);
+            }
+        }
+    }
+
+    const preLoadBlacklistedNewsSource = () => {
+        //preload news source preferences from local storage
+        if (!allNewsSrc || allNewsSrc.length === 0) {
+            const allNewsSourcesFromStorage = localStorage.getItem("blacklistedNewsSources");
+            try {
+                setBlacklistedNewsSrc(allNewsSourcesFromStorage ? JSON.parse(allNewsSourcesFromStorage) : [])
+            } catch (error) {
+                setBlacklistedNewsSrc([]);
+            }
+        }
+    }
+
     useEffect(() => {
         if (isAuthenticated) {
+            preLoadNewsSources()
+            preLoadNewsSourcePreference()
+            preLoadBlacklistedNewsSource()
             Promise.all([
                 dispatch(getAllNewsSources()),
                 dispatch(getAllUserNewsSourcesPreferences()),
@@ -60,10 +100,11 @@ const FilterSources = (props: Props) => {
     
         // Proceed with removing the source from InterestedNewsSrc
         const updatedInterestedNewsSrc = InterestedNewsSrc.filter(source => source.id !== id);
+        localStorage.setItem("newsSourcePreferences", JSON.stringify(updatedInterestedNewsSrc));
         setInterestedNewsSrc(updatedInterestedNewsSrc);
     
         // Dispatch the action to remove the source preference
-        localStorage.removeItem("feed");
+        localStorage.removeItem("feed"); // Remove the feed from local storage since we have a new setting
         dispatch(removeNewsSourcePreference({ news_source_id: id }));
     };
 
@@ -87,10 +128,11 @@ const FilterSources = (props: Props) => {
         }
       
         // Update the state with the new list of interested sources
+        localStorage.setItem("newsSourcePreferences", JSON.stringify(updatedInterestedNewsSrc));
         setInterestedNewsSrc(updatedInterestedNewsSrc);
       
         // Dispatch the action to add the source preference
-        localStorage.removeItem("feed");
+        localStorage.removeItem("feed"); // Remove the feed from local storage since we have a new setting
         dispatch(addNewsSourcePreference({ news_source_id: id }));
       };
 

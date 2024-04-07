@@ -30,7 +30,7 @@ export interface NewsArticle {
     updatedAt: string; // Or Date
     categories: string[];
     keywords: string[];
-    media: string[];
+    media: string;
     from: string;
     fromImage: string;
     externalLink?: string;

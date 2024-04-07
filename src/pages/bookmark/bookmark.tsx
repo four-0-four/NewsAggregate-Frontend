@@ -60,7 +60,7 @@ const BookmarkPage: React.FC = ({}) => {
             {bookmarks && bookmarks.news.length > 0 && bookmarks.news.map(newsCard => (
               <NewsCard
                 id={newsCard.id}
-                imageSrc={newsCard.media[0]}
+                imageSrc={(newsCard.media && newsCard.media[0]) || "/breaking_news.png"}
                 title={newsCard.title}
                 shortSummary={newsCard.shortSummary}
                 from={newsCard.from}

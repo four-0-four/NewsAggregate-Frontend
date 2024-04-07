@@ -314,7 +314,7 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         }
   
         const userFollowings: string[] = await response.json();
-        Cookies.set("userFollowings", JSON.stringify(userFollowings), { expires: 1 });
+        localStorage.setItem("userFollowings", JSON.stringify(userFollowings));
         return userFollowings;
       } catch (error) {
         if (error instanceof Error) {
@@ -470,6 +470,8 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         throw new Error('Failed to add following');
       }
 
+      localStorage.removeItem("userFollowings")
+
       const result = await response.json();
       return result;
     } catch (error) {
@@ -550,6 +552,9 @@ export const removeFollowing = createAsyncThunk<
       if (!response.ok) {
         throw new Error('Failed to remove following');
       }
+
+      //remove the current topic from the local storage
+      localStorage.removeItem("userFollowings")
 
       const result = await response.json();
       return result;
