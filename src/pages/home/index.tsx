@@ -168,6 +168,11 @@ const Home: React.FC = () => {
         {(!IsLoading && userNews && userNews.status === 'succeeded' && LoadMore) && (
           <LoadMoreButton HandleLoadMore={HandleLoadMore} />
         )}
+        {!IsLoading && userNews && userNews.status === 'succeeded' && !LoadMore && (
+          <div className="flex justify-center">
+            <p className="text-center text-gray-500">You have reached the end</p>
+          </div>
+        )}
     </>
     )
   }

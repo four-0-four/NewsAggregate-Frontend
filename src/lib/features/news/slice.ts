@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
-import { fetchCategories, fetchNewsArticles, fetchOneNewsArticle, fetchOneNewsArticleAuthenticated, fetchTopicNews, getAllBookmarksForUser } from './thunks';
+import { fetchCategories, fetchExplore, fetchNewsArticles, fetchOneNewsArticle, fetchOneNewsArticleAuthenticated, fetchTopicNews, getAllBookmarksForUser } from './thunks';
 
 function formatDateToString(date: Date) {
   const pad = (number: number) => (number < 10 ? `0${number}` : number);
@@ -61,6 +61,7 @@ export interface NewsState {
     selectedArticle?: NewsArticle | null;
     bookmarks: BookmarkState;
     categoryArticles: CategoryState[];
+    explore: CategoryState;
   }
   
   const initialState: NewsState = {
@@ -79,6 +80,12 @@ export interface NewsState {
       status: 'idle', 
     },
     categoryArticles: [],
+    explore: { 
+      news: [], 
+      last_news_time:formatDateToString(new Date()), 
+      status: 'idle', 
+      number_of_articles_to_fetch: 10
+    },
   }; 
   
   const newsSlice = createSlice({
@@ -160,6 +167,13 @@ export interface NewsState {
         state.load_more = action.payload.load_more || false;
         state.articles.number_of_articles_to_fetch = action.payload.number_of_articles_to_fetch;
         state.articles.status = action.payload.status;
+      },
+      addExplore(state, action: PayloadAction<CategoryState>) {
+        state.explore.news = action.payload.news;
+        state.explore.last_news_time = action.payload.last_news_time;
+        state.load_more = action.payload.load_more || false;
+        state.explore.number_of_articles_to_fetch = action.payload.number_of_articles_to_fetch;
+        state.explore.status = action.payload.status;
       }
     },
     extraReducers: (builder) => {
@@ -326,6 +340,34 @@ export interface NewsState {
           }
           state.error = null;
         })
+        .addCase(fetchExplore.pending, (state, action) => {
+          state.explore.status='loading'
+          state.error = null;
+        })
+        .addCase(fetchExplore.fulfilled, (state, action) => {
+          // Get the current news articles for the category
+          const currentNews = state.explore.news;
+              
+          if(action.payload.articles.length !== 0){
+            // Filter out new articles that are already present in the current news based on their id
+            const newUniqueArticles = action.payload.articles.filter(newArticle => 
+                !currentNews.some(currentArticle => currentArticle.id === newArticle.id));
+            
+            // If the category is found, update its news array by adding only new, unique articles
+            state.explore.news = [
+              ...currentNews,
+              ...newUniqueArticles
+            ];
+          }
+          state.explore.status = 'succeeded';
+          state.explore.last_news_time = action.payload.last_news_time;
+          state.load_more = action.payload.load_more;
+          state.error = null;
+        })
+        .addCase(fetchExplore.rejected, (state, action) => {
+          state.explore.status='failed'
+          state.error = null;
+        })
         .addCase(getAllBookmarksForUser.pending, (state) => {
           state.bookmarks.status = 'loading';
         })
@@ -351,9 +393,10 @@ export interface NewsState {
   export const selectNewsError = (state: { news: NewsState }) => state.news.error;
   export const selectLoadMore = (state: { news: NewsState }) => state.news.load_more;
   export const selectBookmarks = (state: { news: NewsState }) => state.news.bookmarks;
-  export const { addBookmark, removeBookmark, addFeed } = newsSlice.actions;
+  export const { addBookmark, removeBookmark, addFeed, addExplore } = newsSlice.actions;
   
   // New selector to get categories
   export const selectCategoryArticles = (state: { news: NewsState }) => state.news.categoryArticles;
+  export const selectExploreArticles = (state: { news: NewsState }) => state.news.explore;
   export const selectNewsCategories = (state: { news: NewsState }) => state.news.categoryArticles.map(category => category.name);
   export default newsSlice.reducer;

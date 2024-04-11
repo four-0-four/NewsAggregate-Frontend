@@ -127,6 +127,11 @@ const TopicPage: React.FC = ({}) => {
             {category && category.status === 'succeeded' && LoadMore && (
                 <LoadMoreButton HandleLoadMore={HandleLoadMore} />
             )}
+            {category && category.status === 'succeeded' && !LoadMore && (
+              <div className="flex justify-center">
+                <p className="text-center text-gray-500">You have reached the end</p>
+              </div>
+            )}
           </div>
       </div>
     );

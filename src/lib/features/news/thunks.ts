@@ -234,6 +234,51 @@ export const fetchTopicNews = createAsyncThunk<
     }
 );
 
+export const fetchExplore = createAsyncThunk<
+    { articles: NewsArticle[]; last_news_time:string; load_more: boolean},
+    number,
+    { state: RootState, rejectValue: string } 
+>(
+    'news/explore',
+    async (parent_category_id, thunkAPI) => {
+        const token = Cookies.get('access_token');
+        if (!token) {
+            return thunkAPI.rejectWithValue('No access token available');
+        }
+
+        const state = thunkAPI.getState();
+        const explore = state.news.explore;
+
+        try {
+            const searchParams = new URLSearchParams();
+            searchParams.append('parent_category_id', parent_category_id.toString());
+            searchParams.append('last_news_time', (explore?.last_news_time ?? '').toString());
+
+            const url = new URL(BaseURL + '/news/explore');
+            url.search = searchParams.toString();
+
+            const response = await fetch(url.toString(), {
+                method: 'GET',
+                headers: {
+                Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch news for different topics');
+            }
+
+            const data = await response.json();
+            return { articles: data.news as NewsArticle[], last_news_time: data.last_news_time, load_more: data.load_more };
+        } catch (error) {
+            if (error instanceof Error) {
+                return thunkAPI.rejectWithValue(error.message);
+            }
+            return thunkAPI.rejectWithValue('Failed to fetch news for different categories');
+        }
+    }
+);
+
 
 export const addNewsToBookmark = createAsyncThunk<
     { message: string },
