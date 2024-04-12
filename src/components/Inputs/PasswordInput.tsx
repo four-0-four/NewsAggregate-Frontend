@@ -18,7 +18,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ headerText, placeholder, 
     };
 
     return (
-        <div className="flex flex-col mt-6 relative z-5">
+        <div className="flex flex-col mt-3 relative z-5">
             <h1 className="text-sm sm:text-md mb-[3px] font-bold">{headerText}</h1>
             <input
                 type={viewPassword ? 'text' : 'password'}
