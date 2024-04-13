@@ -38,7 +38,7 @@ const RegisterForm = () => {
     return (
         <div className="absolute inset-0 flex items-center justify-center px-2 sm:px-10 mt-[60px]">
             <div className='bg-white flex flex-row rounded-[20px] overflow-hidden'>
-                <div className="hidden lg:flex px-20 justify-center items-center bg-amber-100 bg-opacity-[40%] min-h-[500px]">
+                <div className="hidden lg:flex px-20 justify-center items-center bg-amber-100 bg-opacity-[40%] min-h-[450px] xl:min-h-[500px]">
                     <div className="min-w-[300px] text-center">
                         <img src="/register.png" className="max-w-[270px] m-auto"/>
                         <h1 className="text-md font-bold text-center mt-5">Your gateway to global news!</h1>
@@ -63,7 +63,7 @@ const RegisterForm = () => {
 
 
                         {!registered && (
-                            <div className='relative flex flex-col justify-center  p-4 xs:p-8 lg:px-12 sm:min-h-[600px] w-[95vw] max-w-[350px] xs:max-w-[450px]'>
+                            <div className='relative flex flex-col justify-center  p-4 xs:p-8 lg:px-12 w-[95vw] max-w-[350px] xs:min-h-[450px] xl:min-h-[500px]'>
                                 {loading && status !== 'failed' && (
                                     <div className="z-10 w-full h-full absolute top-0 left-0 flex flex-col items-center justify-center bg-gray-100 bg-opacity-70">
                                         <img src="/loading.gif" className='w-[50px]'/>

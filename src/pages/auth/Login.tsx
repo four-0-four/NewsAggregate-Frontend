@@ -33,14 +33,14 @@ const LoginForm = () => {
     return (
         <div className="absolute inset-0 flex items-center justify-center px-2 sm:px-10  mt-[60px]">
             <div className='bg-white flex flex-row rounded-[20px] overflow-hidden'>
-                <div className="hidden lg:flex px-20 justify-center items-center bg-amber-100 bg-opacity-[40%] min-h-[500px]">
+                <div className="hidden lg:flex px-20 justify-center items-center bg-amber-100 bg-opacity-[40%] min-h-[450px] xl:min-h-[500px]">
                     <div className="min-w-[300px] text-center">
                         <img src="/login.png" className="max-w-[270px] m-auto"/>
                         <h1 className="text-md font-bold text-center mt-5">Your gateway to global news!</h1>
                         <p className='max-w-[250px] m-auto text-neutral-600 mt-2 leading-5 text-sm'>Widen your perspective to different viewpoints and information</p>
                     </div>
                 </div>
-                <div className="flex justify-center items-center p-4 xs:p-8 sm:px-16 sm:min-h-[500px]">
+                <div className="flex justify-center items-center p-4 xs:p-8 sm:px-16 sm:min-h-[450px] xl:min-h-[500px]">
                     <form onSubmit={handleSubmit} className='min-w-[270px]'>
                         <div className='flex justify-center items-center flex-grow md:flex-grow-0 mb-10'>
                             <img src={'/logo_transparent.png'} alt="Farabix" className="w-8" />

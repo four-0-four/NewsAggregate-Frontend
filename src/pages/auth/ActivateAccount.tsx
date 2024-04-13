@@ -75,9 +75,15 @@ const ActivateAccount = () => {
 
     if (!isLoading) {
         return (
-            <div className="w-full flex justify-center items-start h-screen mt-4 md:mt-16 lg:mt-36">
-                <Box title="Your Account is Activated" size='small'>
-                    <form onSubmit={handleSubmit}>
+            <div className="absolute inset-0 flex items-center justify-center px-2 sm:px-10  mt-[60px]">
+            <div className='bg-white flex flex-row rounded-[20px] overflow-hidden'>
+                <div className="hidden lg:flex px-20 justify-center items-center bg-amber-100 bg-opacity-[40%] min-h-[450px] xl:min-h-[500px]">
+                    <div className="min-w-[300px] text-center">
+                        <img src="/welcome.png" className="max-w-[270px] m-auto"/>
+                    </div>
+                </div>
+                <div className="flex justify-center items-center p-4 xs:p-8 sm:px-16 sm:min-h-[450px] xl:min-h-[500px]">
+                    <form onSubmit={handleSubmit} className='min-h-[270px]'>
                         {status === 'failed' && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
 
 
@@ -89,8 +95,9 @@ const ActivateAccount = () => {
                             <PrimaryButton type="submit" text="Log In" />
                         </div>
                     </form>
-                </Box>
+                </div>
             </div>
+        </div>
         );
     }
 }

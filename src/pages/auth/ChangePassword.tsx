@@ -97,20 +97,33 @@ const ChangePasswordForm = () => {
 
     if(token){
         return (
-            <div className="flex w-full justify-center items-start h-screen mt-4 md:mt-16">
-                <Box title="Change Password" size='small'>
-                    <form onSubmit={handleSubmit}>
-                        <PasswordInput headerText="New Password" placeholder="New Password" name="newPassword" value={formData.newPassword} onChange={handleChange} />
-                        <PasswordInput headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
-
-                        <div className="mt-6 flex flex-col sm:flex-row justify-between items-center w-full">
-                            <p className="text-xs md:text-sm order-2 md:order-1">
-                                <a href="/auth/Login" className="text-primary">Cancel</a>
-                            </p>
-                            <PrimaryButton text="Change" type="submit"/>
+            <div className="absolute inset-0 flex items-center justify-center px-2 sm:px-10  mt-[60px]">
+                <div className='bg-white flex flex-row rounded-[20px] overflow-hidden'>
+                    <div className="hidden lg:flex px-20 justify-center items-center bg-amber-100 bg-opacity-[40%] min-h-[450px] xl:min-h-[500px]">
+                        <div className="min-w-[300px] text-center">
+                            <img src="/resetPassword.png" className="max-w-[270px] m-auto"/>
                         </div>
-                    </form>
-                </Box>
+                    </div>
+                    <div className="flex justify-center items-center p-4 xs:p-8 sm:px-16 sm:min-h-[450px] xl:min-h-[500px]">
+                        <form onSubmit={handleSubmit} className='min-w-[270px]'>
+                            <div className='flex justify-center items-center flex-grow md:flex-grow-0 mb-10'>
+                                <img src={'/logo_transparent.png'} alt="Farabix" className="w-8" />
+                                <p className="flex text-xl text-primary uppercase">Farabix</p>
+                            </div>
+                            <PasswordInput headerText="New Password" placeholder="New Password" name="newPassword" value={formData.newPassword} onChange={handleChange} />
+                            <PasswordInput headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
+
+                            <div className='mt-10'>
+                                <PrimaryButton text="Change" type="submit" fullWidth={true}/>
+                            </div>
+                            <div className="mt-2 flex flex-col sm:flex-row justify-center items-center w-full">
+                                <p className="text-xs md:text-sm order-2 md:order-1">
+                                    <a href="/auth/Login" className="text-primary">Cancel</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         );
     }
