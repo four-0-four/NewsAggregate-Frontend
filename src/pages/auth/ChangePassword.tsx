@@ -78,7 +78,7 @@ const ChangePasswordForm = () => {
                 setError('Failed to change password: ' + error);
             });
         } else {
-            setIsConfirmed(false);
+            setIsConfirmed(true);
             setIsLoading(false);
             setError("Passwords do not match");
         }
@@ -110,6 +110,8 @@ const ChangePasswordForm = () => {
                                 <img src={'/logo_transparent.png'} alt="Farabix" className="w-8" />
                                 <p className="flex text-xl text-primary uppercase">Farabix</p>
                             </div>
+
+                            {error && <p className="text-left text-red-500 text-sm my-2 mt-6">* {(error && error.includes("[object Object]"))?"Something went wrong":error}</p>}
                             <PasswordInput headerText="New Password" placeholder="New Password" name="newPassword" value={formData.newPassword} onChange={handleChange} />
                             <PasswordInput headerText="Confirm New Password" placeholder="Confirm New Password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
 

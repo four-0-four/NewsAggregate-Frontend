@@ -59,11 +59,10 @@ const RegisterForm = () => {
                                 </p>
                             </div>
                         )}
-                        {status === 'failed' && <p className="text-left text-red-500 text-sm mb-2">* {(error && error.includes("[object Object]"))?"Something went wrong":error}</p>}
 
 
                         {!registered && (
-                            <div className='relative flex flex-col justify-center  p-4 xs:p-8 lg:px-12 w-[95vw] max-w-[350px] xs:min-h-[450px] xl:min-h-[500px]'>
+                            <div className='relative flex flex-col justify-center  p-4 xs:p-8 lg:px-12 w-[95vw] max-w-[450px] xs:min-h-[450px] xl:min-h-[500px]'>
                                 {loading && status !== 'failed' && (
                                     <div className="z-10 w-full h-full absolute top-0 left-0 flex flex-col items-center justify-center bg-gray-100 bg-opacity-70">
                                         <img src="/loading.gif" className='w-[50px]'/>
@@ -75,6 +74,7 @@ const RegisterForm = () => {
                                     <img src={'/logo_transparent.png'} alt="Farabix" className="w-8" />
                                     <p className="flex text-xl text-primary uppercase">Farabix</p>
                                 </div>
+                                {status === 'failed' && <p className="text-left text-red-500 text-sm my-2 mt-6">* {(error && error.includes("[object Object]"))?"Something went wrong":error}</p>}
                                 <div className="grid xs:grid-cols-2 grid-cols-1 xs:gap-x-2 mb-[-7px]">
                                     <Input headerText="First Name" placeholder="First Name" name="first_name" value={formData.first_name} onChange={handleChange} min={2}/>
                                     <Input headerText="Last Name" placeholder="Last Name" name="last_name" value={formData.last_name} onChange={handleChange} />

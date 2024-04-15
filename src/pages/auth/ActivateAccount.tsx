@@ -82,8 +82,12 @@ const ActivateAccount = () => {
                         <img src="/welcome.png" className="max-w-[270px] m-auto"/>
                     </div>
                 </div>
-                <div className="flex justify-center items-center p-4 xs:p-8 sm:px-16 sm:min-h-[450px] xl:min-h-[500px]">
-                    <form onSubmit={handleSubmit} className='min-h-[270px]'>
+                <div className="flex justify-center items-center p-4 xs:p-8 sm:px-16 w-[95vw] max-w-[450px]  sm:min-h-[450px] xl:min-h-[500px]">
+                    <form onSubmit={handleSubmit} className='min-h-[270px] w-[95vw] max-w-[450px] '>
+                        <div className='flex justify-center items-center flex-grow md:flex-grow-0 mb-10'>
+                            <img src={'/logo_transparent.png'} alt="Farabix" className="w-8" />
+                            <p className="flex text-xl text-primary uppercase">Farabix</p>
+                        </div>
                         {status === 'failed' && <p className="text-left text-red-500 text-sm mb-2">* {error}</p>}
 
 
@@ -91,8 +95,8 @@ const ActivateAccount = () => {
 
                         <PasswordInput headerText="Password" placeholder="Password" name="password" value={formData.password} onChange={handleChange} />
 
-                        <div className="mt-6 flex flex-col md:flex-row justify-end items-end w-full">
-                            <PrimaryButton type="submit" text="Log In" />
+                        <div className="mt-10 flex flex-col md:flex-row justify-end items-end w-full">
+                            <PrimaryButton type="submit" text="Log In" fullWidth={true}/>
                         </div>
                     </form>
                 </div>
