@@ -8,7 +8,16 @@ import Footer from './Footer';
 
 const NewsSources = () => {
     const dispatch = useAppDispatch();
-    const allNewsSourcesState: NewsSourceState[] = useAppSelector(allNewsSources) ?? [];
+    let allNewsSourcesState: NewsSourceState[] = useAppSelector(allNewsSources) ?? [];
+
+    if (!allNewsSourcesState || allNewsSourcesState.length === 0) {
+        const allNewsSourcesFromStorage = localStorage.getItem("allNewsSources");
+        try {
+            allNewsSourcesState = allNewsSourcesFromStorage ? JSON.parse(allNewsSourcesFromStorage) : [];
+        } catch (error) {
+            allNewsSourcesState = []
+        }
+    }
     
     useEffect(() => {
         dispatch(getAllNewsSourcesLanding())

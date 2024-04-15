@@ -39,10 +39,10 @@ const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
               <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
-          <div className='flex md:justify-center items-center flex-grow md:flex-grow-0 cursor-pointer ml-3' onClick={()=>navigate('/')}>
+          <a className='flex md:justify-center items-center flex-grow md:flex-grow-0 cursor-pointer ml-3' href="/">
             <img src={'/logo_transparent.png'} alt="Farabix" className="w-12" />
             <p className="hidden xs:flex text-xl xs:text-2xl text-primary uppercase">Farabix</p>
-          </div>
+          </a>
         </div>
   
         {/* Logo - Center on large screens, left on smaller screens */}

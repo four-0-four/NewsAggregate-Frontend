@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate for navigation and useParams to access route params
 import { useAppDispatch, useAppSelector } from '../../lib/hooks';
 import { selectIsAuthenticated, selectUserFollowings } from '../../lib/features/user/slice';
-import { selectBookmarks, selectCategoryArticles, selectLoadMore } from '../../lib/features/news/slice';
+import { NewsArticle, selectBookmarks, selectCategoryArticles, selectLoadMore } from '../../lib/features/news/slice';
 import { fetchTopicNews, getAllBookmarksForUser } from '../../lib/features/news/thunks';
 import { addFollowing, removeFollowing } from '../../lib/features/user/thunks';
 import NewsCard from '../../components/NewsCard';
@@ -14,10 +14,18 @@ const BookmarkPage: React.FC = ({}) => {
     // Function to format the date
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
-    const bookmarks = useAppSelector(selectBookmarks);
+    let bookmarks = useAppSelector(selectBookmarks);
+    let localBookmarks = localStorage.getItem("bookmarks");
+    if (isAuthenticated && bookmarks.news.length === 0 && localBookmarks !== null) {
+      let newBookmarkState = {
+        news: JSON.parse(localBookmarks) as NewsArticle[],
+        status: "done" as const
+      }
+      bookmarks = newBookmarkState;
+    }
 
     useEffect(() => {
-      if (isAuthenticated) {
+      if (isAuthenticated && bookmarks.news.length === 0) {
           dispatch(getAllBookmarksForUser());
       }
     }, [dispatch, isAuthenticated]);
@@ -52,7 +60,7 @@ const BookmarkPage: React.FC = ({}) => {
             {bookmarks && bookmarks.news.length > 0 && bookmarks.news.map(newsCard => (
               <NewsCard
                 id={newsCard.id}
-                imageSrc={newsCard.media[0]}
+                imageSrc={(newsCard.media && newsCard.media[0]) || "/breaking_news.png"}
                 title={newsCard.title}
                 shortSummary={newsCard.shortSummary}
                 from={newsCard.from}
@@ -62,7 +70,7 @@ const BookmarkPage: React.FC = ({}) => {
                 isBookmarked={newsCard.isBookmarked}
               />
             ))}
-            {bookmarks && bookmarks.status == 'loading' && (
+            {bookmarks && bookmarks.news.length == 0 && bookmarks.status == 'loading' && (
               <>
                 <Placeholder />
                 <Placeholder />

@@ -85,7 +85,9 @@ export const getAllNewsSources = createAsyncThunk<
 >(
   'newsSource/getall',
   async (_, thunkAPI) => {
-    return await newsSourceGetterAPICaller(thunkAPI, '/newsSource/get-all');
+    let newsSources =  await newsSourceGetterAPICaller(thunkAPI, '/newsSource/get-all');
+    localStorage.setItem("newsSources", JSON.stringify(newsSources));
+    return newsSources
   }
 );
 
@@ -112,6 +114,7 @@ export const getAllNewsSourcesLanding = createAsyncThunk<
         return thunkAPI.rejectWithValue(errorData.detail || 'Failed to add news source preference');
       }
       const data = await response.json();
+      localStorage.setItem("allNewsSources", JSON.stringify(data));
       return data;
     } catch (error) {
       if (error instanceof Error) {
@@ -131,7 +134,7 @@ export const getAllUserNewsSourcesPreferences = createAsyncThunk<
   'newsSource/get-users-preference',
   async (_, thunkAPI) => {
     let newsSourcePreferences =  await newsSourceGetterAPICaller(thunkAPI, '/newsSource/get-users-preference');
-    Cookies.set("newsSourcePreferences", JSON.stringify(newsSourcePreferences), { expires: 1 });
+    localStorage.setItem("newsSourcePreferences", JSON.stringify(newsSourcePreferences));
     return newsSourcePreferences;
   }
 );
@@ -144,7 +147,9 @@ export const getAllUserNewsSourcesBlacklist = createAsyncThunk<
 >(
   'newsSource/get-users-blacklist',
   async (_, thunkAPI) => {
-    return await newsSourceGetterAPICaller(thunkAPI, '/newsSource/get-users-blacklist');
+    let blacklistedNewsSources =  await newsSourceGetterAPICaller(thunkAPI, '/newsSource/get-users-blacklist');
+    localStorage.setItem("blacklistedNewsSources", JSON.stringify(blacklistedNewsSources));
+    return blacklistedNewsSources;
   }
 );
 

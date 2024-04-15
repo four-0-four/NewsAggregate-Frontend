@@ -1,12 +1,12 @@
 import Box from '../../components/Box/Box'
 import { selectNewsCategories } from '../../lib/features/news/slice';
 import { fetchCategories } from '../../lib/features/news/thunks';
-import { selectIsAuthenticated } from '../../lib/features/user/slice';
+import { selectIsAuthenticated, selectUserFollowings } from '../../lib/features/user/slice';
 import { addFollowing, fetchUserFollowings, removeFollowing } from '../../lib/features/user/thunks';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks';
 import { RootState } from '../../lib/store';
 import CategoryIcons from '../../util/CategoryIcons';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
 type Props = {}
@@ -15,10 +15,25 @@ const Interests = (props: Props) => {
     const dispatch = useAppDispatch();
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
     const categories = useAppSelector(selectNewsCategories);
-    let userFollowings = useSelector((state: RootState) => state.user.followings);
+    const [userFollowings, setUserFollowings] = useState<string[]>(useAppSelector(selectUserFollowings));
     let tagDesign = "text-sm sm:text-md inline-block mr-2 mb-2 sm:mr-3 sm:mb-3 px-4 py-2 capitalize border border-primary rounded-[20px] transition-colors duration-300 hover:bg-primary hover:text-black";
     let interestDesign = "text-sm sm:text-md inline-block mr-3 mb-3 px-4 py-2 capitalize bg-primary border border-primary rounded-[20px] transition-colors duration-300 hover:bg-opacity-80";
     
+    // load userFollowings from local storage
+    useEffect(() => {
+        if (!userFollowings || userFollowings.length === 0) {
+            const userFollowingsFromStorage = localStorage.getItem("userFollowings");
+    
+            // Parse the JSON string from cookies. If it's not present or parsing fails, default to an empty array
+            try {
+                setUserFollowings(userFollowingsFromStorage ? JSON.parse(userFollowingsFromStorage) : [])
+            } catch (error) {
+                setUserFollowings([]);
+            }
+        }
+    }, []);
+    
+
     useEffect(() => {
         if (isAuthenticated) {
           dispatch(fetchCategories({parent_category_id:0}))
@@ -26,15 +41,30 @@ const Interests = (props: Props) => {
         }
     }, [dispatch, isAuthenticated]);
 
+    const updateCookieFollowings = (newFollowings: string[]) => {
+        // Update the cookie with new user followings
+        localStorage.setItem('userFollowings', JSON.stringify(newFollowings));
+        setUserFollowings(newFollowings);
+    };
 
-    let handleRemoveInterest = (topic: string) => {
+    let handleRemoveInterest = async (topic: string) => {
         if (!userFollowings.includes(topic)) return;
-        dispatch(removeFollowing({topic}));
+        const newFollowings = userFollowings.filter(following => following !== topic);
+        updateCookieFollowings(newFollowings);
+        
+        localStorage.removeItem("feed");// Remove the feed from local storage since we have a new setting
+        await dispatch(removeFollowing({topic}));
+        await dispatch(fetchUserFollowings());
     }
 
-    let handleAddInterest = (topic: string) => {
+    let handleAddInterest = async (topic: string) => {
         if (userFollowings.includes(topic)) return;
-        dispatch(addFollowing({topic}));
+        const newFollowings = [...userFollowings, topic];
+        updateCookieFollowings(newFollowings);
+        
+        localStorage.removeItem("feed");// Remove the feed from local storage since we have a new setting
+        await dispatch(addFollowing({topic}));
+        await dispatch(fetchUserFollowings());
     }
 
     let MIN_INTEREST_NEWS = 2
@@ -51,7 +81,7 @@ const Interests = (props: Props) => {
                 <p className='text-sm text-gray-300 mt-[-15px]'>(Min {MIN_INTEREST_NEWS} Interest)</p>
                     {userFollowings.length > 0 ? (
                         <>
-                            <div className='flex mt-6'>
+                            <div className='flex mt-6 flex-wrap'>
                                 {userFollowings.map((following, index) => (
                                     <div className='relative'>
                                         <p className={`${interestDesign}`}>

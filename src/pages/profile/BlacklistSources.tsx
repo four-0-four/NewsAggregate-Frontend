@@ -65,6 +65,7 @@ const BlacklistSources = (props: Props) => {
         setBlacklistedNewsSrc(updatedBlacklistedNewsSrc);
     
         // Dispatch the action to remove the source preference
+        localStorage.removeItem("feed");
         dispatch(removeNewsSourceBlacklist({ news_source_id: id }));
     };
 
@@ -91,6 +92,7 @@ const BlacklistSources = (props: Props) => {
         setBlacklistedNewsSrc(updatedBlacklistedNewsSrc);
       
         // Dispatch the action to add the source preference
+        localStorage.removeItem("feed");
         dispatch(addNewsSourceBlacklist({ news_source_id: id }));
       };
 

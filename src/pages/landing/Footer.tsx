@@ -16,10 +16,10 @@ const Footer = () => {
             <footer className="bg-black p-5 py-3 mt-[-1px]">
                 <div className="grid md:grid-cols-[50%,50%] grid-cols-1 gap-4 max-w-[1000px] mx-auto border-b border-gray-600">
                     <div>
-                        <div className='flex md:justify-start items-center flex-grow md:flex-grow-0 cursor-pointer sm:ml-1' onClick={()=>navigate('/')}>
+                        <a className='flex md:justify-start items-center flex-grow md:flex-grow-0 cursor-pointer sm:ml-1' href="/">
                             <img src={'/logo_transparent.png'} alt="Farabix" className="w-12" />
                             <p className="flex text-xl xs:text-2xl text-primary uppercase">Farabix</p>
-                        </div>
+                        </a>
                         <p className='text-gray-300 text-sm sm:px-2 py-3 max-w-[350px]'>
                             Our goal is to customize your news experience: Stay informed, stay engaged, stay in control
                         </p>
@@ -58,12 +58,12 @@ const Footer = () => {
                         <div>
                             <h2 className='text-gray-200'>Legal</h2>
                             <div className='flex flex-col gap-2 mt-2'>
-                                <a href="/landing" className='text-sm text-gray-400 hover:text-primary'>Privacy Policy</a>
-                                <a href="/landing/contactUs" className='text-sm text-gray-400 hover:text-primary'>Cookies Policy</a>
+                                <a href="/policy/PrivacyPolicy" className='text-sm text-gray-400 hover:text-primary'>Privacy Policy</a>
+                                <a href="/policy/TermsOfService" className='text-sm text-gray-400 hover:text-primary'>Terms of Service</a>
                             </div>
                         </div>
                         <div className='flex flex-col gap-2 md:mr-5 mt-5 sm:mt-0'>
-                            <a href='/auth/Login' className='text-md px-2 md:px-2 py-1 text-black rounded-full capitalize bg-primary text-center border-2 border-primary'>
+                            <a href="/auth/Register" className='text-md px-2 md:px-2 py-1 text-black rounded-full capitalize bg-primary text-center border-2 border-primary'>
                                 Sign up
                             </a>
                             <a href='/auth/Login' className='text-md px-2 md:px-2 py-1 text-primary border-2 border-primary rounded-full capitalize bg-black hover:bg-opacity-80 text-center'>

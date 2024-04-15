@@ -25,15 +25,15 @@ type HomeInterestsProps = {
 
     useEffect(() => {
         // Load user followings from cookies
-        const followingsFromCookie = Cookies.get('userFollowings');
-        if (followingsFromCookie) {
-            setUserFollowings(JSON.parse(followingsFromCookie));
+        const followingsFromStorage = localStorage.getItem('userFollowings');
+        if (followingsFromStorage) {
+            setUserFollowings(JSON.parse(followingsFromStorage));
         }
     }, []);
 
     const updateCookieFollowings = (newFollowings: string[]) => {
         // Update the cookie with new user followings
-        Cookies.set('userFollowings', JSON.stringify(newFollowings), { expires: 1 }); // Expires in 7 days
+        localStorage.setItem('userFollowings', JSON.stringify(newFollowings));
         setUserFollowings(newFollowings);
     };
 

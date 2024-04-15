@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks';
 import { selectIsAuthenticated } from '../../lib/features/user/slice';
-import { addNewsToBookmark, fetchOneNewsArticle, fetchOneNewsArticleAuthenticated, removeNewsFromBookmark } from '../../lib/features/news/thunks';
+import { addNewsToBookmark, fetchOneNewsArticle, fetchOneNewsArticleAuthenticated, getAllBookmarksForUser, removeNewsFromBookmark } from '../../lib/features/news/thunks';
 import { NewsArticle, addBookmark, removeBookmark, selectNewsStatus, selectSelectedArticle } from '../../lib/features/news/slice';
 import NewsPlaceholder from '../../components/Placeholders/NewsPlaceholder';
 import { useParams } from 'react-router-dom';
@@ -33,9 +33,9 @@ const News: React.FC<NewsComponentProps> = ({}) => {
 
     useEffect(() => {
         const img = new Image();
-        img.onload = () => setImageSrc(selectedArticle?.media[0] || "/breaking_news.png");
+        img.onload = () => setImageSrc(selectedArticle?.media && selectedArticle?.media[0] || "/breaking_news.png");
         img.onerror = () => setImageSrc("/breaking_news.png"); // Fallback image on error
-        img.src = selectedArticle?.media[0] || "";
+        img.src = selectedArticle?.media && selectedArticle?.media[0] || "";
     }, [selectedArticle?.media]);
 
     useEffect(() => {
@@ -85,24 +85,26 @@ const News: React.FC<NewsComponentProps> = ({}) => {
         });
     };
     
-    const bookmarkNews = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const bookmarkNews = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation(); // Prevent click event from reaching the <a> tag
         const id = isNaN(Number(newsID)) ? null : Number(newsID);
         if (id === null) return;
         if (!isNaN(id)) {
-            dispatch(addBookmark(id)); // Dispatch the addBookmark action with the news article's ID
+            await dispatch(addBookmark(id)); // Dispatch the addBookmark action with the news article's ID
         }
-        dispatch(addNewsToBookmark(id));
+        await dispatch(addNewsToBookmark(id));
+        await dispatch(getAllBookmarksForUser());
     }
 
-    const unbookmarkNews = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const unbookmarkNews = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation(); // Prevent click event from reaching the <a> tag
         const id = isNaN(Number(newsID)) ? null : Number(newsID);
         if (id === null) return;
         if (!isNaN(id)) {
-            dispatch(removeBookmark(id)); // Dispatch the removeBookmark action with the news article's ID
+            await dispatch(removeBookmark(id)); // Dispatch the removeBookmark action with the news article's ID
         }
-        dispatch(removeNewsFromBookmark(id));
+        await dispatch(removeNewsFromBookmark(id));
+        await dispatch(getAllBookmarksForUser());
     }
 
 

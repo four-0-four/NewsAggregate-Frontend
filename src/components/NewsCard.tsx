@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../lib/hooks';
-import { addNewsToBookmark, removeNewsFromBookmark } from '../lib/features/news/thunks';
+import { addNewsToBookmark, getAllBookmarksForUser, removeNewsFromBookmark } from '../lib/features/news/thunks';
 import { addBookmark, removeBookmark } from '../lib/features/news/slice';
 
 type NewsComponentProps = {
@@ -16,7 +16,7 @@ type NewsComponentProps = {
     isBookmarked?: boolean | null;
 };
 
-const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, shortSummary, from, fromImage, date, tags, isBookmarked=false }) => {
+const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, shortSummary, from, fromImage, date, isBookmarked=false }) => {
     const dispatch = useAppDispatch();
     const formatDate = (dateString: string) => {
         // Assuming dateString is in UTC, parse it as such
@@ -42,18 +42,20 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, shortSumm
         img.src = imageSrc || "";
     }, [imageSrc]);
 
-    const bookmarkNews = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const bookmarkNews = async(event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation(); // Prevent click event from reaching the <a> tag
         event.preventDefault();
-        dispatch(addBookmark(id));
-        dispatch(addNewsToBookmark(id));
+        await dispatch(addBookmark(id));
+        await dispatch(addNewsToBookmark(id));
+        await dispatch(getAllBookmarksForUser());
     }
 
-    const unbookmarkNews = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const unbookmarkNews = async(event: React.MouseEvent<HTMLButtonElement>) => {
         event.stopPropagation(); // Prevent click event from reaching the <a> tag
         event.preventDefault();
-        dispatch(removeBookmark(id));
-        dispatch(removeNewsFromBookmark(id));
+        await dispatch(removeBookmark(id));
+        await dispatch(removeNewsFromBookmark(id));
+        await dispatch(getAllBookmarksForUser());
     }
 
     const navigate = useNavigate();

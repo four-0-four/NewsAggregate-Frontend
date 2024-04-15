@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useRouter
 import { selectIsAuthenticated, selectUserDetails, selectUserFollowings } from "../../lib/features/user/slice";
-import { fetchCategories, fetchNewsArticles } from "../../lib/features/news/thunks";
+import { fetchCategories, fetchNewsArticles, getAllBookmarksForUser } from "../../lib/features/news/thunks";
 import {
   NewsArticle,
+  addFeed,
   selectLoadMore,
   selectNewsArticles,
   selectNewsCategories,
@@ -15,21 +16,67 @@ import Placeholder from "../../components/Placeholders/NewsCardPlaceholder";
 import { useAppDispatch, useAppSelector } from '../../lib/hooks';
 import LoadMoreButton from '../../components/Buttons/LoadMoreButton';
 import { fetchUserFollowings } from '../../lib/features/user/thunks';
-import Box from '../../components/Box/Box';
-import CategoryIcons from '../../util/CategoryIcons';
 import HomeInterests from './HomeInterest';
 
 const Home: React.FC = () => {
   const dispatch = useAppDispatch(); // Use Redux's useDispatch
   const navigate = useNavigate(); // Use useNavigate for navigation
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  const userFollowings = useAppSelector(selectUserFollowings);
+  let userFollowings = useAppSelector(selectUserFollowings);
   const categories = useAppSelector(selectNewsCategories);
   const LoadMore = useAppSelector(selectLoadMore);
-  const userNews = useAppSelector(selectNewsArticles);
   const userDetails = useAppSelector(selectUserDetails)
-  const [IsLoading, setIsLoading] = React.useState(true);
+  const [IsLoading, setIsLoading] = React.useState(false);
   const [getStarted, setGetStarted] = React.useState(false);
+  let userNews = useAppSelector(selectNewsArticles);
+
+  const loadUserFollowingfromStorage = () => {
+    //parse the local userFollowings from local storage
+    if (!userFollowings || userFollowings.length === 0) {
+      const userFollowingsFromStorage = localStorage.getItem("userFollowings");
+
+      // Parse the JSON string from cookies. If it's not present or parsing fails, default to an empty array
+      try {
+          userFollowings = userFollowingsFromStorage ? JSON.parse(userFollowingsFromStorage) : [];
+      } catch (error) {
+          userFollowings = [];
+      }
+    }
+  }
+
+  const loadfeedfromstorage = () => {
+    //parse the local feed from local storage
+    let localfeed = localStorage.getItem("feed")
+    if (isAuthenticated && userNews.news.length === 0 && localfeed !== null) {
+      let parsedFeed = JSON.parse(localfeed)
+      let loadedNewsFeed = {
+        news: parsedFeed.articles,
+        last_news_time: parsedFeed.last_news_time,
+        status: 'succeeded' as const,
+        number_of_articles_to_fetch: 10,
+        load_more: parsedFeed.load_more
+      }
+      userNews = loadedNewsFeed
+      dispatch(addFeed(loadedNewsFeed))
+    }
+  }
+
+  //TODO: PRELOAD SOMEOF THE STUFF. LIKE GETTING BOOKMARKS, EXPLORE IN ADVANCE
+  //preload the bookmarks
+  const preloadBookmarks = async () => {
+    let localBookmarks = localStorage.getItem("bookmarks");
+      if (isAuthenticated && localBookmarks !== null) {
+        let newBookmarkState = {
+          news: JSON.parse(localBookmarks) as NewsArticle[],
+          status: "done" as const
+        }
+        if(newBookmarkState.news.length === 0){
+          dispatch(getAllBookmarksForUser());
+        }
+      }else if(localBookmarks === null){
+        dispatch(getAllBookmarksForUser());
+      }
+  }
 
   const start = () => {
     setGetStarted(false);
@@ -47,8 +94,18 @@ const Home: React.FC = () => {
       });
     }
   }
+
   useEffect(() => {
-    start()
+    if(isAuthenticated){
+      preloadBookmarks()
+    }
+    //loadfeedfromstorage()
+    if(userNews.news.length == 0){
+      start()
+    }
+    
+    loadfeedfromstorage()
+    loadUserFollowingfromStorage()
   }, [dispatch, isAuthenticated]);
 
   let HandleLoadMore = async () => {
@@ -61,20 +118,20 @@ const Home: React.FC = () => {
     return <HomeInterests userFollowings={userFollowings} categories={categories} firstName={userDetails?.first_name} start={start}/>
   }
   
-  
+
   if(!getStarted){
     return (
       <>
         {(!IsLoading && userNews.status == 'failed') && (
           <InternalError />
         )}
-        {((!IsLoading && userNews.status !== 'failed' && userNews.status !== 'loading')||userNews.news.length > 0) && (
+        {((!IsLoading && userNews.status === 'succeeded')||userNews.news.length > 0) && (
           <>
             { userNews.news.length > 0 ? (
                 userNews.news.map((newsCard: NewsArticle) => (
                   <NewsCard 
                     id={newsCard.id}
-                    imageSrc={newsCard.media[0]} 
+                    imageSrc={newsCard.media} 
                     title={newsCard.title} 
                     shortSummary={newsCard.shortSummary}  
                     from={newsCard.from}
@@ -110,6 +167,11 @@ const Home: React.FC = () => {
         )}
         {(!IsLoading && userNews && userNews.status === 'succeeded' && LoadMore) && (
           <LoadMoreButton HandleLoadMore={HandleLoadMore} />
+        )}
+        {!IsLoading && userNews && userNews.status === 'succeeded' && !LoadMore && (
+          <div className="flex justify-center">
+            <p className="text-center text-gray-500">You have reached the end</p>
+          </div>
         )}
     </>
     )
