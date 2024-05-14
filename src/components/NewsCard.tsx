@@ -63,7 +63,7 @@ const NewsCard: React.FC<NewsComponentProps> = ({ id, imageSrc, title, shortSumm
     return (
         <a className="flex flex-col sm:flex-row lg:max-w-[750px] w-full rounded-[20px] bg-white border-solid border border-gray-100 overflow-hidden mb-2 md:mb-4 cursor-pointer"
         href={'/news/' + id}>
-            <div className="block w-full sm:min-w-[33%] sm:w-1/3 object-cover object-top rounded-l-[20px] h-100% min-h-[200px]" style={{backgroundImage:`url(${image})`, backgroundSize:'cover'}}></div>
+            <div className="block w-full sm:min-w-[33%] sm:w-1/3 object-cover object-top rounded-l-[20px] h-100% min-h-[200px]" style={{backgroundImage:`url(${image})`, backgroundSize:'cover', backgroundPosition: 'center'}}></div>
             <div className="flex flex-col justify-between items-between p-2 py-3 px-1 xs:px-4 w-full">
                 <div>
                     <h2 className="block text-lg mb-1 !leading-6">{title}</h2>

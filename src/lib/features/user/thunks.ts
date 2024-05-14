@@ -182,6 +182,7 @@ export const forgetPassword = createAsyncThunk<string, { email: string }, { reje
         }
   
         const userDetails = await response.json() as UserDetails;
+        localStorage.setItem("userDetails", JSON.stringify(userDetails));
         return userDetails;
       } catch (error) {
         if (error instanceof Error) {

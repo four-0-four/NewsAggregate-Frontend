@@ -17,7 +17,11 @@ type LayoutProps = {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const dispatch = useAppDispatch();
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  let isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const accessToken = Cookies.get('access_token');
+  if (!isAuthenticated && accessToken) {
+    isAuthenticated = !!accessToken && isTokenValid(accessToken);
+  }
   let userFollowings = useAppSelector(selectUserFollowings);
   const location = useLocation(); // Use useLocation to access the current route
   // Check if current route is /landing, /profile, or /contact
@@ -30,12 +34,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     dispatch(resetStatus());
   }, [location.pathname, dispatch]); 
 
-  const [isLoading, setIsLoading] = useState(true);
-
   const kickUserOut = async () => {
     Cookies.remove('access_token');
     await dispatch(setAuthenticationState(false));
-    setIsLoading(false);
     localStorage.clear();
   }
 
@@ -44,7 +45,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     if (accessToken && isTokenValid(accessToken)) {
       await dispatch(setAuthenticationState(true));
       await dispatch(fetchUserDetails());
-      setIsLoading(false);
       return true
     } else {
       await kickUserOut();
@@ -96,10 +96,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, [isAuthenticated]);
-
-  if (isLoading) {
-    return <div>Loading...</div>; // Or any loading component
-  }
 
   return (
     <>

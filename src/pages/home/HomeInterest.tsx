@@ -22,6 +22,8 @@ type HomeInterestsProps = {
 
     const [userFollowings, setUserFollowings] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
+    let MIN_INTEREST_NEWS = 2
+    const [buttonText, setButtonText] = useState(`Add ${MIN_INTEREST_NEWS} More Interests`);
 
     useEffect(() => {
         // Load user followings from cookies
@@ -40,12 +42,14 @@ type HomeInterestsProps = {
     let handleRemoveInterest = (topic: string) => {
         if (!userFollowings.includes(topic)) return;
         const newFollowings = userFollowings.filter(following => following !== topic);
+        setButtonText(`Add ${MIN_INTEREST_NEWS - newFollowings.length} More Interests`);
         updateCookieFollowings(newFollowings);
     };
 
     let handleAddInterest = (topic: string) => {
         if (userFollowings.includes(topic)) return;
         const newFollowings = [...userFollowings, topic];
+        setButtonText(`Add ${MIN_INTEREST_NEWS - newFollowings.length} More Interests`);
         updateCookieFollowings(newFollowings);
     };
 
@@ -70,33 +74,34 @@ type HomeInterestsProps = {
                         </div>
                     )}
                     <p className='mb-5 text-sm sm:text-md'>To tailor your Farabix experience, please select the interests from below. Choose a minimum of 2!</p>
-                    <h1 className='text-lg sm:text-xl font-bold text-left capitalize pb-4 font-semibold flex items-center mb-1'>Add Interests</h1>
-                    {categories.map((category, index) => (
-                        <button onClick={()=>category?handleAddInterest(category):""} className={tagDesign}>{category?CategoryIcons(category):""}{category}</button>
-                    ))}
+                    <h1 className='text-lg sm:text-xl font-bold text-left capitalize font-semibold flex items-center mb-3'>Add Interests</h1>
+                    <p className='text-sm text-gray-300 mt-[-15px] pb-4 mb-1'>(Min {MIN_INTEREST_NEWS} Interest)</p>
+                    <div className='flex flex-wrap'>
+                        {categories.map((category, index) => 
+                            ((!category || userFollowings.includes(category))?(
+                                <div className='relative'>
+                                    <p className={`${interestDesign}`}>
+                                        {category ? CategoryIcons(category) : ""}{category}
+                                    </p>
+                                    {category ? (
+                                        <button onClick={()=>handleRemoveInterest(category)} className={`absolute top-[-0.5rem] right-1 text-sm rounded-full bg-black text-white h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center`}>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-3 h-3 sm:w-4 sm:h-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    ):("")}
+                                </div>
+                            ):(
+                                <button onClick={()=>category?handleAddInterest(category):""} className={tagDesign}>{category?CategoryIcons(category):""}{category}</button>
+                            )
+                            )
+                        )}
+                    </div>
                     <div className='flex justify-end mt-5'>
-                        <PrimaryButton text="Get Started" onClick={handleSubmit} disabled={userFollowings.length<2}/>
+                        <PrimaryButton text={userFollowings.length >= MIN_INTEREST_NEWS?'Get Started':buttonText} onClick={handleSubmit} disabled={userFollowings.length<2}/>
                     </div>
                 </div>
             </Box>
-            {userFollowings.length>0 && (<Box title="Selected Interests">
-                <div className='flex mt-3 flex-wrap'>
-                    {userFollowings.map((following, index) => (
-                        <div className='relative'>
-                            <p className={`${interestDesign}`}>
-                                {following ? CategoryIcons(following) : ""}{following}
-                            </p>
-                            <button onClick={()=>handleRemoveInterest(following)} className='absolute top-[-0.5rem] right-1 text-sm rounded-full bg-black text-white h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center'>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-3 h-3 sm:w-4 sm:h-4">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-                    ))}
-                </div>
-            </Box>
-            )}
-
         </div>
     )
 }

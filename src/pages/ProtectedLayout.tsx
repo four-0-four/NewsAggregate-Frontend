@@ -4,10 +4,12 @@ import { useAppDispatch, useAppSelector } from '../lib/hooks';
 import { fetchUserDetails, refreshAccessToken } from '../lib/features/user/thunks';
 import Cookies from 'js-cookie';
 import isTokenValid from '../util/token';
+import { setAuthenticationState } from '../lib/features/user/slice';
 
 const ProtectedLayout: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isAuthenticated = useAppSelector(state => state.user.isAuthenticated);
+  const accessToken = Cookies.get('access_token');
+  const isAuthenticated = accessToken && isTokenValid(accessToken)
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -20,6 +22,7 @@ const ProtectedLayout: React.FC = () => {
         if (isTokenValid(token)) {
           // Attempt to refresh access token or fetch user details if needed
           await dispatch(refreshAccessToken());
+          await dispatch(setAuthenticationState(true));
           // You may need to fetch user details here as well depending on your auth flow
           await dispatch(fetchUserDetails());
         } else {
@@ -31,7 +34,6 @@ const ProtectedLayout: React.FC = () => {
         navigate('/landing', { replace: true });
       }
     };
-
     checkAuthentication();
   }, [dispatch, isAuthenticated, navigate]);
 

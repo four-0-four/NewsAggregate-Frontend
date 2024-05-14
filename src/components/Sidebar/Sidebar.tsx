@@ -8,12 +8,19 @@ import { useSelector } from 'react-redux';
 import { selectIsAuthenticated } from '../../lib/features/user/slice';
 import { RootState } from '../../lib/store';
 import { useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie';
+import { useAppSelector } from '../../../src/lib/hooks';
+import isTokenValid from '../../../src/util/token';
 
 type SidebarProps = {
 };
 
 const Sidebar: React.FC<SidebarProps> = () => {
-    const isAuthenticated = useSelector((state: RootState) => selectIsAuthenticated(state));
+    let isAuthenticated = useAppSelector(selectIsAuthenticated);
+    const accessToken = Cookies.get('access_token');
+    if (!isAuthenticated && accessToken) {
+        isAuthenticated = !!accessToken && isTokenValid(accessToken);
+    }
     const location = useLocation(); // Use useLocation to access the current path
 
     // Check if current route is /landing, /profile, or /contact

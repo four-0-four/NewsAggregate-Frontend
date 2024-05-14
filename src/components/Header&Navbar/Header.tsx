@@ -4,6 +4,8 @@ import { useAppSelector } from '../../lib/hooks';
 import ProfileDropdown from '../ProfileDropdown';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './CustomStyles.module.scss';
+import isTokenValid from '../../../src/util/token';
+import Cookies from 'js-cookie';
 
 const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
   const today = new Date();
@@ -26,8 +28,20 @@ const Header: React.FC<{ toggleSidebar: () => void }> = ({ toggleSidebar }) => {
     day: 'numeric'
   });
 
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  const userDetails = useAppSelector(selectUserDetails)
+  const accessToken = Cookies.get('access_token');
+  const isAuthenticated = accessToken && isTokenValid(accessToken)
+  let userDetails = useAppSelector(selectUserDetails)
+
+  if (!userDetails) {
+    const userDetailsFromStorage = localStorage.getItem("userDetails");
+
+    // Parse the JSON string from cookies. If it's not present or parsing fails, default to an empty array
+    try {
+      userDetails = userDetailsFromStorage ? JSON.parse(userDetailsFromStorage) : [];
+    } catch (error) {
+      userDetails = null;
+    }
+  }
 
   return (
     <header className="bg-black text-white p-2 px-4 fixed top-0 left-0 right-0 z-30 mb-10">

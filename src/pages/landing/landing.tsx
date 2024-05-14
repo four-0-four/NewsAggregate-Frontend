@@ -14,19 +14,31 @@ const point =()=>(<svg width="27" height="46" viewBox="0 0 27 46" fill="none" xm
 const LandingPage: React.FC = () => {
     const dispatch = useAppDispatch();
     
+    function smoothScroll(e) {
+        e.preventDefault(); // Prevent the default anchor behavior
+        const targetId = e.currentTarget.getAttribute('href'); // Get the href attribute of the clicked element
+        const targetElement = document.querySelector(targetId); // Select the target element
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth', // Smoothly scroll to the target element
+                block: 'center' // Align the target element in the center of the viewport
+            });
+        }
+    }
+
     useEffect(() => {
         dispatch(getAllNewsSourcesLanding())
     }, [dispatch]);
     return (
-        <div className='w-full'>
+        <div className='w-full scroll-smooth'>
             {/* Section 1 */}
             <section className="bg-gray-100">
                 <div className='overflow-hidden flex flex-col sm:flex-row justify-between items-end sm:items-center mx-auto  md:px-10  max-w-[1200px] '>
                     <div className="w-full sm:w-4/5 md:w-3/5 md:w-[500px] md:px-0 px-8 md:px-4 md:pb-20 pt-24 sm:pt-0 md:pt-24">
                         <h1 className="text-3xl sm:text-4xl xl:text-5xl font-bold sm:mb-2 text-left lg:!leading-tight">Your <span className={styles.underlined}>Trusted</span> Source for Aggregated and Independent News</h1>
                         <h3 className='mb-6 mt-4 sm:my-7 lg:mb-6 lg:mb-2 text-sm md:text-md lg:text-lg xl:!leading-normal'>Customize your news experience: stay informed, stay engaged, stay in control</h3>
-                        <a href="/auth/Register" className={`md:inline-block text-md lg:text-lg w-auto sm:mr-0 mr-0 px-6 pr-4 py-3 sm:py-2 text-black rounded-full capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}>
-                            Register now &rarr;
+                        <a href="#getStarted" className={`md:inline-block text-md lg:text-lg w-auto sm:mr-0 mr-0 px-6 pr-4 py-3 sm:py-2 text-black rounded-full capitalize mb-1 sm:mb-4 md:mb-0 order-1 sm:order-2 bg-primary hover:bg-opacity-80`}  onClick={smoothScroll}>
+                            Get Started &rarr;
                         </a>
                     </div>
                     <div className="hidden sm:block sm:w-2/5 lg:w-3/5 bg-primary min-h-[550px] h-min" style={{ clipPath: "polygon(2% 0, 30% 0, 100% 100%, 29% 100%)" }}>
@@ -219,7 +231,7 @@ const LandingPage: React.FC = () => {
             </div>
 
             {/* stay informed */}
-            <div className='bg-gray-100 relative'>
+            <div className='bg-gray-100 relative'  id="getStarted">
                 <div className='min-h-[200px] w-full absolute top-[50%] md:top-[60%] z-0'>
                     <div className='bg-white min-h-[150px] w-full'></div>
                     <div className="bg-white min-h-[30px] w-full mt-[-1px]" style={{ clipPath: "polygon(100% 0, 100% 100%, 28% 30%, 0 100%, 0% 0%)" }}></div>
@@ -227,11 +239,41 @@ const LandingPage: React.FC = () => {
                 <div className='z-20 relative mx-3 xs:mx-6'>
                     <div className="bg-black min-h-[30px] h-min mx-auto max-w-[570px] md:max-w-[770px] xl:max-w-[970px] mb-[-1px] w-[92%] xs:w-[94%] sm:w-[95%]" style={{ clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }}>
                     </div>
-                    <div className='mx-auto max-w-[600px] md:max-w-[800px] xl:max-w-[1000px] bg-black rounded-[20px] px-3 py-5 xs:p-6'>
+                    <div className='mx-auto max-w-[600px] md:max-w-[800px] xl:max-w-[1000px] bg-black rounded-[20px] px-5 py-5 xs:p-6'>
                         <div className='max-w-[400px] mx-auto text-center'>
-                            <h1 className='text-yellow-300 text-2xl xs:text-3xl lg:text-4xl font-bold mb-3 xs:mb-5'>Stay informed about what interests you</h1>
+                            <h1 className='text-yellow-300 text-2xl xs:text-3xl lg:text-4xl font-bold mb-1 xs:mb-3'>Subscription Plan</h1>
                             <p className='text-white text-sm lg:texl-lg'>Dive into a world where news is personalized just for you, from the sources you trust to the topics you love</p>
-                            <a href="/auth/Register" className='w-fit block mt-5 bg-yellow-300 text-black px-6 py-2 rounded-full mt-4 hover:bg-opacity-80 font-bold text-sm xs:text-md mx-auto'>Get Started Now</a>
+                            <div className='mt-5'>
+                                <span className='text-yellow-300 text-1xl xs:text-2xl font-bold'>USD</span>
+                                <span className='text-yellow-300 text-3xl xs:text-3xl lg:text-4xl font-bold'>$2.99</span> 
+                                <span className='text-white text-md xs:text-lg lg:text-xl font-bold'> / monthly</span>
+                            </div>
+                            <div className='flex flex-col items-center mt-6'>
+                                <div className='w-fit text-left max-w-[300px]'>
+                                    <div className='flex items-center mt-2'>
+                                        <span className='text-yellow-300 border border-yellow-300 rounded-full p-[2px] px-[6px] mr-2 text-sm'>&#10004;</span>
+                                        <span className='text-white leading-5'>Access over 20 news sources</span>
+                                    </div>
+                                    <div className='flex items-center mt-2'>
+                                        <span className='text-yellow-300 border border-yellow-300 rounded-full p-[2px] px-[6px] mr-2 text-sm'>&#10004;</span>
+                                        <span className='text-white leading-5'>Pick your favorite news sources</span>
+                                    </div>
+                                    <div className='flex items-center mt-2'>
+                                        <span className='text-yellow-300 border border-yellow-300 rounded-full p-[2px] px-[6px] mr-2 text-sm'>&#10004;</span>
+                                        <span className='text-white leading-5'>Blacklist undesired news sources</span>
+                                    </div>
+                                    <div className='flex items-center mt-2'>
+                                        <span className='text-yellow-300 border border-yellow-300 rounded-full p-[2px] px-[6px] mr-2 text-sm'>&#10004;</span>
+                                        <span className='text-white leading-5'>Choose interests to tailor your feed</span>
+                                    </div>
+                                    <div className='flex items-center mt-2'>
+                                        <span className='text-yellow-300 border border-yellow-300 rounded-full p-[2px] px-[6px] mr-2 text-sm'>&#10004;</span>
+                                        <span className='text-white leading-5'>Set up news alerts for key updates</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="/auth/Register" className='w-fit block mt-9 bg-yellow-300 text-black px-10 py-2 rounded-full mt-4 hover:bg-opacity-80 font-bold text-md xs:text-lg mx-auto'>Try 14 Days for Free</a>
+                            <p className='text-white mt-1 text-xs'>$2.99 per month after Free 14-day trial period</p>
                         </div>
                     </div>
                 </div>
