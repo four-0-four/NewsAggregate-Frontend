@@ -4,7 +4,10 @@ import { selectIsAuthenticated } from '../../lib/features/user/slice';
 import { addNewsToBookmark, fetchOneNewsArticle, fetchOneNewsArticleAuthenticated, getAllBookmarksForUser, removeNewsFromBookmark } from '../../lib/features/news/thunks';
 import { NewsArticle, addBookmark, removeBookmark, selectNewsStatus, selectSelectedArticle } from '../../lib/features/news/slice';
 import NewsPlaceholder from '../../components/Placeholders/NewsPlaceholder';
+import Cookies from 'js-cookie';
 import { useParams } from 'react-router-dom';
+import isTokenValid from '../../../src/util/token';
+
 import {
     FacebookShareButton,
     RedditShareButton,
@@ -25,7 +28,11 @@ type NewsComponentProps = {};
 const News: React.FC<NewsComponentProps> = ({}) => {
     const { newsID } = useParams<{ newsID: string }>();
     const dispatch = useAppDispatch(); // Use the typed dispatch hook
-    const isAuthenticated = useAppSelector(selectIsAuthenticated); // Also using the typed selector hook
+    let isAuthenticated = useAppSelector(selectIsAuthenticated);
+    const accessToken = Cookies.get('access_token');
+    if (!isAuthenticated && accessToken) {
+        isAuthenticated = !!accessToken && isTokenValid(accessToken);
+    }
     const selectedArticle = useAppSelector(selectSelectedArticle);
     const [imageSrc, setImageSrc] = useState<string>("");
     const [showShareDropdown, setShowShareDropdown] = useState<boolean>(false);
@@ -33,17 +40,15 @@ const News: React.FC<NewsComponentProps> = ({}) => {
 
     useEffect(() => {
         const img = new Image();
-        img.onload = () => setImageSrc(selectedArticle?.media && selectedArticle?.media[0] || "/breaking_news.png");
+        img.onload = () => setImageSrc(selectedArticle?.media || "/breaking_news.png");
         img.onerror = () => setImageSrc("/breaking_news.png"); // Fallback image on error
-        img.src = selectedArticle?.media && selectedArticle?.media[0] || "";
+        img.src = selectedArticle?.media || "";
     }, [selectedArticle?.media]);
 
     useEffect(() => {
         if (newsID) {
             if(isAuthenticated){
                 dispatch(fetchOneNewsArticleAuthenticated(newsID)); // This should now be correctly typed
-            }else{
-                dispatch(fetchOneNewsArticle(newsID)); // This should now be correctly typed
             }
         }
     }, [dispatch, newsID]);

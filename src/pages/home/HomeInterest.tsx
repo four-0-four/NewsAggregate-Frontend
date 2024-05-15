@@ -66,13 +66,13 @@ type HomeInterestsProps = {
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
             <Box title={`Welcome, ${firstName}!`}>
+                {(loading) && (
+                    <div className="z-10 w-full h-full absolute top-0 left-0 flex flex-col items-center justify-center bg-gray-100 bg-opacity-70">
+                        <img src="/gettingStarted.gif" className='w-[50px]'/>
+                        <p className='text-primary text-lg mt-1'>Getting Started...</p>
+                    </div>
+                )}
                 <div className='relative'>
-                    {loading && (
-                        <div className="z-10 w-full h-full absolute top-0 left-0 flex flex-col items-center justify-center bg-gray-100 bg-opacity-70">
-                            <img src="/gettingStarted.gif" className='w-[50px]'/>
-                            <p className='text-primary text-lg mt-1'>Getting Started...</p>
-                        </div>
-                    )}
                     <p className='mb-5 text-sm sm:text-md'>To tailor your Farabix experience, please select the interests from below. Choose a minimum of 2!</p>
                     <h1 className='text-lg sm:text-xl font-bold text-left capitalize font-semibold flex items-center mb-3'>Add Interests</h1>
                     <p className='text-sm text-gray-300 mt-[-15px] pb-4 mb-1'>(Min {MIN_INTEREST_NEWS} Interest)</p>

@@ -57,11 +57,11 @@ const App = () => {
               <Route path="/contact/reportBug" element={<ReportBugForm />} />
               <Route path="/contact/requestFeature" element={<RequestFeatureForm />} />
               <Route path="/contact/contactUs" element={<ContactUs />} />
+              <Route path="/news/:newsID" element={<News />} />
             </Route>
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/landing/contactUs" element={<ContactUsLanding />} />
             <Route path="/landing/newsSources" element={<NewsSources />} />
-            <Route path="/news/:newsID" element={<News />} />
             <Route path="/404" element={<NotFound />} />
             <Route path="/policy/PrivacyPolicy" element={<PrivacyPolicy />} />
             <Route path="/policy/TermsOfService" element={<TermsOfService />} />
