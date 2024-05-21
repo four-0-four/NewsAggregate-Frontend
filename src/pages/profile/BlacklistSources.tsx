@@ -101,7 +101,7 @@ const BlacklistSources = (props: Props) => {
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
             <Box title="Which news sources do you want to blacklist?">
-                <p className='mb-5 text-sm sm:text-md'>This feature allows users to hide news from specific sources they prefer not to see, not only in their feed but also on explore and topic pages. If you wish to change the sources appearing only on your feed page, please visit the <a className='text-primary' href="/profile/filterSources">"Filter News Source"</a> page</p>
+                <p className='mb-5 text-sm sm:text-md'>Avoid news from specific sources you don't want to see in your explore and category page</p>
                 <SearchInput 
                     placeholder={'Search for News Sources'} 
                     name={'search'} 
@@ -129,17 +129,15 @@ const BlacklistSources = (props: Props) => {
                             value={search}
                             action={addSource}
                         />
-                        <p className='text-xs mt-5 text-gray-400'>Note: We are continuously adding new sources. Some will be added shortly, while others may take longer due to geolocation constraints. We will notify you as soon as they are included.</p>
                     </>
                 )}
+                <p className='text-xs mt-5 text-gray-400'>Please note: Our collection of news sources is constantly expanding. Some sources will be integrated soon, whereas others might take longer owing to geolocation constraints. Rest assured, we will inform you as soon as new sources become available.</p>
             </Box>
             <Box title="Blacklisted News Sources">
                 <p className='text-sm text-gray-300 mt-[-15px]'>(Max 5 news sources)</p>
                 {isLoading ? (
-                    <div className='flex flex-row flex-wrap gap-5 mt-6'>
-                        <NewsSourceIconPlaceholder /> 
-                    </div>
-                ) : BlacklistedNewsSourcesState.length > 0 ? (
+                    <></>
+                ) : BlacklistedNewsSrc.length > 0 ? (
                     <>
                         <div className='flex flex-row flex-wrap gap-5 mt-6'>
                         {BlacklistedNewsSrc.map((source) => (

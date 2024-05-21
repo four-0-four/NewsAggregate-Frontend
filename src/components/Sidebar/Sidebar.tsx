@@ -5,21 +5,23 @@ import ProfileSidebarSection from './ProfileSidebarSection';
 import ContactSidebarSection from './ContactSidebarSection';
 import InterestSidebarSection from './InterestSidebarSection';
 import { useSelector } from 'react-redux';
-import { selectIsAuthenticated } from '../../lib/features/user/slice';
+import { selectIsAuthenticated, setAuthenticationState } from '../../lib/features/user/slice';
 import { RootState } from '../../lib/store';
 import { useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
-import { useAppSelector } from '../../../src/lib/hooks';
+import { useAppDispatch, useAppSelector } from '../../../src/lib/hooks';
 import isTokenValid from '../../../src/util/token';
 
 type SidebarProps = {
 };
 
 const Sidebar: React.FC<SidebarProps> = () => {
+    const dispatch = useAppDispatch(); 
     let isAuthenticated = useAppSelector(selectIsAuthenticated);
     const accessToken = Cookies.get('access_token');
     if (!isAuthenticated && accessToken) {
         isAuthenticated = !!accessToken && isTokenValid(accessToken);
+        dispatch(setAuthenticationState(isAuthenticated));
     }
     const location = useLocation(); // Use useLocation to access the current path
 

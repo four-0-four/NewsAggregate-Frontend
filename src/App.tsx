@@ -30,6 +30,7 @@ import FilterSources from './pages/profile/filterSources';
 import ProtectedLayout from './pages/ProtectedLayout';
 import ContactUsLanding from './pages/landing/contactUs';
 import NewsSources from './pages/landing/newsSources';
+import BlacklistSources from './pages/profile/BlacklistSources';
 
 const App = () => {
   const storeRef = useRef<AppStore | null>(null);
@@ -53,6 +54,7 @@ const App = () => {
               <Route path="/profile/account" element={<Account />} />
               <Route path="/profile/interests" element={<Interests />} />
               <Route path="/profile/filterSources" element={<FilterSources />} />
+              <Route path="/profile/blacklistSources" element={<BlacklistSources />} />
               <Route path="/profile/security" element={<Security />} />
               <Route path="/contact/reportBug" element={<ReportBugForm />} />
               <Route path="/contact/requestFeature" element={<RequestFeatureForm />} />

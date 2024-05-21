@@ -5,17 +5,24 @@ import SearchInput from '../../components/Inputs/SearchInput'
 import SearchResults from '../../components/Inputs/SearchResults'
 import { useAppDispatch, useAppSelector } from '../../lib/hooks'
 import { useNavigate } from 'react-router-dom'
-import { selectIsAuthenticated } from '../../lib/features/user/slice'
+import { selectIsAuthenticated, setAuthenticationState } from '../../lib/features/user/slice'
 import { BlacklistedNewsSources, InterestedNewsSources, NewsSourceState, allNewsSources, newsSourceStatus } from '../../lib/features/newsSource/slice'
 import { addNewsSourcePreference, getAllNewsSources, getAllUserNewsSourcesBlacklist, getAllUserNewsSourcesPreferences, removeNewsSourcePreference } from '../../lib/features/newsSource/thunks'
 import NewsSourceIconPlaceholder from '../../components/Placeholders/NewsSourceIconPlaceholder'
+import isTokenValid from '../../../src/util/token'
+import Cookies from 'js-cookie';
 
 type Props = {}
 
 const FilterSources = (props: Props) => {
     const dispatch = useAppDispatch(); // Use Redux's useDispatch
     const navigate = useNavigate(); // Use useNavigate for navigation
-    const isAuthenticated = useAppSelector(selectIsAuthenticated);
+    let isAuthenticated = useAppSelector(selectIsAuthenticated);
+    const accessToken = Cookies.get('access_token');
+    if (!isAuthenticated && accessToken) {
+        isAuthenticated = !!accessToken && isTokenValid(accessToken);
+        dispatch(setAuthenticationState(isAuthenticated));
+    }
 
     let allNewsSourcesState:NewsSourceState[] = useAppSelector(allNewsSources) ?? []
     let InterestedNewsSourcesState:NewsSourceState[] = useAppSelector(InterestedNewsSources) ?? []
@@ -27,11 +34,12 @@ const FilterSources = (props: Props) => {
     const [BlacklistedNewsSrc, setBlacklistedNewsSrc] = useState(BlacklistedNewsSourcesState)
     const [is, setIs] = useState(true);
 
-
+    console.log("before:",allNewsSrc)
     const preLoadNewsSources = () => {
         //preload news sources from local storage
         if (!allNewsSrc || allNewsSrc.length === 0) {
             const allNewsSourcesFromStorage = localStorage.getItem("newsSources");
+            console.log(allNewsSourcesFromStorage)
             try {
                 setAllNewsSrc(allNewsSourcesFromStorage ? JSON.parse(allNewsSourcesFromStorage) : [])
             } catch (error) {
@@ -136,6 +144,7 @@ const FilterSources = (props: Props) => {
         dispatch(addNewsSourcePreference({ news_source_id: id }));
       };
 
+    console.log("after:",allNewsSrc)
     const MIN_INTERESTED_SOURCES = 3
     return (
         <div className="flex flex-col justify-center lg:justify-start items-center lg:items-start gap-y-4">
@@ -163,12 +172,7 @@ const FilterSources = (props: Props) => {
             <Box title="Interested News Sources">
                 <p className='text-sm text-gray-300 mt-[-15px]'>(Min 3 news sources)</p>
                 {is ? (
-                    <div className='flex flex-row flex-wrap gap-5 mt-6'>
-                        <NewsSourceIconPlaceholder />
-                        <NewsSourceIconPlaceholder />
-                        <NewsSourceIconPlaceholder />
-                        <NewsSourceIconPlaceholder />
-                    </div>
+                    <></>
                 ):(
                     <>
                         <div className='flex flex-row flex-wrap gap-5 mt-6'>

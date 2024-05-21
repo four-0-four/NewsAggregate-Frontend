@@ -26,6 +26,9 @@ const ProfileSidebar = (props: Props) => {
                     <SidebarElement href="/profile/filterSources" icon={<NewsSourceIcon />}>
                         Filter News Sources
                     </SidebarElement>
+                    <SidebarElement href="/profile/blacklistSources" icon={<BlackListIcon />}>
+                        Blacklist News Sources
+                    </SidebarElement>
                 </ul>
             </nav>
         </>
@@ -58,7 +61,7 @@ const NewsSourceIcon = () => (
 
 const BlackListIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5 inline-block mr-3">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
     </svg>
 )
 

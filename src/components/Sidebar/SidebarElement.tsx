@@ -16,9 +16,9 @@ const SidebarElement: React.FC<SidebarElementProps> = ({ href, icon, children })
     };
 
     return (
-        <a href={href} className={`block py-2 text-md cursor-pointer border-2 border-white rounded-[20px] ${isActive(href) ? 'bg-primary' : ''} px-3 xl:px-4`}>
-            {icon}
-            {children}
+        <a href={href} className={`flex items-center justify-center py-2 text-md cursor-pointer border-2 border-white rounded-[20px] ${isActive(href) ? 'bg-primary' : ''} px-3 xl:px-4`}>
+            <span className="mr-0">{icon}</span>
+            <span className="flex-grow leading-5">{children}</span>
         </a>
     );
 };
